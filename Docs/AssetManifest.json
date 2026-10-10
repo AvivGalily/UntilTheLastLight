@@ -1,0 +1,1262 @@
+{
+  "seed": 1407,
+  "assets": [
+    {
+      "id": "birch_01",
+      "source": "ArtSource/Blender/birch_01.blend",
+      "export": "Assets/_Game/Art/Meshes/birch_01.fbx",
+      "units": "metres",
+      "triangles": 3420,
+      "lodTriangles": {
+        "LOD0": 3420,
+        "LOD1": 1544,
+        "LOD2": 524
+      },
+      "materials": [
+        "Broadleaf",
+        "PaleBark"
+      ],
+      "textures": [
+        "Assets/_Game/Art/Textures/Broadleaf_BaseColor.png",
+        "Assets/_Game/Art/Textures/Broadleaf_Normal.png",
+        "Assets/_Game/Art/Textures/Broadleaf_Mask.png",
+        "Assets/_Game/Art/Textures/PaleBark_BaseColor.png",
+        "Assets/_Game/Art/Textures/PaleBark_Normal.png",
+        "Assets/_Game/Art/Textures/PaleBark_Mask.png"
+      ],
+      "collider": "separate simple Unity collider; decorative foliage has no collision",
+      "blendShapes": [],
+      "animations": [],
+      "bones": 0,
+      "license": "original procedural project asset",
+      "status": "original art pass"
+    },
+    {
+      "id": "blackpine_01",
+      "source": "ArtSource/Blender/blackpine_01.blend",
+      "export": "Assets/_Game/Art/Meshes/blackpine_01.fbx",
+      "units": "metres",
+      "triangles": 15999,
+      "lodTriangles": {
+        "LOD0": 15999,
+        "LOD1": 5000,
+        "LOD2": 4301
+      },
+      "materials": [
+        "PH_FirBark",
+        "PH_FirTrunkC",
+        "PH_FirTwig"
+      ],
+      "textures": [
+        "Assets/_Game/Art/Textures/PH_FirBark_BaseColor.png",
+        "Assets/_Game/Art/Textures/PH_FirBark_Normal.png",
+        "Assets/_Game/Art/Textures/PH_FirBark_Mask.png",
+        "Assets/_Game/Art/Textures/PH_FirTrunkC_BaseColor.png",
+        "Assets/_Game/Art/Textures/PH_FirTrunkC_Normal.png",
+        "Assets/_Game/Art/Textures/PH_FirTrunkC_Mask.png",
+        "Assets/_Game/Art/Textures/PH_FirTwig_BaseColor.png",
+        "Assets/_Game/Art/Textures/PH_FirTwig_Normal.png",
+        "Assets/_Game/Art/Textures/PH_FirTwig_Mask.png"
+      ],
+      "collider": "separate simple Unity collider; decorative foliage has no collision",
+      "blendShapes": [],
+      "animations": [],
+      "bones": 0,
+      "license": "Poly Haven CC0; project metre scale and three optimized LODs",
+      "status": "photographed material maps with source UVs; see ArtSource/Vendor/polyhaven/sources.json"
+    },
+    {
+      "id": "blackpine_02",
+      "source": "ArtSource/Blender/blackpine_02.blend",
+      "export": "Assets/_Game/Art/Meshes/blackpine_02.fbx",
+      "units": "metres",
+      "triangles": 15999,
+      "lodTriangles": {
+        "LOD0": 15999,
+        "LOD1": 5000,
+        "LOD2": 4843
+      },
+      "materials": [
+        "PH_FirBark",
+        "PH_FirTrunkB",
+        "PH_FirTwig"
+      ],
+      "textures": [
+        "Assets/_Game/Art/Textures/PH_FirBark_BaseColor.png",
+        "Assets/_Game/Art/Textures/PH_FirBark_Normal.png",
+        "Assets/_Game/Art/Textures/PH_FirBark_Mask.png",
+        "Assets/_Game/Art/Textures/PH_FirTrunkB_BaseColor.png",
+        "Assets/_Game/Art/Textures/PH_FirTrunkB_Normal.png",
+        "Assets/_Game/Art/Textures/PH_FirTrunkB_Mask.png",
+        "Assets/_Game/Art/Textures/PH_FirTwig_BaseColor.png",
+        "Assets/_Game/Art/Textures/PH_FirTwig_Normal.png",
+        "Assets/_Game/Art/Textures/PH_FirTwig_Mask.png"
+      ],
+      "collider": "separate simple Unity collider; decorative foliage has no collision",
+      "blendShapes": [],
+      "animations": [],
+      "bones": 0,
+      "license": "Poly Haven CC0; project metre scale and three optimized LODs",
+      "status": "photographed material maps with source UVs; see ArtSource/Vendor/polyhaven/sources.json"
+    },
+    {
+      "id": "burning_car_01",
+      "source": "ArtSource/Blender/burning_car_01.blend",
+      "export": "Assets/_Game/Art/Meshes/burning_car_01.fbx",
+      "units": "metres",
+      "triangles": 38560,
+      "lodTriangles": {
+        "LOD0": 38560
+      },
+      "materials": [
+        "BurnedRubber",
+        "BurnedSteel"
+      ],
+      "textures": [],
+      "collider": "separate simple Unity collider; decorative foliage has no collision",
+      "blendShapes": [],
+      "animations": [],
+      "bones": 0,
+      "license": "CC0 Creomoto Car from OpenGameArt; project wreck adaptation",
+      "status": "Metre-scale crushed/charred CC0 vehicle; source retained in ArtSource/Vendor/creomoto"
+    },
+    {
+      "id": "cabin_sign_01",
+      "source": "ArtSource/Blender/cabin_sign_01.blend",
+      "export": "Assets/_Game/Art/Meshes/cabin_sign_01.fbx",
+      "units": "metres",
+      "triangles": 604,
+      "lodTriangles": {
+        "LOD0": 604
+      },
+      "materials": [
+        "CabinSignIron",
+        "CabinSignWood"
+      ],
+      "textures": [
+        "Assets/_Game/Art/Textures/CabinSignWood_BaseColor.png",
+        "Assets/_Game/Art/Textures/CabinSignWood_Normal.png",
+        "Assets/_Game/Art/Textures/CabinSignWood_Mask.png"
+      ],
+      "collider": "separate simple Unity collider; decorative foliage has no collision",
+      "blendShapes": [],
+      "animations": [],
+      "bones": 0,
+      "license": "CC0 Textured Medieval Sign by allinonemovie; project wall-plaque adaptation and mounting studs",
+      "status": "Wood panel, iron frame, source UVs and authored wood maps; 3m x 0.82m. Separate Hebrew/English yellow name-only lettering follows the runtime language."
+    },
+    {
+      "id": "cinder_head_01",
+      "source": "ArtSource/Blender/cinder_head_01.blend",
+      "export": "Assets/_Game/Art/Meshes/cinder_head_01.fbx",
+      "units": "metres",
+      "triangles": 59134,
+      "lodTriangles": {
+        "LOD0": 59134
+      },
+      "materials": [
+        "CadaverEyes",
+        "CadaverLimb",
+        "CadaverSkin",
+        "CrawlerGums",
+        "CrawlerTeeth",
+        "CrawlerThroat",
+        "HumanBrows",
+        "HumanHair"
+      ],
+      "textures": [
+        "Assets/_Game/Art/Textures/CrawlerGums_BaseColor.png",
+        "Assets/_Game/Art/Textures/CrawlerGums_Normal.png",
+        "Assets/_Game/Art/Textures/CrawlerGums_Mask.png",
+        "Assets/_Game/Art/Textures/CrawlerTeeth_BaseColor.png",
+        "Assets/_Game/Art/Textures/CrawlerTeeth_Normal.png",
+        "Assets/_Game/Art/Textures/CrawlerTeeth_Mask.png",
+        "Assets/_Game/Art/Textures/CrawlerThroat_BaseColor.png",
+        "Assets/_Game/Art/Textures/CrawlerThroat_Normal.png",
+        "Assets/_Game/Art/Textures/CrawlerThroat_Mask.png",
+        "Assets/_Game/Art/Textures/HumanBrows_BaseColor.png",
+        "Assets/_Game/Art/Textures/HumanBrows_Normal.png",
+        "Assets/_Game/Art/Textures/HumanBrows_Mask.png",
+        "Assets/_Game/Art/Textures/HumanHair_BaseColor.png",
+        "Assets/_Game/Art/Textures/HumanHair_Normal.png",
+        "Assets/_Game/Art/Textures/HumanHair_Mask.png"
+      ],
+      "collider": "separate simple Unity collider; decorative foliage has no collision",
+      "blendShapes": [],
+      "animations": [
+        "Head_Bite",
+        "Head_Death",
+        "Head_Idle",
+        "Head_Run",
+        "Head_Spit"
+      ],
+      "bones": 28,
+      "license": "CC0 MakeHuman/MPFB anatomy and Mindfront skin; original project adaptation, six-legged rig and exposed viscera",
+      "status": "Human UV head on six articulated organic legs; 28 bones, idle/scuttle/bite/spit/death clips"
+    },
+    {
+      "id": "crow_01",
+      "source": "ArtSource/Blender/crow_01.blend",
+      "export": "Assets/_Game/Art/Meshes/crow_01.fbx",
+      "units": "metres",
+      "triangles": 17116,
+      "lodTriangles": {
+        "LOD0": 17116
+      },
+      "materials": [
+        "CrowBeak",
+        "CrowEye",
+        "CrowFeathers"
+      ],
+      "textures": [],
+      "collider": "separate simple Unity collider; decorative foliage has no collision",
+      "blendShapes": [],
+      "animations": [],
+      "bones": 0,
+      "license": "original procedural project asset",
+      "status": "original art pass"
+    },
+    {
+      "id": "dead_hero_01",
+      "source": "ArtSource/Blender/dead_hero_01.blend",
+      "export": "Assets/_Game/Art/Meshes/dead_hero_01.fbx",
+      "units": "metres",
+      "triangles": 4032,
+      "lodTriangles": {
+        "LOD0": 4032
+      },
+      "materials": [
+        "Bark"
+      ],
+      "textures": [
+        "Assets/_Game/Art/Textures/Bark_BaseColor.png",
+        "Assets/_Game/Art/Textures/Bark_Normal.png",
+        "Assets/_Game/Art/Textures/Bark_Mask.png"
+      ],
+      "collider": "separate simple Unity collider; decorative foliage has no collision",
+      "blendShapes": [
+        "Dread_Stage1",
+        "Dread_Stage2"
+      ],
+      "animations": [],
+      "bones": 0,
+      "license": "original procedural project asset",
+      "status": "original art pass"
+    },
+    {
+      "id": "eviscerated_casualty_01",
+      "source": "ArtSource/Blender/eviscerated_casualty_01.blend",
+      "export": "Assets/_Game/Art/Meshes/eviscerated_casualty_01.fbx",
+      "units": "metres",
+      "triangles": 39744,
+      "lodTriangles": {
+        "LOD0": 39744
+      },
+      "materials": [
+        "CrawlerThroat",
+        "HumanBoots",
+        "HumanBrows",
+        "HumanEyes",
+        "HumanHair",
+        "HumanOutfit2",
+        "HumanSkin0",
+        "Viscera"
+      ],
+      "textures": [
+        "Assets/_Game/Art/Textures/CrawlerThroat_BaseColor.png",
+        "Assets/_Game/Art/Textures/CrawlerThroat_Normal.png",
+        "Assets/_Game/Art/Textures/CrawlerThroat_Mask.png",
+        "Assets/_Game/Art/Textures/HumanBoots_BaseColor.png",
+        "Assets/_Game/Art/Textures/HumanBoots_Normal.png",
+        "Assets/_Game/Art/Textures/HumanBoots_Mask.png",
+        "Assets/_Game/Art/Textures/HumanBrows_BaseColor.png",
+        "Assets/_Game/Art/Textures/HumanBrows_Normal.png",
+        "Assets/_Game/Art/Textures/HumanBrows_Mask.png",
+        "Assets/_Game/Art/Textures/HumanEyes_BaseColor.png",
+        "Assets/_Game/Art/Textures/HumanEyes_Normal.png",
+        "Assets/_Game/Art/Textures/HumanEyes_Mask.png",
+        "Assets/_Game/Art/Textures/HumanHair_BaseColor.png",
+        "Assets/_Game/Art/Textures/HumanHair_Normal.png",
+        "Assets/_Game/Art/Textures/HumanHair_Mask.png",
+        "Assets/_Game/Art/Textures/HumanOutfit2_BaseColor.png",
+        "Assets/_Game/Art/Textures/HumanOutfit2_Normal.png",
+        "Assets/_Game/Art/Textures/HumanOutfit2_Mask.png",
+        "Assets/_Game/Art/Textures/HumanSkin0_BaseColor.png",
+        "Assets/_Game/Art/Textures/HumanSkin0_Normal.png",
+        "Assets/_Game/Art/Textures/HumanSkin0_Mask.png"
+      ],
+      "collider": "separate simple Unity collider; decorative foliage has no collision",
+      "blendShapes": [],
+      "animations": [],
+      "bones": 0,
+      "license": "CC0 MakeHuman/MPFB anatomy and Mindfront skin; original project adaptation, six-legged rig and exposed viscera",
+      "status": "Clothed CC0 human, opened abdominal surface and continuous coiled intestines, original UVs and wound materials"
+    },
+    {
+      "id": "fallen_log_01",
+      "source": "ArtSource/Blender/fallen_log_01.blend",
+      "export": "Assets/_Game/Art/Meshes/fallen_log_01.fbx",
+      "units": "metres",
+      "triangles": 8000,
+      "lodTriangles": {
+        "LOD0": 8000,
+        "LOD1": 2600,
+        "LOD2": 650
+      },
+      "materials": [
+        "PH_FallenWood"
+      ],
+      "textures": [
+        "Assets/_Game/Art/Textures/PH_FallenWood_BaseColor.png",
+        "Assets/_Game/Art/Textures/PH_FallenWood_Normal.png",
+        "Assets/_Game/Art/Textures/PH_FallenWood_Mask.png"
+      ],
+      "collider": "separate simple Unity collider; decorative foliage has no collision",
+      "blendShapes": [],
+      "animations": [],
+      "bones": 0,
+      "license": "Poly Haven CC0; project metre scale and three optimized LODs",
+      "status": "photographed material maps with source UVs; see ArtSource/Vendor/polyhaven/sources.json"
+    },
+    {
+      "id": "fern_01",
+      "source": "ArtSource/Blender/fern_01.blend",
+      "export": "Assets/_Game/Art/Meshes/fern_01.fbx",
+      "units": "metres",
+      "triangles": 1944,
+      "lodTriangles": {
+        "LOD0": 1944,
+        "LOD1": 1404,
+        "LOD2": 972
+      },
+      "materials": [
+        "Needles"
+      ],
+      "textures": [
+        "Assets/_Game/Art/Textures/Needles_BaseColor.png",
+        "Assets/_Game/Art/Textures/Needles_Normal.png",
+        "Assets/_Game/Art/Textures/Needles_Mask.png"
+      ],
+      "collider": "separate simple Unity collider; decorative foliage has no collision",
+      "blendShapes": [],
+      "animations": [],
+      "bones": 0,
+      "license": "original procedural project asset",
+      "status": "original art pass"
+    },
+    {
+      "id": "field_axe_01",
+      "source": "ArtSource/Blender/field_axe_01.blend",
+      "export": "Assets/_Game/Art/Meshes/field_axe_01.fbx",
+      "units": "metres",
+      "triangles": 1372,
+      "lodTriangles": {
+        "LOD0": 1372
+      },
+      "materials": [
+        "Steel",
+        "Timber"
+      ],
+      "textures": [
+        "Assets/_Game/Art/Textures/Steel_BaseColor.png",
+        "Assets/_Game/Art/Textures/Steel_Normal.png",
+        "Assets/_Game/Art/Textures/Steel_Mask.png",
+        "Assets/_Game/Art/Textures/Timber_BaseColor.png",
+        "Assets/_Game/Art/Textures/Timber_Normal.png",
+        "Assets/_Game/Art/Textures/Timber_Mask.png"
+      ],
+      "collider": "separate simple Unity collider; decorative foliage has no collision",
+      "blendShapes": [],
+      "animations": [],
+      "bones": 0,
+      "license": "original procedural project asset",
+      "status": "original art pass"
+    },
+    {
+      "id": "field_flashlight_01",
+      "source": "ArtSource/Blender/field_flashlight_01.blend",
+      "export": "Assets/_Game/Art/Meshes/field_flashlight_01.fbx",
+      "units": "metres",
+      "triangles": 1064,
+      "lodTriangles": {
+        "LOD0": 1064
+      },
+      "materials": [
+        "Fabric",
+        "Glass",
+        "Steel"
+      ],
+      "textures": [
+        "Assets/_Game/Art/Textures/Steel_BaseColor.png",
+        "Assets/_Game/Art/Textures/Steel_Normal.png",
+        "Assets/_Game/Art/Textures/Steel_Mask.png"
+      ],
+      "collider": "separate simple Unity collider; decorative foliage has no collision",
+      "blendShapes": [],
+      "animations": [],
+      "bones": 0,
+      "license": "original procedural project asset",
+      "status": "original art pass"
+    },
+    {
+      "id": "field_power_panel_01",
+      "source": "ArtSource/Blender/field_power_panel_01.blend",
+      "export": "Assets/_Game/Art/Meshes/field_power_panel_01.fbx",
+      "units": "metres",
+      "triangles": 440,
+      "lodTriangles": {
+        "LOD0": 440
+      },
+      "materials": [
+        "Amber",
+        "Fabric",
+        "PaleBark",
+        "Steel"
+      ],
+      "textures": [
+        "Assets/_Game/Art/Textures/PaleBark_BaseColor.png",
+        "Assets/_Game/Art/Textures/PaleBark_Normal.png",
+        "Assets/_Game/Art/Textures/PaleBark_Mask.png",
+        "Assets/_Game/Art/Textures/Steel_BaseColor.png",
+        "Assets/_Game/Art/Textures/Steel_Normal.png",
+        "Assets/_Game/Art/Textures/Steel_Mask.png"
+      ],
+      "collider": "separate simple Unity collider; decorative foliage has no collision",
+      "blendShapes": [],
+      "animations": [],
+      "bones": 0,
+      "license": "original procedural project asset",
+      "status": "original art pass"
+    },
+    {
+      "id": "forest_body_01",
+      "source": "ArtSource/Blender/forest_body_01.blend",
+      "export": "Assets/_Game/Art/Meshes/forest_body_01.fbx",
+      "units": "metres",
+      "triangles": 75999,
+      "lodTriangles": {
+        "LOD0": 75999,
+        "LOD1": 31918,
+        "LOD2": 9879
+      },
+      "materials": [
+        "HumanBoots",
+        "HumanBrows",
+        "HumanEyes",
+        "HumanHair",
+        "HumanOutfit0",
+        "HumanSkin0"
+      ],
+      "textures": [
+        "Assets/_Game/Art/Textures/HumanBoots_BaseColor.png",
+        "Assets/_Game/Art/Textures/HumanBoots_Normal.png",
+        "Assets/_Game/Art/Textures/HumanBoots_Mask.png",
+        "Assets/_Game/Art/Textures/HumanBrows_BaseColor.png",
+        "Assets/_Game/Art/Textures/HumanBrows_Normal.png",
+        "Assets/_Game/Art/Textures/HumanBrows_Mask.png",
+        "Assets/_Game/Art/Textures/HumanEyes_BaseColor.png",
+        "Assets/_Game/Art/Textures/HumanEyes_Normal.png",
+        "Assets/_Game/Art/Textures/HumanEyes_Mask.png",
+        "Assets/_Game/Art/Textures/HumanHair_BaseColor.png",
+        "Assets/_Game/Art/Textures/HumanHair_Normal.png",
+        "Assets/_Game/Art/Textures/HumanHair_Mask.png",
+        "Assets/_Game/Art/Textures/HumanOutfit0_BaseColor.png",
+        "Assets/_Game/Art/Textures/HumanOutfit0_Normal.png",
+        "Assets/_Game/Art/Textures/HumanOutfit0_Mask.png",
+        "Assets/_Game/Art/Textures/HumanSkin0_BaseColor.png",
+        "Assets/_Game/Art/Textures/HumanSkin0_Normal.png",
+        "Assets/_Game/Art/Textures/HumanSkin0_Mask.png"
+      ],
+      "collider": "separate simple Unity collider; decorative foliage has no collision",
+      "blendShapes": [],
+      "animations": [],
+      "bones": 0,
+      "license": "CC0 MakeHuman/MPFB graphics, system clothes and Mindfront/Jartur69 skin; project pose and optimization",
+      "status": "anatomical human mesh with original UV skin, fitted clothing, hair and eyes; posed dressed casualty; three LODs; Unity wound shader"
+    },
+    {
+      "id": "forest_body_02",
+      "source": "ArtSource/Blender/forest_body_02.blend",
+      "export": "Assets/_Game/Art/Meshes/forest_body_02.fbx",
+      "units": "metres",
+      "triangles": 76000,
+      "lodTriangles": {
+        "LOD0": 76000,
+        "LOD1": 31918,
+        "LOD2": 9879
+      },
+      "materials": [
+        "HumanBoots",
+        "HumanBrows",
+        "HumanEyes",
+        "HumanHair",
+        "HumanOutfit1",
+        "HumanSkin1"
+      ],
+      "textures": [
+        "Assets/_Game/Art/Textures/HumanBoots_BaseColor.png",
+        "Assets/_Game/Art/Textures/HumanBoots_Normal.png",
+        "Assets/_Game/Art/Textures/HumanBoots_Mask.png",
+        "Assets/_Game/Art/Textures/HumanBrows_BaseColor.png",
+        "Assets/_Game/Art/Textures/HumanBrows_Normal.png",
+        "Assets/_Game/Art/Textures/HumanBrows_Mask.png",
+        "Assets/_Game/Art/Textures/HumanEyes_BaseColor.png",
+        "Assets/_Game/Art/Textures/HumanEyes_Normal.png",
+        "Assets/_Game/Art/Textures/HumanEyes_Mask.png",
+        "Assets/_Game/Art/Textures/HumanHair_BaseColor.png",
+        "Assets/_Game/Art/Textures/HumanHair_Normal.png",
+        "Assets/_Game/Art/Textures/HumanHair_Mask.png",
+        "Assets/_Game/Art/Textures/HumanOutfit1_BaseColor.png",
+        "Assets/_Game/Art/Textures/HumanOutfit1_Normal.png",
+        "Assets/_Game/Art/Textures/HumanOutfit1_Mask.png",
+        "Assets/_Game/Art/Textures/HumanSkin1_BaseColor.png",
+        "Assets/_Game/Art/Textures/HumanSkin1_Normal.png",
+        "Assets/_Game/Art/Textures/HumanSkin1_Mask.png"
+      ],
+      "collider": "separate simple Unity collider; decorative foliage has no collision",
+      "blendShapes": [],
+      "animations": [],
+      "bones": 0,
+      "license": "CC0 MakeHuman/MPFB graphics, system clothes and Mindfront/Jartur69 skin; project pose and optimization",
+      "status": "anatomical human mesh with original UV skin, fitted clothing, hair and eyes; posed dressed casualty; three LODs; Unity wound shader"
+    },
+    {
+      "id": "forest_body_03",
+      "source": "ArtSource/Blender/forest_body_03.blend",
+      "export": "Assets/_Game/Art/Meshes/forest_body_03.fbx",
+      "units": "metres",
+      "triangles": 76000,
+      "lodTriangles": {
+        "LOD0": 76000,
+        "LOD1": 31919,
+        "LOD2": 9879
+      },
+      "materials": [
+        "HumanBoots",
+        "HumanBrows",
+        "HumanEyes",
+        "HumanHair",
+        "HumanOutfit2",
+        "HumanSkin0"
+      ],
+      "textures": [
+        "Assets/_Game/Art/Textures/HumanBoots_BaseColor.png",
+        "Assets/_Game/Art/Textures/HumanBoots_Normal.png",
+        "Assets/_Game/Art/Textures/HumanBoots_Mask.png",
+        "Assets/_Game/Art/Textures/HumanBrows_BaseColor.png",
+        "Assets/_Game/Art/Textures/HumanBrows_Normal.png",
+        "Assets/_Game/Art/Textures/HumanBrows_Mask.png",
+        "Assets/_Game/Art/Textures/HumanEyes_BaseColor.png",
+        "Assets/_Game/Art/Textures/HumanEyes_Normal.png",
+        "Assets/_Game/Art/Textures/HumanEyes_Mask.png",
+        "Assets/_Game/Art/Textures/HumanHair_BaseColor.png",
+        "Assets/_Game/Art/Textures/HumanHair_Normal.png",
+        "Assets/_Game/Art/Textures/HumanHair_Mask.png",
+        "Assets/_Game/Art/Textures/HumanOutfit2_BaseColor.png",
+        "Assets/_Game/Art/Textures/HumanOutfit2_Normal.png",
+        "Assets/_Game/Art/Textures/HumanOutfit2_Mask.png",
+        "Assets/_Game/Art/Textures/HumanSkin0_BaseColor.png",
+        "Assets/_Game/Art/Textures/HumanSkin0_Normal.png",
+        "Assets/_Game/Art/Textures/HumanSkin0_Mask.png"
+      ],
+      "collider": "separate simple Unity collider; decorative foliage has no collision",
+      "blendShapes": [],
+      "animations": [],
+      "bones": 0,
+      "license": "CC0 MakeHuman/MPFB graphics, system clothes and Mindfront/Jartur69 skin; project pose and optimization",
+      "status": "anatomical human mesh with original UV skin, fitted clothing, hair and eyes; posed dressed casualty; three LODs; Unity wound shader"
+    },
+    {
+      "id": "forest_body_04",
+      "source": "ArtSource/Blender/forest_body_04.blend",
+      "export": "Assets/_Game/Art/Meshes/forest_body_04.fbx",
+      "units": "metres",
+      "triangles": 76000,
+      "lodTriangles": {
+        "LOD0": 76000,
+        "LOD1": 31918,
+        "LOD2": 9880
+      },
+      "materials": [
+        "HumanBoots",
+        "HumanBrows",
+        "HumanEyes",
+        "HumanHair",
+        "HumanOutfit3",
+        "HumanSkin1"
+      ],
+      "textures": [
+        "Assets/_Game/Art/Textures/HumanBoots_BaseColor.png",
+        "Assets/_Game/Art/Textures/HumanBoots_Normal.png",
+        "Assets/_Game/Art/Textures/HumanBoots_Mask.png",
+        "Assets/_Game/Art/Textures/HumanBrows_BaseColor.png",
+        "Assets/_Game/Art/Textures/HumanBrows_Normal.png",
+        "Assets/_Game/Art/Textures/HumanBrows_Mask.png",
+        "Assets/_Game/Art/Textures/HumanEyes_BaseColor.png",
+        "Assets/_Game/Art/Textures/HumanEyes_Normal.png",
+        "Assets/_Game/Art/Textures/HumanEyes_Mask.png",
+        "Assets/_Game/Art/Textures/HumanHair_BaseColor.png",
+        "Assets/_Game/Art/Textures/HumanHair_Normal.png",
+        "Assets/_Game/Art/Textures/HumanHair_Mask.png",
+        "Assets/_Game/Art/Textures/HumanOutfit3_BaseColor.png",
+        "Assets/_Game/Art/Textures/HumanOutfit3_Normal.png",
+        "Assets/_Game/Art/Textures/HumanOutfit3_Mask.png",
+        "Assets/_Game/Art/Textures/HumanSkin1_BaseColor.png",
+        "Assets/_Game/Art/Textures/HumanSkin1_Normal.png",
+        "Assets/_Game/Art/Textures/HumanSkin1_Mask.png"
+      ],
+      "collider": "separate simple Unity collider; decorative foliage has no collision",
+      "blendShapes": [],
+      "animations": [],
+      "bones": 0,
+      "license": "CC0 MakeHuman/MPFB graphics, system clothes and Mindfront/Jartur69 skin; project pose and optimization",
+      "status": "anatomical human mesh with original UV skin, fitted clothing, hair and eyes; posed dressed casualty; three LODs; Unity wound shader"
+    },
+    {
+      "id": "forest_fence_01",
+      "source": "ArtSource/Blender/forest_fence_01.blend",
+      "export": "Assets/_Game/Art/Meshes/forest_fence_01.fbx",
+      "units": "metres",
+      "triangles": 1628,
+      "lodTriangles": {
+        "LOD0": 1628
+      },
+      "materials": [
+        "Steel"
+      ],
+      "textures": [
+        "Assets/_Game/Art/Textures/Steel_BaseColor.png",
+        "Assets/_Game/Art/Textures/Steel_Normal.png",
+        "Assets/_Game/Art/Textures/Steel_Mask.png"
+      ],
+      "collider": "separate simple Unity collider; decorative foliage has no collision",
+      "blendShapes": [],
+      "animations": [],
+      "bones": 0,
+      "license": "original procedural project asset",
+      "status": "original art pass"
+    },
+    {
+      "id": "forest_gate_01",
+      "source": "ArtSource/Blender/forest_gate_01.blend",
+      "export": "Assets/_Game/Art/Meshes/forest_gate_01.fbx",
+      "units": "metres",
+      "triangles": 748,
+      "lodTriangles": {
+        "LOD0": 748
+      },
+      "materials": [
+        "Steel"
+      ],
+      "textures": [
+        "Assets/_Game/Art/Textures/Steel_BaseColor.png",
+        "Assets/_Game/Art/Textures/Steel_Normal.png",
+        "Assets/_Game/Art/Textures/Steel_Mask.png"
+      ],
+      "collider": "separate simple Unity collider; decorative foliage has no collision",
+      "blendShapes": [],
+      "animations": [],
+      "bones": 0,
+      "license": "original procedural project asset",
+      "status": "original art pass"
+    },
+    {
+      "id": "gallows_oak_01",
+      "source": "ArtSource/Blender/gallows_oak_01.blend",
+      "export": "Assets/_Game/Art/Meshes/gallows_oak_01.fbx",
+      "units": "metres",
+      "triangles": 10112,
+      "lodTriangles": {
+        "LOD0": 10112,
+        "LOD1": 5056,
+        "LOD2": 1820
+      },
+      "materials": [
+        "Bark"
+      ],
+      "textures": [
+        "Assets/_Game/Art/Textures/Bark_BaseColor.png",
+        "Assets/_Game/Art/Textures/Bark_Normal.png",
+        "Assets/_Game/Art/Textures/Bark_Mask.png"
+      ],
+      "collider": "separate simple Unity collider; decorative foliage has no collision",
+      "blendShapes": [],
+      "animations": [],
+      "bones": 0,
+      "license": "original procedural project asset",
+      "status": "original art pass"
+    },
+    {
+      "id": "grass_01",
+      "source": "ArtSource/Blender/grass_01.blend",
+      "export": "Assets/_Game/Art/Meshes/grass_01.fbx",
+      "units": "metres",
+      "triangles": 256,
+      "lodTriangles": {
+        "LOD0": 256,
+        "LOD1": 96,
+        "LOD2": 64
+      },
+      "materials": [
+        "Grass"
+      ],
+      "textures": [],
+      "collider": "separate simple Unity collider; decorative foliage has no collision",
+      "blendShapes": [],
+      "animations": [],
+      "bones": 0,
+      "license": "original procedural project asset",
+      "status": "original art pass"
+    },
+    {
+      "id": "hanging_survivor_01",
+      "source": "ArtSource/Blender/hanging_survivor_01.blend",
+      "export": "Assets/_Game/Art/Meshes/hanging_survivor_01.fbx",
+      "units": "metres",
+      "triangles": 32984,
+      "lodTriangles": {
+        "LOD0": 32984
+      },
+      "materials": [
+        "HumanBoots",
+        "HumanBrows",
+        "HumanEyes",
+        "HumanHair",
+        "HumanOutfit2",
+        "HumanSkin0"
+      ],
+      "textures": [
+        "Assets/_Game/Art/Textures/HumanBoots_BaseColor.png",
+        "Assets/_Game/Art/Textures/HumanBoots_Normal.png",
+        "Assets/_Game/Art/Textures/HumanBoots_Mask.png",
+        "Assets/_Game/Art/Textures/HumanBrows_BaseColor.png",
+        "Assets/_Game/Art/Textures/HumanBrows_Normal.png",
+        "Assets/_Game/Art/Textures/HumanBrows_Mask.png",
+        "Assets/_Game/Art/Textures/HumanEyes_BaseColor.png",
+        "Assets/_Game/Art/Textures/HumanEyes_Normal.png",
+        "Assets/_Game/Art/Textures/HumanEyes_Mask.png",
+        "Assets/_Game/Art/Textures/HumanHair_BaseColor.png",
+        "Assets/_Game/Art/Textures/HumanHair_Normal.png",
+        "Assets/_Game/Art/Textures/HumanHair_Mask.png",
+        "Assets/_Game/Art/Textures/HumanOutfit2_BaseColor.png",
+        "Assets/_Game/Art/Textures/HumanOutfit2_Normal.png",
+        "Assets/_Game/Art/Textures/HumanOutfit2_Mask.png",
+        "Assets/_Game/Art/Textures/HumanSkin0_BaseColor.png",
+        "Assets/_Game/Art/Textures/HumanSkin0_Normal.png",
+        "Assets/_Game/Art/Textures/HumanSkin0_Mask.png"
+      ],
+      "collider": "separate simple Unity collider; decorative foliage has no collision",
+      "blendShapes": [],
+      "animations": [
+        "Victim_Dying",
+        "Victim_Hanging",
+        "Victim_Overpowered"
+      ],
+      "bones": 163,
+      "license": "CC0 MakeHuman/MPFB graphics, system clothes and Mindfront/Jartur69 skin; project pose and optimization",
+      "status": "clothed adult survivor; weighted human skeleton; separate suspended struggle, overpowering and dying clips; Unity chest-contact feeding choreography"
+    },
+    {
+      "id": "moss_rock_01",
+      "source": "ArtSource/Blender/moss_rock_01.blend",
+      "export": "Assets/_Game/Art/Meshes/moss_rock_01.fbx",
+      "units": "metres",
+      "triangles": 8000,
+      "lodTriangles": {
+        "LOD0": 8000,
+        "LOD1": 2400,
+        "LOD2": 650
+      },
+      "materials": [
+        "PH_MossRock"
+      ],
+      "textures": [
+        "Assets/_Game/Art/Textures/PH_MossRock_BaseColor.png",
+        "Assets/_Game/Art/Textures/PH_MossRock_Normal.png",
+        "Assets/_Game/Art/Textures/PH_MossRock_Mask.png"
+      ],
+      "collider": "separate simple Unity collider; decorative foliage has no collision",
+      "blendShapes": [],
+      "animations": [],
+      "bones": 0,
+      "license": "Poly Haven CC0; project metre scale and three optimized LODs",
+      "status": "photographed material maps with source UVs; see ArtSource/Vendor/polyhaven/sources.json"
+    },
+    {
+      "id": "moss_rock_02",
+      "source": "ArtSource/Blender/moss_rock_02.blend",
+      "export": "Assets/_Game/Art/Meshes/moss_rock_02.fbx",
+      "units": "metres",
+      "triangles": 8000,
+      "lodTriangles": {
+        "LOD0": 8000,
+        "LOD1": 2400,
+        "LOD2": 650
+      },
+      "materials": [
+        "PH_MossRock"
+      ],
+      "textures": [
+        "Assets/_Game/Art/Textures/PH_MossRock_BaseColor.png",
+        "Assets/_Game/Art/Textures/PH_MossRock_Normal.png",
+        "Assets/_Game/Art/Textures/PH_MossRock_Mask.png"
+      ],
+      "collider": "separate simple Unity collider; decorative foliage has no collision",
+      "blendShapes": [],
+      "animations": [],
+      "bones": 0,
+      "license": "Poly Haven CC0; project metre scale and three optimized LODs",
+      "status": "photographed material maps with source UVs; see ArtSource/Vendor/polyhaven/sources.json"
+    },
+    {
+      "id": "moss_rock_03",
+      "source": "ArtSource/Blender/moss_rock_03.blend",
+      "export": "Assets/_Game/Art/Meshes/moss_rock_03.fbx",
+      "units": "metres",
+      "triangles": 5000,
+      "lodTriangles": {
+        "LOD0": 5000,
+        "LOD1": 2400,
+        "LOD2": 650
+      },
+      "materials": [
+        "PH_MossRock"
+      ],
+      "textures": [
+        "Assets/_Game/Art/Textures/PH_MossRock_BaseColor.png",
+        "Assets/_Game/Art/Textures/PH_MossRock_Normal.png",
+        "Assets/_Game/Art/Textures/PH_MossRock_Mask.png"
+      ],
+      "collider": "separate simple Unity collider; decorative foliage has no collision",
+      "blendShapes": [],
+      "animations": [],
+      "bones": 0,
+      "license": "Poly Haven CC0; project metre scale and three optimized LODs",
+      "status": "photographed material maps with source UVs; see ArtSource/Vendor/polyhaven/sources.json"
+    },
+    {
+      "id": "norton_shotgun_01",
+      "source": "ArtSource/Blender/norton_shotgun_01.blend",
+      "export": "Assets/_Game/Art/Meshes/norton_shotgun_01.fbx",
+      "units": "metres",
+      "triangles": 1672,
+      "lodTriangles": {
+        "LOD0": 1672
+      },
+      "materials": [
+        "BurnedRubber.001",
+        "Steel",
+        "Timber"
+      ],
+      "textures": [
+        "Assets/_Game/Art/Textures/Steel_BaseColor.png",
+        "Assets/_Game/Art/Textures/Steel_Normal.png",
+        "Assets/_Game/Art/Textures/Steel_Mask.png",
+        "Assets/_Game/Art/Textures/Timber_BaseColor.png",
+        "Assets/_Game/Art/Textures/Timber_Normal.png",
+        "Assets/_Game/Art/Textures/Timber_Mask.png"
+      ],
+      "collider": "separate simple Unity collider; decorative foliage has no collision",
+      "blendShapes": [],
+      "animations": [],
+      "bones": 0,
+      "license": "original procedural project asset",
+      "status": "original art pass"
+    },
+    {
+      "id": "pine_hero_01",
+      "source": "ArtSource/Blender/pine_hero_01.blend",
+      "export": "Assets/_Game/Art/Meshes/pine_hero_01.fbx",
+      "units": "metres",
+      "triangles": 10472,
+      "lodTriangles": {
+        "LOD0": 10472
+      },
+      "materials": [
+        "Bark",
+        "Needles"
+      ],
+      "textures": [
+        "Assets/_Game/Art/Textures/Bark_BaseColor.png",
+        "Assets/_Game/Art/Textures/Bark_Normal.png",
+        "Assets/_Game/Art/Textures/Bark_Mask.png",
+        "Assets/_Game/Art/Textures/Needles_BaseColor.png",
+        "Assets/_Game/Art/Textures/Needles_Normal.png",
+        "Assets/_Game/Art/Textures/Needles_Mask.png"
+      ],
+      "collider": "separate simple Unity collider; decorative foliage has no collision",
+      "blendShapes": [
+        "Dread_Stage1",
+        "Dread_Stage2"
+      ],
+      "animations": [],
+      "bones": 0,
+      "license": "original procedural project asset",
+      "status": "original art pass"
+    },
+    {
+      "id": "player_axe_hand_01",
+      "source": "ArtSource/Blender/player_axe_hand_01.blend",
+      "export": "Assets/_Game/Art/Meshes/player_axe_hand_01.fbx",
+      "units": "metres",
+      "triangles": 15408,
+      "lodTriangles": {
+        "LOD0": 15408
+      },
+      "materials": [
+        "HumanOutfit2",
+        "HumanSkin0"
+      ],
+      "textures": [
+        "Assets/_Game/Art/Textures/HumanOutfit2_BaseColor.png",
+        "Assets/_Game/Art/Textures/HumanOutfit2_Normal.png",
+        "Assets/_Game/Art/Textures/HumanOutfit2_Mask.png",
+        "Assets/_Game/Art/Textures/HumanSkin0_BaseColor.png",
+        "Assets/_Game/Art/Textures/HumanSkin0_Normal.png",
+        "Assets/_Game/Art/Textures/HumanSkin0_Mask.png"
+      ],
+      "collider": "separate simple Unity collider; decorative foliage has no collision",
+      "blendShapes": [],
+      "animations": [],
+      "bones": 0,
+      "license": "CC0 MakeHuman/MPFB anatomy, clothing and Mindfront skin; project pose and extraction",
+      "status": "Human forearm, palm, nails and five fingers posed around the axe shaft; retained UV skin and clothing"
+    },
+    {
+      "id": "player_body_01",
+      "source": "ArtSource/Blender/player_body_01.blend",
+      "export": "Assets/_Game/Art/Meshes/player_body_01.fbx",
+      "units": "metres",
+      "triangles": 32984,
+      "lodTriangles": {
+        "LOD0": 32984
+      },
+      "materials": [
+        "HumanBoots",
+        "HumanBrows",
+        "HumanEyes",
+        "HumanHair",
+        "HumanOutfit2",
+        "HumanSkin0"
+      ],
+      "textures": [
+        "Assets/_Game/Art/Textures/HumanBoots_BaseColor.png",
+        "Assets/_Game/Art/Textures/HumanBoots_Normal.png",
+        "Assets/_Game/Art/Textures/HumanBoots_Mask.png",
+        "Assets/_Game/Art/Textures/HumanBrows_BaseColor.png",
+        "Assets/_Game/Art/Textures/HumanBrows_Normal.png",
+        "Assets/_Game/Art/Textures/HumanBrows_Mask.png",
+        "Assets/_Game/Art/Textures/HumanEyes_BaseColor.png",
+        "Assets/_Game/Art/Textures/HumanEyes_Normal.png",
+        "Assets/_Game/Art/Textures/HumanEyes_Mask.png",
+        "Assets/_Game/Art/Textures/HumanHair_BaseColor.png",
+        "Assets/_Game/Art/Textures/HumanHair_Normal.png",
+        "Assets/_Game/Art/Textures/HumanHair_Mask.png",
+        "Assets/_Game/Art/Textures/HumanOutfit2_BaseColor.png",
+        "Assets/_Game/Art/Textures/HumanOutfit2_Normal.png",
+        "Assets/_Game/Art/Textures/HumanOutfit2_Mask.png",
+        "Assets/_Game/Art/Textures/HumanSkin0_BaseColor.png",
+        "Assets/_Game/Art/Textures/HumanSkin0_Normal.png",
+        "Assets/_Game/Art/Textures/HumanSkin0_Mask.png"
+      ],
+      "collider": "separate simple Unity collider; decorative foliage has no collision",
+      "blendShapes": [],
+      "animations": [],
+      "bones": 0,
+      "license": "CC0 MakeHuman/MPFB anatomy, clothing and Mindfront skin; project pose and extraction",
+      "status": "Full clothed anatomical shadow body"
+    },
+    {
+      "id": "ranger_cabin_01",
+      "source": "ArtSource/Blender/ranger_cabin_01.blend",
+      "export": "Assets/_Game/Art/Meshes/ranger_cabin_01.fbx",
+      "units": "metres",
+      "triangles": 9328,
+      "lodTriangles": {
+        "LOD0": 9328
+      },
+      "materials": [
+        "Fabric",
+        "Glass",
+        "PaleBark",
+        "Steel",
+        "Stone",
+        "Timber"
+      ],
+      "textures": [
+        "Assets/_Game/Art/Textures/PaleBark_BaseColor.png",
+        "Assets/_Game/Art/Textures/PaleBark_Normal.png",
+        "Assets/_Game/Art/Textures/PaleBark_Mask.png",
+        "Assets/_Game/Art/Textures/Steel_BaseColor.png",
+        "Assets/_Game/Art/Textures/Steel_Normal.png",
+        "Assets/_Game/Art/Textures/Steel_Mask.png",
+        "Assets/_Game/Art/Textures/Stone_BaseColor.png",
+        "Assets/_Game/Art/Textures/Stone_Normal.png",
+        "Assets/_Game/Art/Textures/Stone_Mask.png",
+        "Assets/_Game/Art/Textures/Timber_BaseColor.png",
+        "Assets/_Game/Art/Textures/Timber_Normal.png",
+        "Assets/_Game/Art/Textures/Timber_Mask.png"
+      ],
+      "collider": "separate simple Unity collider; decorative foliage has no collision",
+      "blendShapes": [],
+      "animations": [],
+      "bones": 0,
+      "license": "original procedural project asset",
+      "status": "original art pass"
+    },
+    {
+      "id": "research_station_01",
+      "source": "ArtSource/Blender/research_station_01.blend",
+      "export": "Assets/_Game/Art/Meshes/research_station_01.fbx",
+      "units": "metres",
+      "triangles": 6072,
+      "lodTriangles": {
+        "LOD0": 6072
+      },
+      "materials": [
+        "Fabric",
+        "Glass",
+        "PaleBark",
+        "Steel",
+        "Stone",
+        "Timber"
+      ],
+      "textures": [
+        "Assets/_Game/Art/Textures/PaleBark_BaseColor.png",
+        "Assets/_Game/Art/Textures/PaleBark_Normal.png",
+        "Assets/_Game/Art/Textures/PaleBark_Mask.png",
+        "Assets/_Game/Art/Textures/Steel_BaseColor.png",
+        "Assets/_Game/Art/Textures/Steel_Normal.png",
+        "Assets/_Game/Art/Textures/Steel_Mask.png",
+        "Assets/_Game/Art/Textures/Stone_BaseColor.png",
+        "Assets/_Game/Art/Textures/Stone_Normal.png",
+        "Assets/_Game/Art/Textures/Stone_Mask.png",
+        "Assets/_Game/Art/Textures/Timber_BaseColor.png",
+        "Assets/_Game/Art/Textures/Timber_Normal.png",
+        "Assets/_Game/Art/Textures/Timber_Mask.png"
+      ],
+      "collider": "separate simple Unity collider; decorative foliage has no collision",
+      "blendShapes": [],
+      "animations": [],
+      "bones": 0,
+      "license": "original procedural project asset",
+      "status": "original art pass"
+    },
+    {
+      "id": "scanned_stump_01",
+      "source": "ArtSource/Blender/scanned_stump_01.blend",
+      "export": "Assets/_Game/Art/Meshes/scanned_stump_01.fbx",
+      "units": "metres",
+      "triangles": 7999,
+      "lodTriangles": {
+        "LOD0": 7999,
+        "LOD1": 2599,
+        "LOD2": 649
+      },
+      "materials": [
+        "PH_Stump"
+      ],
+      "textures": [
+        "Assets/_Game/Art/Textures/PH_Stump_BaseColor.png",
+        "Assets/_Game/Art/Textures/PH_Stump_Normal.png",
+        "Assets/_Game/Art/Textures/PH_Stump_Mask.png"
+      ],
+      "collider": "separate simple Unity collider; decorative foliage has no collision",
+      "blendShapes": [],
+      "animations": [],
+      "bones": 0,
+      "license": "Poly Haven CC0; project metre scale and three optimized LODs",
+      "status": "photographed material maps with source UVs; see ArtSource/Vendor/polyhaven/sources.json"
+    },
+    {
+      "id": "shelter_lantern_01",
+      "source": "ArtSource/Blender/shelter_lantern_01.blend",
+      "export": "Assets/_Game/Art/Meshes/shelter_lantern_01.fbx",
+      "units": "metres",
+      "triangles": 264,
+      "lodTriangles": {
+        "LOD0": 264
+      },
+      "materials": [
+        "Amber",
+        "Steel"
+      ],
+      "textures": [
+        "Assets/_Game/Art/Textures/Steel_BaseColor.png",
+        "Assets/_Game/Art/Textures/Steel_Normal.png",
+        "Assets/_Game/Art/Textures/Steel_Mask.png"
+      ],
+      "collider": "separate simple Unity collider; decorative foliage has no collision",
+      "blendShapes": [],
+      "animations": [],
+      "bones": 0,
+      "license": "original procedural project asset",
+      "status": "original art pass"
+    },
+    {
+      "id": "snag_01",
+      "source": "ArtSource/Blender/snag_01.blend",
+      "export": "Assets/_Game/Art/Meshes/snag_01.fbx",
+      "units": "metres",
+      "triangles": 4032,
+      "lodTriangles": {
+        "LOD0": 4032,
+        "LOD1": 924,
+        "LOD2": 180
+      },
+      "materials": [
+        "Bark"
+      ],
+      "textures": [
+        "Assets/_Game/Art/Textures/Bark_BaseColor.png",
+        "Assets/_Game/Art/Textures/Bark_Normal.png",
+        "Assets/_Game/Art/Textures/Bark_Mask.png"
+      ],
+      "collider": "separate simple Unity collider; decorative foliage has no collision",
+      "blendShapes": [],
+      "animations": [],
+      "bones": 0,
+      "license": "original procedural project asset",
+      "status": "original art pass"
+    },
+    {
+      "id": "storehouse_01",
+      "source": "ArtSource/Blender/storehouse_01.blend",
+      "export": "Assets/_Game/Art/Meshes/storehouse_01.fbx",
+      "units": "metres",
+      "triangles": 9636,
+      "lodTriangles": {
+        "LOD0": 9636
+      },
+      "materials": [
+        "Glass",
+        "PaleBark",
+        "Steel",
+        "Stone",
+        "Timber"
+      ],
+      "textures": [
+        "Assets/_Game/Art/Textures/PaleBark_BaseColor.png",
+        "Assets/_Game/Art/Textures/PaleBark_Normal.png",
+        "Assets/_Game/Art/Textures/PaleBark_Mask.png",
+        "Assets/_Game/Art/Textures/Steel_BaseColor.png",
+        "Assets/_Game/Art/Textures/Steel_Normal.png",
+        "Assets/_Game/Art/Textures/Steel_Mask.png",
+        "Assets/_Game/Art/Textures/Stone_BaseColor.png",
+        "Assets/_Game/Art/Textures/Stone_Normal.png",
+        "Assets/_Game/Art/Textures/Stone_Mask.png",
+        "Assets/_Game/Art/Textures/Timber_BaseColor.png",
+        "Assets/_Game/Art/Textures/Timber_Normal.png",
+        "Assets/_Game/Art/Textures/Timber_Mask.png"
+      ],
+      "collider": "separate simple Unity collider; decorative foliage has no collision",
+      "blendShapes": [],
+      "animations": [],
+      "bones": 0,
+      "license": "original procedural project asset",
+      "status": "original art pass"
+    },
+    {
+      "id": "victim_web_01",
+      "source": "ArtSource/Blender/victim_web_01.blend",
+      "export": "Assets/_Game/Art/Meshes/victim_web_01.fbx",
+      "units": "metres",
+      "triangles": 4020,
+      "lodTriangles": {
+        "LOD0": 4020
+      },
+      "materials": [
+        "WebSilk"
+      ],
+      "textures": [],
+      "collider": "separate simple Unity collider; decorative foliage has no collision",
+      "blendShapes": [],
+      "animations": [],
+      "bones": 0,
+      "license": "original procedural project asset",
+      "status": "Original 22-radial silk web, five sagging rings and tree/ground anchor strands; separate intact core and persistent torn rim; Unity bone-attached bindings release on impact"
+    },
+    {
+      "id": "walker_01",
+      "source": "ArtSource/Blender/walker_01.blend",
+      "export": "Assets/_Game/Art/Meshes/walker_01.fbx",
+      "units": "metres",
+      "triangles": 97652,
+      "lodTriangles": {
+        "LOD0": 97652
+      },
+      "materials": [
+        "CrawlerGums",
+        "CrawlerSaliva",
+        "CrawlerSkin",
+        "CrawlerTeeth",
+        "CrawlerThroat"
+      ],
+      "textures": [
+        "Assets/_Game/Art/Textures/CrawlerGums_BaseColor.png",
+        "Assets/_Game/Art/Textures/CrawlerGums_Normal.png",
+        "Assets/_Game/Art/Textures/CrawlerGums_Mask.png",
+        "Assets/_Game/Art/Textures/CrawlerSkin_BaseColor.png",
+        "Assets/_Game/Art/Textures/CrawlerSkin_Normal.png",
+        "Assets/_Game/Art/Textures/CrawlerSkin_Mask.png",
+        "Assets/_Game/Art/Textures/CrawlerSkin_Anatomy.png",
+        "Assets/_Game/Art/Textures/CrawlerTeeth_BaseColor.png",
+        "Assets/_Game/Art/Textures/CrawlerTeeth_Normal.png",
+        "Assets/_Game/Art/Textures/CrawlerTeeth_Mask.png",
+        "Assets/_Game/Art/Textures/CrawlerThroat_BaseColor.png",
+        "Assets/_Game/Art/Textures/CrawlerThroat_Normal.png",
+        "Assets/_Game/Art/Textures/CrawlerThroat_Mask.png",
+        "Assets/_Game/Art/Textures/CrawlerMouth_Anatomy.png"
+      ],
+      "collider": "separate simple Unity collider; decorative foliage has no collision",
+      "blendShapes": [
+        "Jaw_Open",
+        "Jaw_Bite"
+      ],
+      "animations": [
+        "Crawler_Crawl",
+        "Crawler_Idle"
+      ],
+      "bones": 28,
+      "license": "Original project crawler and rig; original imagegen human epidermis and mouth albedos",
+      "status": "Weighted 28-bone eight-limb crawler; retained skin atlas/clips/jaw morphs, 26 sharpened teeth with decayed enamel, wounded lips/gums and dark mucosa maps; explicit primary oral UVs"
+    },
+    {
+      "id": "zombie_wolf_01",
+      "source": "ArtSource/Blender/zombie_wolf_01.blend",
+      "export": "Assets/_Game/Art/Meshes/zombie_wolf_01.fbx",
+      "units": "metres",
+      "triangles": 35015,
+      "lodTriangles": {
+        "LOD0": 35015
+      },
+      "materials": [
+        "WolfBone",
+        "WolfEyes",
+        "WolfSkin",
+        "WolfSocket",
+        "WolfTissue"
+      ],
+      "textures": [
+        "Assets/_Game/Art/Textures/WolfBone_BaseColor.png",
+        "Assets/_Game/Art/Textures/WolfBone_Normal.png",
+        "Assets/_Game/Art/Textures/WolfBone_Mask.png",
+        "Assets/_Game/Art/Textures/WolfSkin_BaseColor.png",
+        "Assets/_Game/Art/Textures/WolfSkin_Normal.png",
+        "Assets/_Game/Art/Textures/WolfSkin_Mask.png"
+      ],
+      "collider": "separate simple Unity collider; decorative foliage has no collision",
+      "blendShapes": [],
+      "animations": [
+        "Wolf_Bite",
+        "Wolf_Death",
+        "Wolf_Idle",
+        "Wolf_Run"
+      ],
+      "bones": 36,
+      "license": "CC0 NewDLC wolf; project authored half-skull and idle/run/bite/death; original imagegen fur/bone albedos and Blender-baked normal maps",
+      "status": "36-bone CC0 wolf adaptation with smoother silhouette; original exposed half-skull, empty orbit, jaw-weighted mandible/canine teeth, generated fur and aged bone artwork, native Blender normal bakes and varied bone roughness/AO; four clips with bite closure at .60 seconds; Unity wounds"
+    }
+  ],
+  "otherAssets": "Unity interaction/collision, blood shaders and overlays; original synthesized audio and CC0 recorded footsteps/human injury voices. See ThirdPartyNotices.md"
+}

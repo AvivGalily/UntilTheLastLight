@@ -1,0 +1,42 @@
+{
+  "tool": "built-in image_gen",
+  "source": "ArtSource/Textures/CrawlerMouth_Imagegen.png",
+  "sha256": "1d5fc251e81fa8ba6699cc1113e91560cef8d652374095a131ecdf2f0ba7090a",
+  "nativeSize": [
+    1254,
+    1254
+  ],
+  "prompt": "ArtSource/Textures/CrawlerMouth_Imagegen.prompt.txt",
+  "materials": [
+    {
+      "material": "CrawlerTeeth",
+      "crop": [
+        0,
+        0,
+        1254,
+        418
+      ],
+      "runtime": "Assets/_Game/Art/Textures/CrawlerTeeth_BaseColor.png"
+    },
+    {
+      "material": "CrawlerGums",
+      "crop": [
+        0,
+        418,
+        1254,
+        836
+      ],
+      "runtime": "Assets/_Game/Art/Textures/CrawlerGums_BaseColor.png"
+    },
+    {
+      "material": "CrawlerThroat",
+      "crop": [
+        0,
+        836,
+        1254,
+        1254
+      ],
+      "runtime": "Assets/_Game/Art/Textures/CrawlerThroat_BaseColor.png"
+    }
+  ]
+}

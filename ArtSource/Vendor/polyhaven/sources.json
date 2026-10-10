@@ -1,0 +1,43 @@
+{
+  "provider": "Powered by Poly Haven",
+  "license": "CC0-1.0",
+  "assets": [
+    {
+      "id": "fir_tree_01",
+      "source": "https://polyhaven.com/a/fir_tree_01"
+    },
+    {
+      "id": "rock_moss_set_01",
+      "source": "https://polyhaven.com/a/rock_moss_set_01"
+    },
+    {
+      "id": "dead_tree_trunk",
+      "source": "https://polyhaven.com/a/dead_tree_trunk"
+    },
+    {
+      "id": "tree_stump_02",
+      "source": "https://polyhaven.com/a/tree_stump_02"
+    },
+    {
+      "id": "pine_bark",
+      "source": "https://polyhaven.com/a/pine_bark"
+    },
+    {
+      "id": "forest_ground_04",
+      "source": "https://polyhaven.com/a/forest_ground_04"
+    },
+    {
+      "id": "rocky_trail",
+      "source": "https://polyhaven.com/a/rocky_trail"
+    },
+    {
+      "id": "wood_planks_dirt",
+      "source": "https://polyhaven.com/a/wood_planks_dirt"
+    },
+    {
+      "id": "rust_coarse_01",
+      "source": "https://polyhaven.com/a/rust_coarse_01"
+    }
+  ],
+  "changes": "Unity packed maps; original UVs retained on scans; optimized mesh LODs"
+}

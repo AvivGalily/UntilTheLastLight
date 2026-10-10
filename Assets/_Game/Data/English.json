@@ -1,0 +1,640 @@
+{
+  "entries": [
+    {
+      "id": "title",
+      "value": "UNTIL THE\nLAST LIGHT"
+    },
+    {
+      "id": "eyebrow",
+      "value": "A FOREST THAT REMEMBERS"
+    },
+    {
+      "id": "intro",
+      "value": "Light drives it back while it is still distant.\nIf it reaches you, RUN.\n\nFollow the ranger’s trail. Keep a way back.\nListen before you look."
+    },
+    {
+      "id": "demo_footer",
+      "value": "FOREST DEMO · Headphones recommended · Reading pauses the forest"
+    },
+    {
+      "id": "controls",
+      "value": "WASD move · Shift run · Ctrl crouch · E interact · F light · Right click boost · B battery · R reload · 1 axe / 2 shotgun · Left click attack · Tab pack · J notes · M map · Esc pause · F11 fullscreen"
+    },
+    {
+      "id": "begin",
+      "value": "Begin the journey"
+    },
+    {
+      "id": "continue",
+      "value": "Continue checkpoint"
+    },
+    {
+      "id": "settings",
+      "value": "Settings"
+    },
+    {
+      "id": "exit",
+      "value": "Exit"
+    },
+    {
+      "id": "pause_title",
+      "value": "A MOMENT\nIN THE LIGHT"
+    },
+    {
+      "id": "pause_body",
+      "value": "The forest is paused.\n\nLast checkpoint\n{0}"
+    },
+    {
+      "id": "resume",
+      "value": "Return to the forest"
+    },
+    {
+      "id": "load",
+      "value": "Load checkpoint"
+    },
+    {
+      "id": "main",
+      "value": "Main menu"
+    },
+    {
+      "id": "pack_title",
+      "value": "WHAT YOU\nCARRY"
+    },
+    {
+      "id": "replace",
+      "value": "Replace battery"
+    },
+    {
+      "id": "journal",
+      "value": "Collected documents"
+    },
+    {
+      "id": "close_pack",
+      "value": "Close pack"
+    },
+    {
+      "id": "journal_title",
+      "value": "VOICES\nLEFT BEHIND"
+    },
+    {
+      "id": "next_page",
+      "value": "More documents"
+    },
+    {
+      "id": "hint",
+      "value": "Need a hint"
+    },
+    {
+      "id": "map_title",
+      "value": "THE RANGER’S\nFIELD MAP"
+    },
+    {
+      "id": "close_map",
+      "value": "Fold the map"
+    },
+    {
+      "id": "map_legend",
+      "value": "Ranger’s sketch · Approximate locations · Dashed trail · No position marker"
+    },
+    {
+      "id": "map_cabin",
+      "value": "Ranger cabin\nShelter / circuit / charger"
+    },
+    {
+      "id": "map_store",
+      "value": "East storehouse\nFuse + batteries"
+    },
+    {
+      "id": "map_research",
+      "value": "Research station\nWEAK LIGHT — UNSAFE"
+    },
+    {
+      "id": "map_lantern",
+      "value": "Old lantern\nShelter + charger"
+    },
+    {
+      "id": "map_gate",
+      "value": "North gate\nRestore circuit"
+    },
+    {
+      "id": "map_body1",
+      "value": "Surveyor + map"
+    },
+    {
+      "id": "map_body2",
+      "value": "Courier + letter"
+    },
+    {
+      "id": "map_body3",
+      "value": "Researcher + report"
+    },
+    {
+      "id": "map_body4",
+      "value": "Guard + last log"
+    },
+    {
+      "id": "settings_title",
+      "value": "MAKE THE\nDARK READABLE"
+    },
+    {
+      "id": "settings_body",
+      "value": "Reading, maps and menus pause the world.\n\nWarnings follow the real threat.\nLanguage is remembered between sessions."
+    },
+    {
+      "id": "fov",
+      "value": "Field of view   {0:0}"
+    },
+    {
+      "id": "sensitivity",
+      "value": "Mouse sensitivity   {0:F3}"
+    },
+    {
+      "id": "invert",
+      "value": "Invert mouse Y   {0}"
+    },
+    {
+      "id": "bob",
+      "value": "Head movement   {0}"
+    },
+    {
+      "id": "visual",
+      "value": "Visual warnings   {0}"
+    },
+    {
+      "id": "volume",
+      "value": "Master volume   {0:0}%"
+    },
+    {
+      "id": "language",
+      "value": "Language   English / Hebrew"
+    },
+    {
+      "id": "back",
+      "value": "Back"
+    },
+    {
+      "id": "on",
+      "value": "ON"
+    },
+    {
+      "id": "off",
+      "value": "OFF"
+    },
+    {
+      "id": "dead_title",
+      "value": "THE FOREST\nKEPT YOU"
+    },
+    {
+      "id": "dead_body",
+      "value": "The Walker kills at close range. Your beam cannot repel it within 2.8 metres.\n\nThe axe can kill undead wolves in two strikes. A second wolf bite is fatal.\n\nOnly marked amber shelters offer safety."
+    },
+    {
+      "id": "complete_title",
+      "value": "A PATH\nTHROUGH THE DARK"
+    },
+    {
+      "id": "complete_eyebrow",
+      "value": "FIELD TRIAL COMPLETE"
+    },
+    {
+      "id": "complete_body",
+      "value": "The service circuit is alive.\nFor tonight, the gate opens.\n\nActive time: {0}\nDocuments found: {1} / 7\n\nThe full journey is still in development."
+    },
+    {
+      "id": "again",
+      "value": "Play again"
+    },
+    {
+      "id": "reserve",
+      "value": "BLACKPINE RESERVE"
+    },
+    {
+      "id": "objective_gate",
+      "value": "Follow the lamps to the north gate."
+    },
+    {
+      "id": "objective_return",
+      "value": "Return the fuse to the ranger cabin."
+    },
+    {
+      "id": "objective_fuse",
+      "value": "Find the fuse in the east storehouse."
+    },
+    {
+      "id": "resources",
+      "value": "LIGHT {0:0}%   SPARES {1}"
+    },
+    {
+      "id": "light_off",
+      "value": "LIGHT OFF"
+    },
+    {
+      "id": "breath",
+      "value": "BREATH {0:0}%"
+    },
+    {
+      "id": "wounded",
+      "value": "WOUNDED · Recover in a shelter"
+    },
+    {
+      "id": "swapping",
+      "value": "Replacing battery… {0:0.0}s"
+    },
+    {
+      "id": "behind",
+      "value": "BEHIND"
+    },
+    {
+      "id": "left",
+      "value": "LEFT"
+    },
+    {
+      "id": "right",
+      "value": "RIGHT"
+    },
+    {
+      "id": "ahead",
+      "value": "AHEAD"
+    },
+    {
+      "id": "attack",
+      "value": "TOO CLOSE · RUN TO SHELTER"
+    },
+    {
+      "id": "click_warning",
+      "value": "[Clicks · {0}]"
+    },
+    {
+      "id": "inventory_body",
+      "value": "FLASHLIGHT {0:0}%\nSPARE BATTERIES {1} / 6\nSERVICE FUSE {2}\nFIELD MAP {3}\n\nRead collected documents in your journal.\nChanging a battery here is safe and immediate.\n\nLast checkpoint: {4}"
+    },
+    {
+      "id": "carried",
+      "value": "In your pack"
+    },
+    {
+      "id": "installed",
+      "value": "Installed"
+    },
+    {
+      "id": "not_found",
+      "value": "Not found"
+    },
+    {
+      "id": "map_missing",
+      "value": "Find the surveyor’s map on the body beside the first bend in the trail."
+    },
+    {
+      "id": "checkpoint_none",
+      "value": "No checkpoint yet"
+    },
+    {
+      "id": "checkpoint_cabin",
+      "value": "Ranger cabin"
+    },
+    {
+      "id": "checkpoint_power",
+      "value": "Cabin power restored"
+    },
+    {
+      "id": "checkpoint_complete",
+      "value": "Journey completed"
+    },
+    {
+      "id": "new_hint",
+      "value": "Find the surveyor at the first bend. Take the axe beside the body and search for the map."
+    },
+    {
+      "id": "fresh",
+      "value": "Fresh battery installed."
+    },
+    {
+      "id": "no_spares",
+      "value": "No spare batteries."
+    },
+    {
+      "id": "save_error",
+      "value": "Checkpoint could not be saved."
+    },
+    {
+      "id": "load_ok",
+      "value": "Checkpoint loaded."
+    },
+    {
+      "id": "load_backup",
+      "value": "Recovered the last valid backup."
+    },
+    {
+      "id": "load_error",
+      "value": "No valid checkpoint could be loaded."
+    },
+    {
+      "id": "charge_complete",
+      "value": "Hand-crank charge complete: 35%."
+    },
+    {
+      "id": "struck",
+      "value": "It struck you. Reach a shelter to recover."
+    },
+    {
+      "id": "last_light",
+      "value": "The last light went out."
+    },
+    {
+      "id": "take_batteries",
+      "value": "[E] Take batteries ({0})"
+    },
+    {
+      "id": "take_fuse",
+      "value": "[E] Take the service fuse"
+    },
+    {
+      "id": "power_restored",
+      "value": "Power restored. The north gate is open."
+    },
+    {
+      "id": "install_fuse",
+      "value": "[E] Install fuse and restore power"
+    },
+    {
+      "id": "missing_fuse",
+      "value": "Missing service fuse. Check the east storehouse."
+    },
+    {
+      "id": "charger_hold",
+      "value": "[Hold E] Hand-crank · 12 seconds · restores 35%"
+    },
+    {
+      "id": "charger_full",
+      "value": "Emergency charger · battery above 35%"
+    },
+    {
+      "id": "leave",
+      "value": "[E] Leave through the north gate"
+    },
+    {
+      "id": "gate_no_power",
+      "value": "Gate has no power. Restore the cabin circuit."
+    },
+    {
+      "id": "read",
+      "value": "[E] Read the document"
+    },
+    {
+      "id": "search_map",
+      "value": "[E] Search the surveyor · map and log"
+    },
+    {
+      "id": "search_body",
+      "value": "[E] Search the body · document"
+    },
+    {
+      "id": "reread_body",
+      "value": "[E] Read the recovered document"
+    },
+    {
+      "id": "added_batteries",
+      "value": "{0} spare batteries added."
+    },
+    {
+      "id": "stack_full",
+      "value": "Battery stack is full. These will stay here."
+    },
+    {
+      "id": "fuse_acquired",
+      "value": "Service fuse acquired. Return to the cabin circuit."
+    },
+    {
+      "id": "circuit_alive",
+      "value": "The circuit is alive. Follow the lamps to the north gate."
+    },
+    {
+      "id": "restore_first",
+      "value": "Restore the circuit in the ranger cabin first."
+    },
+    {
+      "id": "map_acquired",
+      "value": "Field map recovered. Press M to unfold it."
+    },
+    {
+      "id": "wolf_caption",
+      "value": "[A distant wolf howls]"
+    },
+    {
+      "id": "hint_fuse",
+      "value": "Follow the pale trail east to the storehouse. Take the fuse from its desk. Save a battery for the return."
+    },
+    {
+      "id": "hint_return",
+      "value": "Install the fuse in the circuit box on the ranger cabin’s rear wall."
+    },
+    {
+      "id": "hint_gate",
+      "value": "The northern gate has power. Follow the lamps and use its switch."
+    },
+    {
+      "id": "sign_cabin",
+      "value": "RANGER CABIN"
+    },
+    {
+      "id": "sign_store",
+      "value": "EAST STOREHOUSE"
+    },
+    {
+      "id": "sign_research",
+      "value": "RESEARCH STATION"
+    },
+    {
+      "id": "sign_gate",
+      "value": "NORTH GATE\nSERVICE CIRCUIT REQUIRED"
+    },
+    {
+      "id": "note_guard_rules",
+      "value": "Keep your distance. The beam repels the Walker only beyond 2.8 metres. When it is already beside you, run. Its attack is fatal.\n\nDry clicks are its footsteps: when they stop, it may be standing nearby. It returns from the trees.\n\nThe surveyor left an axe beside the first body. Use it against the diseased wolves: two strikes, with room to swing.\n\nMarked amber shelters are safe. The research station’s weak bulb is not."
+    },
+    {
+      "id": "note_guard_rules_title",
+      "value": "The rules of light"
+    },
+    {
+      "id": "note_route",
+      "value": "The pale trail runs east to the storehouse. The fuse lies on its desk.\n\nThe longer return passes the old amber lantern. The abandoned research station has three rooms off a corridor, but its weak bulb is not shelter.\n\nThe surveyor took a map of every landmark. Last seen by the first bend north of this cabin.\n\nPaths remain stable even when the trees seem to move."
+    },
+    {
+      "id": "note_route_title",
+      "value": "The service route"
+    },
+    {
+      "id": "note_storehouse",
+      "value": "It waited at the edge for an hour. The pale torso rose above eight jointed legs. No eyes. No nose. A mouth where a face should be.\n\nThe clicking stopped when I aimed the beam. When I looked down to replace the cell, it started on my left.\n\nKeep a fresh battery for the way home. Recover only in a marked shelter."
+    },
+    {
+      "id": "note_storehouse_title",
+      "value": "A storekeeper’s note"
+    },
+    {
+      "id": "note_cartographer",
+      "value": "The map is beside my coat. It marks the cabin, fuse storehouse, research station, old lantern, northern gate and the bodies we found. Distances are estimates.\n\nTake my axe. The wolves no longer behave like animals. The blade will stop them; the Walker is something else.\n\nDo not trust the research station’s dim lamp. It is too weak."
+    },
+    {
+      "id": "note_cartographer_title",
+      "value": "The surveyor’s last log"
+    },
+    {
+      "id": "note_clicks",
+      "value": "Three clicks, then silence. It was farther away than I thought. The sound returned faster, lower, beside the path.\n\nIts jaw unhinged as it came closer. Rows of teeth kept unfolding beneath the blank crown.\n\nThe howls beyond the fence belong to wolves. The dry knocking between the trees does not."
+    },
+    {
+      "id": "note_clicks_title",
+      "value": "The courier’s letter"
+    },
+    {
+      "id": "note_research",
+      "value": "STATION 03 — Emergency circuit failing.\n\nThree rooms: records west, bunks southeast, observation northeast. The central corridor remains passable.\n\nThe ceiling bulb is too weak to repel the creature. It crossed beneath it without hesitation. Never lower the hand beam in this building.\n\nThe amber lantern on the eastern trail still holds."
+    },
+    {
+      "id": "note_research_title",
+      "value": "Research report / illumination"
+    },
+    {
+      "id": "note_last_watch",
+      "value": "I can see the gate. Without the service circuit its switch is dead. Take the fuse back to the cabin first.\n\nI counted the steps behind me. Eight feet, one rhythm. When it was near, even the forest wind disappeared beneath the pounding.\n\nIf the lamps come back on, follow them north. Do not stop for me."
+    },
+    {
+      "id": "note_last_watch_title",
+      "value": "The guard’s last watch"
+    },
+    {
+      "id": "take_axe",
+      "value": "[E] Take field axe"
+    },
+    {
+      "id": "axe_acquired",
+      "value": "Field axe acquired. Left mouse: swing. Two hits kill an undead wolf. Keep the Walker at a distance."
+    },
+    {
+      "id": "axe_control",
+      "value": "AXE · LEFT MOUSE"
+    },
+    {
+      "id": "survivor_help",
+      "value": "\"Help! Please, help me!\""
+    },
+    {
+      "id": "blackout_run",
+      "value": "The light is dead. RUN to the ranger cabin or east storehouse! Hold E at the indoor charger."
+    },
+    {
+      "id": "blackout_refuge",
+      "value": "Inside, at last. Hold E at the charger for 12 seconds to restore the flashlight."
+    },
+    {
+      "id": "repair_hold",
+      "value": "[Hold E] Reset circuit and recharge · 12 seconds"
+    },
+    {
+      "id": "repair_house_only",
+      "value": "Circuit failure. Use a charger inside the ranger cabin or east storehouse."
+    },
+    {
+      "id": "checkpoint_blackout",
+      "value": "The forest ambush"
+    },
+    {
+      "id": "checkpoint_refuge",
+      "value": "Reached shelter"
+    },
+    {
+      "id": "checkpoint_repaired",
+      "value": "Flashlight restored"
+    },
+    {
+      "id": "objective_escape",
+      "value": "RUN to an amber-lit house. The flashlight circuit has failed."
+    },
+    {
+      "id": "objective_repair",
+      "value": "Hold E at the indoor charger to repair the flashlight."
+    },
+    {
+      "id": "display",
+      "value": "Display: {0} · F11"
+    },
+    {
+      "id": "fullscreen",
+      "value": "Full screen"
+    },
+    {
+      "id": "windowed",
+      "value": "Window"
+    },
+    {
+      "id": "note_norton_title",
+      "value": "A letter to Mr. Norton"
+    },
+    {
+      "id": "note_norton",
+      "value": "Mr. Norton,\n\nThey have crossed onto my land. Last night the lamps went out, but the things beneath them kept moving. Dead men's heads, crawling on six legs. One of them spoke in my brother's voice. He has been buried for nine years.\n\nYou are the finest hunter I know. I have left my shotgun beside the car. Light will not turn these creatures back. Use steel and shot. When their mouths begin to glow, get out of the way.\n\nPlease deal with them before they reach the houses. There is scratching under my door now.\n\nE. Mercer\nBlackpine ranger"
+    },
+    {
+      "id": "take_shotgun",
+      "value": "E — take the shotgun"
+    },
+    {
+      "id": "take_shells",
+      "value": "E — take cartridges ({0})"
+    },
+    {
+      "id": "shotgun_acquired",
+      "value": "Shotgun acquired. Left click fires · R reloads · 1 axe / 2 shotgun · B flashlight battery."
+    },
+    {
+      "id": "shells_acquired",
+      "value": "Cartridges added to your pack."
+    },
+    {
+      "id": "shells_full",
+      "value": "Your cartridge pouch is full."
+    },
+    {
+      "id": "shotgun_empty",
+      "value": "The barrels are empty. Press R to reload."
+    },
+    {
+      "id": "shotgun_hud",
+      "value": "Shotgun {0}/2 · spare {1} · R reload · 1 axe"
+    },
+    {
+      "id": "shotgun_stowed",
+      "value": "2 — equip shotgun ({0}/2 · {1} spare)"
+    },
+    {
+      "id": "shotgun_reloading",
+      "value": "Reloading… {0:0.0}s"
+    },
+    {
+      "id": "head_arrival",
+      "value": "Something answers the letter. Light cannot stop it. Aim at the head — or use your axe."
+    },
+    {
+      "id": "fire_hit",
+      "value": "You are burned. Avoid another fireball for ten seconds."
+    },
+    {
+      "id": "fire_recovery",
+      "value": "Burn recovery: {0:0.0}s · another fireball is fatal"
+    },
+    {
+      "id": "fire_death",
+      "value": "A second flame took the last of your strength."
+    },
+    {
+      "id": "checkpoint_wreck",
+      "value": "The shotgun by the wreck"
+    },
+    {
+      "id": "checkpoint_norton",
+      "value": "Norton's letter"
+    }
+  ]
+}

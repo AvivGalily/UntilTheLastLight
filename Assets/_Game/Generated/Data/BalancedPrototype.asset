@@ -1,0 +1,73 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6a15aa72653fd474cb57884c7c77a136, type: 3}
+  m_Name: BalancedPrototype
+  m_EditorClassIdentifier: Game.Runtime::Game.GameTuning
+  flashlight:
+    normalDurationSeconds: 420
+    minRange: 6.5
+    maxRange: 18
+    innerHalfAngle: 18
+    outerHalfAngle: 24
+    edgeMeters: 1
+    boostRange: 1.25
+    boostDrain: 3
+    boostSeconds: 3
+    boostRecovery: 5
+    swapSeconds: 2.5
+    graceSeconds: 1.2
+    graceRearmSeconds: 5
+    emergencyCharge: 35
+    emergencySeconds: 12
+  player:
+    walkSpeed: 3
+    sprintSpeed: 5.2
+    crouchSpeed: 1.6
+    sprintSeconds: 8
+    recoveryDelay: 1.5
+    refillSeconds: 5
+    standingHeight: 1.7
+    crouchHeight: 1.15
+    interactionRange: 2.2
+    hitInvulnerability: 6
+    woundRecovery: 15
+    gravity: 20
+  monster:
+    radius: 0.7
+    height: 1.95
+    stalkSpeed: 1.8
+    approachSpeed: 2.8
+    huntSpeed: 4.5
+    retreatSpeed: 4
+    attackRange: 1.8
+    windupSeconds: 1.2
+    warningSeconds: 1.5
+    warningRange: 8
+    huntSeconds: 14
+    planningHz: 4
+    sensesHz: 8
+    memorySeconds: 8
+    sightRange: 45
+    walkHearing: 10
+    sprintHearing: 24
+    spawnMin: 35
+    spawnMax: 50
+    encounterCooldown: 14
+    restoreGraceSeconds: 10
+    pointBlankRange: 2.8
+    encounterMinSeconds: 32
+    encounterMaxSeconds: 52
+    hiddenMinSeconds: 3
+    hiddenMaxSeconds: 6
+    vanishMinDistance: 14
+    pathCandidates: 12
+  seed: 1407

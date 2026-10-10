@@ -1,0 +1,18 @@
+[
+  {
+    "title": "Dog barking mono",
+    "author": "Brandon Morris / HaelDB",
+    "license": "CC0",
+    "page": "https://opengameart.org/content/dog-barking-mono",
+    "download": "https://opengameart.org/sites/default/files/dog_barking_mono.wav",
+    "sha256": "bbd0f908b3514dd3bd7d2bc04dcf64f8d360a161e7f43cac5d6761e7add79451"
+  },
+  {
+    "title": "Ghost",
+    "author": "Ogrebane",
+    "license": "CC0",
+    "page": "https://opengameart.org/content/ghost",
+    "download": "https://opengameart.org/sites/default/files/ghost.wav",
+    "sha256": "d3d2db1f5cf0d00017c9415099bedd6cca878ef8782a751460d07ed14c2ab9d6"
+  }
+]
