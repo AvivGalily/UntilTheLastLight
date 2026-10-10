@@ -22,6 +22,7 @@ namespace Game.Editor
                 var go=new GameObject("Verification animated surface",typeof(MeshFilter),typeof(MeshRenderer));go.transform.SetParent(skin.transform,false);
                 go.transform.localScale=new Vector3(1/skin.transform.lossyScale.x,1/skin.transform.lossyScale.y,1/skin.transform.lossyScale.z);
                 go.GetComponent<MeshFilter>().sharedMesh=mesh;var r=go.GetComponent<MeshRenderer>();r.sharedMaterials=skin.sharedMaterials;
+                r.shadowCastingMode=skin.shadowCastingMode;r.receiveShadows=skin.receiveShadows;r.renderingLayerMask=skin.renderingLayerMask;
                 var properties=new MaterialPropertyBlock();skin.GetPropertyBlock(properties);r.SetPropertyBlock(properties);skin.enabled=false;baked.Add(go);
             }
             UIShot(game,name,beam);

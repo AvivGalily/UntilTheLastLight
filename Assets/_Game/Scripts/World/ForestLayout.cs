@@ -17,8 +17,8 @@ namespace Game
         public static readonly Vector3 Lantern = new Vector3(45,0,65);
         public static readonly Vector3 Gate = new Vector3(-5,0,120);
         public static readonly Vector3 EncounterTree = new Vector3(-56,0,-70);
-        public static readonly Vector3 Wreck=Cabin+new Vector3(8.6f,0,2);
-        public static readonly Vector3 NortonBody=Cabin+new Vector3(7.3f,0,5.8f);
+        public static readonly Vector3 Wreck=Research+new Vector3(13,0,7);
+        public static readonly Vector3 NortonBody=Research+new Vector3(11.7f,0,12.8f);
         public static bool InRefugeHouse(Vector3 p)
         {
             return (Mathf.Abs(p.x-Cabin.x)<4.1f&&Mathf.Abs(p.z-Cabin.z)<3.7f)

@@ -30,4 +30,16 @@ for name,duration in [('head_introduction',3.4),('head_growl',4),('head_bite',.6
         fade=min(1,t/.003,(duration-t)/.03);samples.append(v*max(0,fade))
     peak=max(map(abs,samples)) or 1;pcm=array.array('h',(round(v/peak*.76*32767) for v in samples))
     with wave.open(str(OUT/(name+'.wav')),'wb') as f:f.setparams((1,2,SR,len(pcm),'NONE',''));f.writeframes(pcm.tobytes())
-print('Created ten mono Norton weapon, wreck, projectile and CC0-derived monster clips.')
+# Original quiet twelve-second dread loop. Every oscillator completes an
+# integer number of cycles, so the sustained score has no restart click.
+duration=12
+samples=[]
+for i in range(duration*SR):
+    t=i/SR;phase=math.tau*t
+    drone=sum(math.sin(phase*f) * gain for f,gain in [(49,.42),(49+1/12,.16),(73+1/12,.18),(103+5/12,.09),(147,.055)])
+    swell=.7+.18*math.sin(phase/12)+.12*math.sin(phase*2/12)
+    whisper=math.sin(phase*411)*math.sin(phase*419)*math.sin(phase*7/12)*.045
+    samples.append(drone*swell+whisper)
+peak=max(map(abs,samples));pcm=array.array('h',(round(v/peak*.76*32767) for v in samples))
+with wave.open(str(OUT/'head_score.wav'),'wb') as f:f.setparams((1,2,SR,len(pcm),'NONE',''));f.writeframes(pcm.tobytes())
+print('Created ten Norton effect clips and the original quiet head approach score.')

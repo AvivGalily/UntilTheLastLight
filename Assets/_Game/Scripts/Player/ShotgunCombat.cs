@@ -43,6 +43,7 @@ namespace Game
         public void Simulate(float dt,GameSession game)
         {
             bool selected=game.Inventory.ShotgunEquipped;heldModel.gameObject.SetActive(selected);
+            if(game.presence&&game.presence.gripLight)game.presence.gripLight.enabled=selected||game.Inventory.AxeEquipped;
             if(dt<=0||!game.State.Running)return;cooldown-=dt;recoil=Mathf.MoveTowards(recoil,0,dt*5);flash-=dt;muzzleLight.enabled=selected&&flash>0;
             muzzleSmoke.Simulate(dt,true,false,false);muzzleSmoke.Pause();
             if(ReloadRemaining>0)
@@ -51,8 +52,8 @@ namespace Game
                 if(ReloadRemaining==0)game.Inventory.ReloadShotgun();
             }
             float reload=ReloadRemaining>0?Mathf.Sin((1-ReloadRemaining/1.7f)*Mathf.PI):0;
-            heldModel.localPosition=restPosition+new Vector3(0,-reload*.16f,-recoil*.08f);
-            heldModel.localRotation=restRotation*Quaternion.Euler(-recoil*9+reload*25,0,-reload*12);
+            heldModel.localPosition=restPosition+new Vector3(0,-reload*.055f,-recoil*.08f);
+            heldModel.localRotation=restRotation*Quaternion.Euler(-recoil*9+reload*10,0,-reload*5);
         }
     }
 }

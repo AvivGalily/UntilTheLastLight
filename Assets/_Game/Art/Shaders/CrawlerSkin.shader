@@ -9,6 +9,11 @@ Shader "Last Light/Crawler skin"
         _AnatomyMap("Rest-pose human skin atlas",2D)="white"{}
         _UseSkinAtlas("Use anatomical UV2 atlas",Range(0,1))=0
         _WorldSkin("Static human skin projection",Range(0,1))=0
+        _CadaverDecay("Cadaver discoloration",Range(0,1))=0
+        _CinderDecay("Necrotic veins and mottled tissue",Range(0,1))=0
+        _CharAmount("Burned tissue",Range(0,1))=0
+        _BurnAway("Ash dissolution",Range(0,1))=0
+        _FogFade("Concealment in distant mist",Range(0,1))=0
         _SkinTileScale("Human skin repeats per metre",Float)=3.2
         _MetallicGlossMap("Skin mask",2D)="white"{}
         _OcclusionMap("Occlusion",2D)="white"{}
@@ -28,6 +33,42 @@ Shader "Last Light/Crawler skin"
     SubShader
     {
         Tags{"RenderType"="Opaque" "RenderPipeline"="UniversalPipeline" "Queue"="Geometry"}
+        HLSLINCLUDE
+        #include "Packages/com.unity.render-pipelines.universal/ShaderLibrary/Core.hlsl"
+        CBUFFER_START(UnityPerMaterial)
+        float4 _BaseMap_ST;half4 _BaseColor;
+        half _BumpScale,_OcclusionStrength,_Smoothness,_HighlightRolloff,_Cutoff;
+        half _UseSkinAtlas,_SkinSpecular,_Subsurface;
+        half _WorldSkin,_SkinTileScale,_CadaverDecay,_CinderDecay,_CharAmount,_BurnAway,_FogFade;
+        half _IlluminanceRolloff;
+        half _BloodAmount,_Lacerations,_AlphaClip;float4 _Wound0,_Wound1;
+        CBUFFER_END
+        TEXTURE2D(_BaseMap);SAMPLER(sampler_BaseMap);
+        TEXTURE2D(_BumpMap);SAMPLER(sampler_BumpMap);
+        TEXTURE2D(_AnatomyMap);SAMPLER(sampler_AnatomyMap);
+        TEXTURE2D(_MetallicGlossMap);SAMPLER(sampler_MetallicGlossMap);
+        TEXTURE2D(_OcclusionMap);SAMPLER(sampler_OcclusionMap);
+        float Hash(float2 p){return frac(sin(dot(p,float2(127.1,311.7)))*43758.5453);}
+        float Noise(float2 p)
+        {
+            float2 cell=floor(p),f=frac(p);f=f*f*(3-2*f);
+            return lerp(lerp(Hash(cell),Hash(cell+float2(1,0)),f.x),lerp(Hash(cell+float2(0,1)),Hash(cell+1),f.x),f.y);
+        }
+        float Ash(float2 uv){return Noise(uv*57)*.65+Noise(uv*137)*.35;}
+        void ClipSurface(float2 uv)
+        {
+            if(_AlphaClip>.5)clip(SAMPLE_TEXTURE2D(_BaseMap,sampler_BaseMap,uv).a-_Cutoff);
+            if(_BurnAway>0)clip(Ash(uv)-_BurnAway);
+            if(_FogFade>0)clip(Ash(uv)-_FogFade);
+        }
+        struct DepthInput{float4 positionOS:POSITION;float3 normalOS:NORMAL;float2 uv:TEXCOORD0;UNITY_VERTEX_INPUT_INSTANCE_ID};
+        struct DepthOutput{float4 positionCS:SV_POSITION;float2 uv:TEXCOORD0;half3 normalWS:TEXCOORD1;UNITY_VERTEX_INPUT_INSTANCE_ID};
+        DepthOutput DepthVert(DepthInput i)
+        {
+            DepthOutput o=(DepthOutput)0;UNITY_SETUP_INSTANCE_ID(i);UNITY_TRANSFER_INSTANCE_ID(i,o);
+            o.positionCS=TransformObjectToHClip(i.positionOS.xyz);o.uv=TRANSFORM_TEX(i.uv,_BaseMap);o.normalWS=TransformObjectToWorldNormal(i.normalOS);return o;
+        }
+        ENDHLSL
         Pass
         {
             Name "ForwardLit"
@@ -42,21 +83,7 @@ Shader "Last Light/Crawler skin"
             #pragma multi_compile_fog
             #pragma multi_compile_instancing
             #define _SPECULAR_SETUP 1
-            #include "Packages/com.unity.render-pipelines.universal/ShaderLibrary/Core.hlsl"
             #include "Packages/com.unity.render-pipelines.universal/ShaderLibrary/Lighting.hlsl"
-            CBUFFER_START(UnityPerMaterial)
-            float4 _BaseMap_ST;half4 _BaseColor;
-            half _BumpScale,_OcclusionStrength,_Smoothness,_HighlightRolloff,_Cutoff;
-            half _UseSkinAtlas,_SkinSpecular,_Subsurface;
-            half _WorldSkin,_SkinTileScale;
-            half _IlluminanceRolloff;
-            half _BloodAmount,_Lacerations,_AlphaClip;float4 _Wound0,_Wound1;
-            CBUFFER_END
-            TEXTURE2D(_BaseMap);SAMPLER(sampler_BaseMap);
-            TEXTURE2D(_BumpMap);SAMPLER(sampler_BumpMap);
-            TEXTURE2D(_AnatomyMap);SAMPLER(sampler_AnatomyMap);
-            TEXTURE2D(_MetallicGlossMap);SAMPLER(sampler_MetallicGlossMap);
-            TEXTURE2D(_OcclusionMap);SAMPLER(sampler_OcclusionMap);
             struct Attributes{float4 positionOS:POSITION;float3 normalOS:NORMAL;float4 tangentOS:TANGENT;float2 uv:TEXCOORD0;float2 atlasUV:TEXCOORD1;UNITY_VERTEX_INPUT_INSTANCE_ID};
             struct Varyings{float4 positionCS:SV_POSITION;float3 positionWS:TEXCOORD0;half3 normalWS:TEXCOORD1;half4 tangentWS:TEXCOORD2;float2 uv:TEXCOORD3;float4 shadow:TEXCOORD4;half fog:TEXCOORD5;float2 atlasUV:TEXCOORD6;UNITY_VERTEX_INPUT_INSTANCE_ID};
             Varyings Vert(Attributes input)
@@ -81,7 +108,7 @@ Shader "Last Light/Crawler skin"
             half4 Frag(Varyings i):SV_Target
             {
                 UNITY_SETUP_INSTANCE_ID(i);
-                if(_AlphaClip>.5)clip(SAMPLE_TEXTURE2D(_BaseMap,sampler_BaseMap,i.uv).a-_Cutoff);
+                ClipSurface(i.uv);float ash=Ash(i.uv);
                 half3 normalTS=UnpackNormalScale(SAMPLE_TEXTURE2D(_BumpMap,sampler_BumpMap,i.uv),_BumpScale);
                 half3 bitangent=i.tangentWS.w*cross(i.normalWS,i.tangentWS.xyz);
                 InputData d=(InputData)0;d.positionWS=i.positionWS;
@@ -103,6 +130,17 @@ Shader "Last Light/Crawler skin"
                     s.albedo=(skinX*weights.x+skinY*weights.y+skinZ*weights.z)*_BaseColor.rgb;
                 }
                 s.specular=_SkinSpecular.xxx;s.metallic=0;s.smoothness=mask.a*_Smoothness;
+                if(_CadaverDecay>0)
+                {
+                    // Anatomical UVs hold the discoloration on animated skin.
+                    float patch=.5+.5*sin(i.uv.x*61+sin(i.uv.y*47)*2)*sin(i.uv.y*53+i.uv.x*13);
+                    float vein=1-smoothstep(.018,.09,abs(sin(i.uv.x*173+sin(i.uv.y*67)*2)));
+                    float grey=dot(s.albedo,float3(.299,.587,.114));
+                    half3 pallor=grey*half3(.68,.75,.72);
+                    s.albedo=lerp(s.albedo,pallor,_CadaverDecay*.85);
+                    s.albedo*=1-_CadaverDecay*(patch*.12+vein*.055);
+                    s.albedo=lerp(s.albedo,s.albedo*half3(.78,.62,.74),_CadaverDecay*patch*.18);
+                }
                 if(_BloodAmount>0)
                 {
                     float3 p=i.positionWS-_Wound0.xyz;
@@ -121,6 +159,17 @@ Shader "Last Light/Crawler skin"
                     half cut=slit*edge*_Lacerations*_BloodAmount;
                     s.albedo=lerp(s.albedo,half3(.11,.0018,.006),cut);s.smoothness=lerp(s.smoothness,.62,cut);
                 }
+                if(_CinderDecay>0)
+                {
+                    float mottling=Noise(i.uv*37)*.65+Noise(i.uv*89)*.35;
+                    float vein=1-smoothstep(.025,.12,abs(sin(i.uv.x*97+Noise(i.uv*19)*9+i.uv.y*21)));
+                    float bruise=smoothstep(.45,.78,mottling);
+                    s.albedo=lerp(s.albedo,s.albedo*half3(.53,.34,.46),bruise*_CinderDecay*.68);
+                    s.albedo=lerp(s.albedo,s.albedo*half3(.42,.46,.58),vein*_CinderDecay*.35);
+                    s.smoothness=lerp(s.smoothness,.38,bruise*_CinderDecay);
+                }
+                s.albedo=lerp(s.albedo,half3(.011,.007,.006)*(ash*.65+.35),_CharAmount);
+                s.smoothness=lerp(s.smoothness,.08,_CharAmount);
                 s.normalTS=normalTS;s.occlusion=lerp(1,SAMPLE_TEXTURE2D(_OcclusionMap,sampler_OcclusionMap,i.uv).g,_OcclusionStrength);
                 half4 color=UniversalFragmentPBR(d,s);
                 if(_IlluminanceRolloff>0)
@@ -150,12 +199,31 @@ Shader "Last Light/Crawler skin"
                 }
                 // Preserve skin hue/detail under a close spotlight before the scene's ACES grade.
                 half peak=max(color.r,max(color.g,color.b));color.rgb/=1+max(0,peak-.45h)*_HighlightRolloff;
+                if(_BurnAway>0)color.rgb+=half3(1.7,.24,.015)*(1-smoothstep(0,.055,ash-_BurnAway))*(1-_BurnAway);
                 color.rgb=MixFog(color.rgb,i.fog);return color;
             }
             ENDHLSL
         }
         UsePass "Universal Render Pipeline/Lit/ShadowCaster"
-        UsePass "Universal Render Pipeline/Lit/DepthOnly"
-        UsePass "Universal Render Pipeline/Lit/DepthNormals"
+        Pass
+        {
+            Name "DepthOnly" Tags{"LightMode"="DepthOnly"} ZWrite On ColorMask R
+            HLSLPROGRAM
+            #pragma vertex DepthVert
+            #pragma fragment DepthFrag
+            #pragma multi_compile_instancing
+            half DepthFrag(DepthOutput i):SV_Target{UNITY_SETUP_INSTANCE_ID(i);ClipSurface(i.uv);return 0;}
+            ENDHLSL
+        }
+        Pass
+        {
+            Name "DepthNormals" Tags{"LightMode"="DepthNormals"} ZWrite On
+            HLSLPROGRAM
+            #pragma vertex DepthVert
+            #pragma fragment NormalFrag
+            #pragma multi_compile_instancing
+            half4 NormalFrag(DepthOutput i):SV_Target{UNITY_SETUP_INSTANCE_ID(i);ClipSurface(i.uv);return half4(normalize(i.normalWS),0);}
+            ENDHLSL
+        }
     }
 }

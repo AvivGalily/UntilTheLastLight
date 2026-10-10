@@ -74,13 +74,15 @@ for path in paths:
         records[-1]['status']='Weighted 28-bone eight-limb crawler; retained skin atlas/clips/jaw morphs, 26 sharpened teeth with decayed enamel, wounded lips/gums and dark mucosa maps; explicit primary oral UVs'
     if path.stem=='victim_web_01':
         records[-1]['status']='Original 22-radial silk web, five sagging rings and tree/ground anchor strands; separate intact core and persistent torn rim; Unity bone-attached bindings release on impact'
-    if path.stem in ('player_body_01','player_axe_hand_01'):
+    if path.stem in ('player_body_01','player_axe_hand_01','player_shotgun_hand_01'):
         records[-1]['license']='CC0 MakeHuman/MPFB anatomy, clothing and Mindfront skin; project pose and extraction'
-        records[-1]['status']='Full clothed anatomical shadow body' if path.stem=='player_body_01' else 'Human forearm, palm, nails and five fingers posed around the axe shaft; retained UV skin and clothing'
+        records[-1]['status']='Full clothed anatomical shadow body with grounded, bent-leg Crouch morph; Unity uniform capsule-height calibration' if path.stem=='player_body_01' else 'Subdivided CC0 anatomical palm, thumb/nails and four curled fingers; separate shotgun index pose; retained human UV epidermis/normal maps; fitted original sleeve and rounded cuff with fabric weave; body-connected forearm retains authored smooth UV-seam normals'
+        if path.stem!='player_body_01':
+            records[-1]['textures']=['Assets/_Game/Art/Textures/'+key+'_'+suffix+'.png' for key in ('HumanSkin0','BodyFabric') for suffix in ('BaseColor','Normal','Mask')]
     if path.stem in ('cinder_head_01','eviscerated_casualty_01'):
         records[-1]['license']='CC0 MakeHuman/MPFB anatomy and Mindfront skin; original project adaptation, six-legged rig and exposed viscera'
-        records[-1]['status']='Human UV head on six articulated organic legs; 28 bones, idle/scuttle/bite/spit/death clips' if path.stem=='cinder_head_01' else 'Clothed CC0 human, opened abdominal surface and continuous coiled intestines, original UVs and wound materials'
-        for key in ['HumanSkin0','CrawlerSkin','CrawlerGums','HumanOutfit2','HumanEyes']:
+        records[-1]['status']='Sunken asymmetric anatomical UV head, necrotic lips and pointed rotten teeth; six continuous muscle/tendon legs and hooked claws; 28 bones; idle/scuttle/bite/spit and 3.2-second grounded folding/side-roll death; dedicated human pore/roughness materials with bruised veins and Unity char/ash dissolution' if path.stem=='cinder_head_01' else 'Clothed CC0 human, opened abdominal surface and continuous coiled intestines, original UVs and wound materials'
+        for key in (['HumanSkin0','CrawlerSkin','CrawlerGums','CrawlerTeeth','CrawlerThroat','WolfBone','HumanEyes'] if path.stem=='cinder_head_01' else ['HumanSkin0','CrawlerSkin','CrawlerGums','HumanOutfit2','HumanEyes']):
             for suffix in ['BaseColor','Normal','Mask']:
                 texture='Assets/_Game/Art/Textures/'+key+'_'+suffix+'.png'
                 if (root/texture).exists() and texture not in records[-1]['textures']:records[-1]['textures'].append(texture)

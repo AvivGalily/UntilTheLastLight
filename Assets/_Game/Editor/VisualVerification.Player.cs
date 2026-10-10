@@ -2,6 +2,7 @@ using System;
 using UnityEngine;
 using UnityEngine.Rendering;
 using UnityEngine.AI;
+using UnityEngine.Rendering.Universal;
 namespace Game.Editor
 {
     public static partial class VisualVerification
@@ -58,13 +59,57 @@ namespace Game.Editor
             Require(presence.axeGrip.GetComponentInChildren<MeshFilter>().sharedMesh.vertexCount>300,"grip is not actual human anatomy");
             bool axe=game.Inventory.HasAxe;game.Inventory.Restore(game.Inventory.Batteries,game.Inventory.HasFuse,true);game.axe.Simulate(.01f,game);
             UIShot(game,"39-human-axe-grip",true);
+            NortonArtShot(game,"54-body-connected-axe",true);
+            Require(game.axe.BeginSwing(game),"axe presentation windup rejected");game.axe.Simulate(.17f,game);NortonArtShot(game,"58-axe-windup-body-arm",true);game.axe.Simulate(.8f,game);
             var eyes=game.player.view.transform;Vector3 position=eyes.position;Quaternion rotation=eyes.rotation;
             var moon=GameObject.Find("Moon · decorative, never protection").GetComponent<Light>();
             Vector3 shadowDirection=Vector3.ProjectOnPlane(moon.transform.forward,Vector3.up).normalized;
             eyes.rotation=Quaternion.LookRotation((game.player.transform.position+shadowDirection*1.7f)-eyes.position);
             UIShot(game,"40-player-human-shadow",false);eyes.SetPositionAndRotation(position,rotation);
+            VerifyShadowOptics(game,moon,shadowDirection);
             game.Inventory.Restore(game.Inventory.Batteries,game.Inventory.HasFuse,axe);game.axe.Simulate(.01f,game);
             Debug.Log("PLAYER PRESENCE SMOKE PASS: anatomical human shadow, UV human forearm/palm/fingers and grip attached throughout axe motion.");
+        }
+        static Color32[] ShadowPixels(Camera camera)
+        {
+            var rt=new RenderTexture(480,270,24);rt.Create();
+            RenderPipeline.SubmitRenderRequest(camera,new UniversalRenderPipeline.SingleCameraRequest{destination=rt});
+            var previous=RenderTexture.active;RenderTexture.active=rt;var texture=new Texture2D(480,270,TextureFormat.RGB24,false);
+            texture.ReadPixels(new Rect(0,0,480,270),0,0);texture.Apply();var pixels=texture.GetPixels32();
+            RenderTexture.active=previous;rt.Release();UnityEngine.Object.DestroyImmediate(rt);UnityEngine.Object.DestroyImmediate(texture);return pixels;
+        }
+        static float PixelDifference(Color32[] a,Color32[] b)
+        {
+            double sum=0;for(int i=0;i<a.Length;i++)sum+=Math.Abs(a[i].r-b[i].r)+Math.Abs(a[i].g-b[i].g)+Math.Abs(a[i].b-b[i].b);return (float)(sum/(a.Length*3));
+        }
+        static void VerifyShadowOptics(GameSession game,Light moon,Vector3 direction)
+        {
+            var camera=game.player.view;var eyes=camera.transform;var position=eyes.position;var rotation=eyes.rotation;
+            var lights=UnityEngine.Object.FindObjectsByType<Light>(FindObjectsInactive.Include,FindObjectsSortMode.None);
+            var enabled=Array.ConvertAll(lights,l=>l.enabled);bool hud=game.hud.gameObject.activeSelf;
+            float selfDifference=0,externalDifference=0;
+            try
+            {
+                game.hud.gameObject.SetActive(false);foreach(var l in lights)l.enabled=false;
+                eyes.rotation=Quaternion.LookRotation(game.player.transform.position+direction*2.2f-eyes.position);
+                game.flashlightVisual.enabled=true;
+                foreach(var r in game.presence.bodyRenderers)r.enabled=true;var withBody=ShadowPixels(camera);
+                foreach(var r in game.presence.bodyRenderers)r.enabled=false;selfDifference=PixelDifference(withBody,ShadowPixels(camera));
+                Require(selfDifference<.15f,"personal flashlight casts own body into beam: mean pixel difference "+selfDifference);
+                foreach(var r in game.presence.bodyRenderers)r.enabled=true;NortonArtShot(game,"55-forward-flashlight-no-self-shadow",true);game.hud.gameObject.SetActive(false);
+                game.flashlightVisual.enabled=false;moon.enabled=true;withBody=ShadowPixels(camera);
+                foreach(var r in game.presence.bodyRenderers)r.enabled=false;externalDifference=PixelDifference(withBody,ShadowPixels(camera));
+                Require(externalDifference>.025f,"external light no longer produces a body shadow");
+                foreach(var r in game.presence.bodyRenderers)r.enabled=true;NortonArtShot(game,"56-human-shadow-external-light",false);game.hud.gameObject.SetActive(false);
+                game.player.Simulate(game.tuning.player,Vector2.zero,Vector2.zero,false,true,.02f);game.presence.Simulate(.02f,game.player);
+                eyes.rotation=Quaternion.LookRotation(game.player.transform.position+direction*1.7f-eyes.position);NortonArtShot(game,"57-crouched-human-shadow",false);
+            }
+            finally
+            {
+                for(int i=0;i<lights.Length;i++)lights[i].enabled=enabled[i];foreach(var r in game.presence.bodyRenderers)r.enabled=true;
+                game.player.Simulate(game.tuning.player,Vector2.zero,Vector2.zero,false,false,.02f);game.presence.ResetPresence();eyes.SetPositionAndRotation(position,rotation);game.hud.gameObject.SetActive(hud);
+            }
+            Debug.Log($"PLAYER SHADOW OPTICS SMOKE PASS: actual URP body-on/off pixel difference {selfDifference:0.000} under personal beam; {externalDifference:0.000} under moon; human standing/crouch and body-connected idle/windup captures.");
         }
     }
 }

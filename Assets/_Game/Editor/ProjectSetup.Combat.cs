@@ -1,6 +1,7 @@
 using System;
 using UnityEditor;
 using UnityEngine;
+using UnityEngine.AI;
 namespace Game.Editor
 {
     public static partial class ProjectSetup
@@ -31,13 +32,14 @@ namespace Game.Editor
             foley.woodSteps=new[]{Clip("step_wood_1"),Clip("step_wood_2"),Clip("step_wood_3")};
             game.axe=game.player.gameObject.AddComponent<AxeCombat>();
             // Blender +X cutting edge imports as -X: yaw 90 points it along camera +Z.
-            game.axe.heldModel=ForestArt.Model("field_axe_01",new Vector3(.34f,-.50f,.66f),Quaternion.Euler(-10,90,8),game.player.hand,.62f).transform;
+            game.axe.heldModel=ForestArt.Model("field_axe_01",new Vector3(.30f,-.46f,.56f),Quaternion.Euler(-10,90,8),game.player.hand,.62f).transform;
             game.axe.audioSource=PlayerVoice(game.player.transform,"Axe movement and impact");game.axe.swingClip=Clip("axe_swing");game.axe.hitClip=Clip("axe_impact");
             game.axe.heldModel.gameObject.SetActive(false);
             WirePlayerPresentation(game);
             if(mechanics)return;
             ConfigureWolfImport();
-            Vector3[] places={new Vector3(-38,0,-55),new Vector3(15,0,-38),new Vector3(83,0,25),new Vector3(-58,0,9),new Vector3(-5,0,96)};
+            // Keep the original five IDs/territories for existing checkpoints.
+            Vector3[] places={new Vector3(-38,0,-55),new Vector3(15,0,-38),new Vector3(83,0,25),new Vector3(-58,0,9),new Vector3(-5,0,96),new Vector3(22,0,-90),new Vector3(72,0,-45),new Vector3(18,0,31),new Vector3(35,0,90)};
             game.wolves=new ZombieWolf[places.Length];
             for(int i=0;i<places.Length;i++)
             {
@@ -57,6 +59,24 @@ namespace Game.Editor
                 wolf.blood=root.AddComponent<BloodySurface>();wolf.blood.surfaces=model.GetComponentsInChildren<Renderer>();wolf.blood.wound0=new Vector4(.12f,.69f,.05f,.36f);wolf.blood.wound1=new Vector4(0,.87f,.63f,.22f);wolf.blood.amount=.65f;wolf.blood.Refresh();
                 foreach(var bone in model.GetComponentsInChildren<Transform>()){if(bone.name=="b_Spine02")wolf.blood.anchor0=bone;else if(bone.name=="b_Head")wolf.blood.anchor1=bone;}wolf.blood.Refresh();
                 foreach(var skin in model.GetComponentsInChildren<SkinnedMeshRenderer>()){skin.updateWhenOffscreen=true;var bounds=skin.localBounds;bounds.Expand(1.6f);skin.localBounds=bounds;}
+            }
+        }
+        static void PlaceWolvesOnNavigation(GameSession game)
+        {
+            var path=new NavMeshPath();
+            foreach(var wolf in game.wolves)
+            {
+                Vector3 origin=wolf.transform.position;bool placed=false;
+                for(int n=0;n<65;n++)
+                {
+                    float radius=n==0?0:1+(n-1)/16;
+                    var candidate=origin+new Vector3(Mathf.Cos(n*Mathf.PI/8),0,Mathf.Sin(n*Mathf.PI/8))*radius;
+                    if(!NavMesh.SamplePosition(candidate,out var point,.65f,NavMesh.AllAreas))continue;
+                    if(Physics.CheckCapsule(point.position+Vector3.up*.4f,point.position+Vector3.up*.8f,.34f,LayerMask.GetMask("WorldSolid","LightBlocker"),QueryTriggerInteraction.Ignore))continue;
+                    if(!NavMesh.CalculatePath(point.position,ForestLayout.Cabin+Vector3.forward*8,NavMesh.AllAreas,path)||path.status!=NavMeshPathStatus.PathComplete)continue;
+                    wolf.transform.position=point.position;placed=true;break;
+                }
+                if(!placed)throw new Exception("Wolf territory has no clear connected ground: "+wolf.persistentId);
             }
         }
         static void ConfigureWolfImport()

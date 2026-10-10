@@ -8,7 +8,7 @@ namespace Game
     [Serializable] public sealed class SaveData
     {
         public int schemaVersion = 5;
-        public string build = "M2-0.11.0", scene = "ForestGame", checkpoint, spawnId = "ranger_cabin";
+        public string build = "M2-0.13.0", scene = "ForestGame", checkpoint, spawnId = "ranger_cabin";
         public float charge, activeSeconds;
         public bool flashlightOn, fuse, powerOn, wounded, completed;
         public int batteries, seed = 1407;

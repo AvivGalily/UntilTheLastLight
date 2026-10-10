@@ -26,6 +26,14 @@ Shader "Last Light/Embers and smoke"
                 float noise=.78+.22*sin(p.x*17+sin(p.y*13+_NortonTime*1.4)*2)*sin(p.y*11-_NortonTime*2);
                 float alpha=saturate(1-r)*saturate(1-r)*noise*i.color.a;
                 float3 c=i.color.rgb*(_Mode>.5?1:1.8+2*saturate(1-r));
+                if(_Mode<.5)
+                {
+                    float width=lerp(.85,.08,i.uv.y)+.08*sin(i.uv.y*19+_NortonTime*8);
+                    float bend=.14*sin(i.uv.y*9-_NortonTime*6);
+                    float tongue=saturate(1-abs(p.x+bend)/max(.05,width));
+                    alpha=tongue*tongue*smoothstep(0,.12,i.uv.y)*(1-i.uv.y)*i.color.a*1.8;
+                    c=lerp(float3(2.6,1.5,.35),i.color.rgb*2.8,i.uv.y);
+                }
                 c=MixFog(c,i.fog);return half4(c,alpha);
             }
             ENDHLSL

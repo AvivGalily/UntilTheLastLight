@@ -101,7 +101,7 @@ namespace Game
             if(playing)
             {
                 Put(objective,T("reserve")+"\n"+T(game.Flashlight.Faulted?(game.forestEncounter&&game.forestEncounter.Escaping?"objective_escape":"objective_repair"):game.PowerOn?"objective_gate":game.Inventory.HasFuse?"objective_return":"objective_fuse"));
-                Put(resources,(game.Flashlight.Active||game.Flashlight.SwapRemaining>0?T("resources",game.Flashlight.Charge,game.Inventory.Batteries):T("light_off"))+(game.player.Stamina<.99f?"\n"+T("breath",game.player.Stamina*100):"")+(game.Condition.FireRecoveryRemaining>0?"\n"+T("fire_recovery",game.Condition.FireRecoveryRemaining):game.Condition.Wounded?"\n"+T("wounded"):"")+(game.Inventory.AxeEquipped?"\n"+T("axe_control"):"")+(game.Inventory.HasShotgun?"\n"+T(game.Inventory.ShotgunEquipped?"shotgun_hud":"shotgun_stowed",game.Inventory.LoadedShells,game.Inventory.SpareShells)+(game.shotgun.ReloadRemaining>0?"\n"+T("shotgun_reloading",game.shotgun.ReloadRemaining):""):""));
+                Put(resources,(game.Flashlight.Active||game.Flashlight.SwapRemaining>0?T("resources",game.Flashlight.Charge,game.Inventory.Batteries):T("light_off",game.Inventory.Batteries))+(game.player.Stamina<.99f?"\n"+T("breath",game.player.Stamina*100):"")+(game.Condition.FireRecoveryRemaining>0?"\n"+T("fire_recovery",game.Condition.FireRecoveryRemaining):game.Condition.Wounded?"\n"+T("wounded"):"")+(game.Inventory.AxeEquipped?"\n"+T("axe_control"):"")+(game.Inventory.HasShotgun?"\n"+T(game.Inventory.ShotgunEquipped?"shotgun_hud":"shotgun_stowed",game.Inventory.LoadedShells,game.Inventory.SpareShells)+(game.shotgun.ReloadRemaining>0?"\n"+T("shotgun_reloading",game.shotgun.ReloadRemaining):""):""));
                 Put(prompt,game.Flashlight.SwapRemaining>0?T("swapping",game.Flashlight.SwapRemaining):game.InteractionPrompt+(game.HoldProgress>0?$"\n{game.HoldProgress*100:0}%":""));Put(message,game.Message);Put(warning,"");
                 if(game.visualWarnings&&game.monster.HasSpawned&&game.monster.Distance<8&&!game.IsSafe)
                 {var d=game.player.transform.InverseTransformDirection(game.monster.transform.position-game.player.transform.position);Put(warning,game.monster.Attack.WindingUp?T("attack"):T("click_warning",T(d.z<-.5f?"behind":d.x<-.5f?"left":d.x>.5f?"right":"ahead")));}
@@ -118,7 +118,11 @@ namespace Game
                 case ScreenMode.Pause:
                     Put(heading,T("pause_title"));Put(body,T("pause_body",game.CheckpointLabel));Choice(0,T("resume"),Close);Choice(1,T("load"),game.Continue,game.Save.Exists);Choice(2,T("settings"),game.OpenSettings);Choice(3,T("main"),game.ReturnToTitle);break;
                 case ScreenMode.Inventory:
-                    Put(heading,T("pack_title"));Put(body,InventoryText());Choice(0,T("replace"),game.SwapFromInventory,game.Inventory.Batteries>0);Choice(1,T("journal"),()=>game.State.Set(ScreenMode.Journal));Choice(2,T("map_title").Replace('\n',' '),game.OpenMap,game.HasMap);Choice(3,T("close_pack"),Close);break;
+                    Put(heading,T("pack_title"));Put(body,InventoryText());
+                    Choice(0,WeaponChoice(HeldWeapon.Axe),()=>game.SelectWeapon(HeldWeapon.Axe),game.Inventory.HasAxe);
+                    Choice(1,WeaponChoice(HeldWeapon.Shotgun),()=>game.SelectWeapon(HeldWeapon.Shotgun),game.Inventory.HasShotgun);
+                    Choice(2,T("replace"),game.SwapFromInventory,game.Inventory.Batteries>0);
+                    Choice(3,T("journal"),()=>game.State.Set(ScreenMode.Journal));Choice(4,T("map_title").Replace('\n',' '),game.OpenMap,game.HasMap);Choice(5,T("close_pack"),Close);break;
                 case ScreenMode.Journal:
                     Put(heading,T("journal_title"));body.fontSize=24;Put(body,T(game.OpenDocument??"note_guard_rules"));
                     var found=new List<string>();foreach(var id in ForestLayout.Documents)if(game.Documents.Contains(id))found.Add(id);
@@ -142,6 +146,10 @@ namespace Game
                 case ScreenMode.Complete:Put(heading,T("complete_title"));Put(eyebrow,T("complete_eyebrow"));Put(body,T("complete_body",TimeSpan.FromSeconds(game.ActiveSeconds).ToString(@"mm\:ss"),game.Documents.Count));Choice(0,T("main"),game.ReturnToTitle);Choice(1,T("again"),game.StartNew);break;
             }
         }
-        string InventoryText()=>T("inventory_body",game.Flashlight.Charge,game.Inventory.Batteries,T(game.Inventory.HasFuse?"carried":game.PowerOn?"installed":"not_found"),T(game.HasMap?"carried":"not_found"),game.CheckpointLabel)+(game.Inventory.HasShotgun?"\n\n"+T("shotgun_hud",game.Inventory.LoadedShells,game.Inventory.SpareShells):"");
+        string WeaponName(HeldWeapon weapon)=>T(weapon==HeldWeapon.Axe?"weapon_axe":"weapon_shotgun");
+        string WeaponChoice(HeldWeapon weapon)=>T(game.Inventory.OwnsWeapon(weapon)?game.RequestedWeapon==weapon?"weapon_selected":"weapon_equip":"weapon_missing",WeaponName(weapon));
+        string InventoryText()=>T("inventory_body",game.Flashlight.Charge,game.Inventory.Batteries,T(game.Inventory.HasFuse?"carried":game.PowerOn?"installed":"not_found"),T(game.HasMap?"carried":"not_found"),game.CheckpointLabel)
+            +"\n\n"+T("weapon_pack",game.Inventory.OwnsWeapon(game.RequestedWeapon)?WeaponName(game.RequestedWeapon):T("not_found"))
+            +(game.Inventory.HasShotgun?"\n"+T("shotgun_hud",game.Inventory.LoadedShells,game.Inventory.SpareShells):"");
     }
 }

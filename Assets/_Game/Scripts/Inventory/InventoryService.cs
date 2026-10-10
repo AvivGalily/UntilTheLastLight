@@ -13,6 +13,9 @@ namespace Game
         public HeldWeapon Weapon {get;set;}
         public bool AxeEquipped=>HasAxe&&Weapon==HeldWeapon.Axe;
         public bool ShotgunEquipped=>HasShotgun&&Weapon==HeldWeapon.Shotgun;
+        public bool OwnsWeapon(HeldWeapon weapon)=>weapon==HeldWeapon.Axe?HasAxe:weapon==HeldWeapon.Shotgun&&HasShotgun;
+        public HeldWeapon NextWeapon(HeldWeapon from)
+        {var next=from==HeldWeapon.Axe?HeldWeapon.Shotgun:HeldWeapon.Axe;return OwnsWeapon(next)?next:from;}
         public void AcquireShotgun(){if(HasShotgun)return;HasShotgun=true;LoadedShells=2;AddShells(12);Weapon=HeldWeapon.Shotgun;}
         public int AddShells(int amount){int n=Mathf.Clamp(amount,0,30-SpareShells);SpareShells+=n;return n;}
         public bool FireShell(){if(!ShotgunEquipped||LoadedShells==0)return false;LoadedShells--;return true;}

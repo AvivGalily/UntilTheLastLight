@@ -36,7 +36,7 @@ namespace Game
         public float spawnMin = 35, spawnMax = 50, encounterCooldown = 40;
         public float restoreGraceSeconds = 10;
         public float pointBlankRange = 2.8f, encounterMinSeconds = 32, encounterMaxSeconds = 52;
-        public float hiddenMinSeconds=3,hiddenMaxSeconds=6,vanishMinDistance=14;
+        public float hiddenMinSeconds=10,hiddenMaxSeconds=15,vanishMinDistance=14,fogRetreatDistance=32;
         public int pathCandidates = 12;
     }
 }

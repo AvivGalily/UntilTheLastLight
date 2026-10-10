@@ -13,6 +13,15 @@ namespace Game
         public AudioSource voice;
         public AudioClip growlClip,biteClip,spitClip,deathClip;
         public BloodySurface blood;
+        public Light throatLight;
+        public ParticleSystem[] deathEffects;
+        public Light burnLight;
+        public AudioSource burnVoice;
+        public Renderer[] surfaces;
+        public const float BurnStarts=3.2f,DisappearAfter=7.5f;
+        public bool Burning=>!Alive&&DeathTime>=BurnStarts&&gameObject.activeSelf;
+        public float BurnAway {get;private set;}
+        MaterialPropertyBlock burnBlock;
         public int Health {get;private set;}=2;
         public bool Alive=>Health>0;
         public int Bites {get;private set;}
@@ -35,7 +44,30 @@ namespace Game
             cooldown=3;attack=corner=0;contact=false;path=new NavMeshPath();hitCollider.enabled=true;
             if(voice){voice.Stop();voice.clip=growlClip;voice.loop=true;voice.volume=.4f;voice.Play();}
             if(blood){blood.amount=.55f;blood.Refresh();}
+            if(throatLight)throatLight.enabled=false;
+            ClearBurn();
             Pose(0);
+        }
+        public void Retire()
+        {
+            if(voice)voice.Stop();ClearBurn();gameObject.SetActive(false);
+        }
+        void ClearBurn()
+        {
+            BurnAway=0;
+            if(burnVoice)burnVoice.Stop();if(burnLight)burnLight.enabled=false;
+            if(deathEffects!=null)foreach(var p in deathEffects)p.Stop(true,ParticleSystemStopBehavior.StopEmittingAndClear);
+            SetBurn(0,0);
+        }
+        void SetBurn(float charAmount,float dissolve)
+        {
+            BurnAway=dissolve;if(surfaces==null)return;
+            if(burnBlock==null)burnBlock=new MaterialPropertyBlock();
+            foreach(var r in surfaces)
+            {
+                r.GetPropertyBlock(burnBlock);burnBlock.SetFloat("_CharAmount",charAmount);burnBlock.SetFloat("_BurnAway",dissolve);r.SetPropertyBlock(burnBlock);
+                r.shadowCastingMode=dissolve>0?UnityEngine.Rendering.ShadowCastingMode.Off:UnityEngine.Rendering.ShadowCastingMode.On;
+            }
         }
         void Graph()
         {
@@ -50,14 +82,15 @@ namespace Game
         {
             if(!Alive||amount<=0)return;Health=Mathf.Max(0,Health-amount);stagger=.48f;attack=0;cooldown=1.2f;
             if(blood){blood.amount=1;blood.Refresh();}
-            voice.PlayOneShot(deathClip,Alive?.35f:.8f);
-            if(!Alive){DeathTime=0;hitCollider.enabled=false;voice.loop=false;voice.Stop();voice.PlayOneShot(deathClip,.8f);}
+            if(throatLight)throatLight.enabled=false;
+            if(Alive)voice.PlayOneShot(deathClip,.35f);
+            else{DeathTime=Speed=0;hitCollider.enabled=false;voice.loop=false;voice.Stop();voice.PlayOneShot(deathClip,.8f);Pose(0);}
         }
         public void Simulate(float dt,GameSession game)
         {
             if(dt<=0||!game.State.Running||!gameObject.activeSelf)return;
             clock+=dt;Speed=0;
-            if(!Alive){DeathTime+=dt;Pose(dt);return;}
+            if(!Alive){SimulateDeath(dt);return;}
             cooldown-=dt;stagger-=dt;
             Vector3 target=game.player.transform.position,chest=game.player.controller.bounds.center;
             Vector3 toward=Vector3.ProjectOnPlane(target-transform.position,Vector3.up);float distance=toward.magnitude;
@@ -81,6 +114,22 @@ namespace Game
             }
             else if(distance>1.15f)Move(dt,target,game);
             Pose(dt);if(blood)blood.Refresh();
+            if(throatLight){throatLight.enabled=attack==2;throatLight.transform.position=MouthPosition+transform.forward*.1f;throatLight.intensity=Mathf.Lerp(.05f,.85f,Mathf.Clamp01(attackTime/.8f));}
+        }
+        void SimulateDeath(float dt)
+        {
+            float before=DeathTime;DeathTime+=dt;Pose(dt);blood?.Refresh();
+            if(DeathTime>=BurnStarts)
+            {
+                // Simulate only the part of this tick after ignition, including
+                // large verification ticks. Pause and zero time never advance it.
+                float fireDt=DeathTime-Mathf.Max(before,BurnStarts);
+                if(before<BurnStarts&&burnVoice)burnVoice.Play();
+                if(deathEffects!=null)foreach(var p in deathEffects){p.Play();p.Simulate(fireDt,true,false,false);p.Pause();}
+                if(burnLight){burnLight.enabled=true;burnLight.intensity=(1.2f+Mathf.Sin(DeathTime*19)*.18f)*(1-Mathf.InverseLerp(6.2f,DisappearAfter,DeathTime));}
+                SetBurn(Mathf.InverseLerp(BurnStarts,5.2f,DeathTime),Mathf.InverseLerp(4.4f,7.2f,DeathTime));
+            }
+            if(DeathTime>=DisappearAfter)Retire();
         }
         void Move(float dt,Vector3 target,GameSession game)
         {
@@ -109,6 +158,7 @@ namespace Game
         }
         public void PoseFatal(float seconds,Vector3 position,Vector3 camera)
         {
+            if(throatLight)throatLight.enabled=false;
             Graph();transform.SetPositionAndRotation(position,Quaternion.LookRotation(Vector3.ProjectOnPlane(camera-position,Vector3.up)));
             for(int i=0;i<5;i++)mixer.SetInputWeight(i,i==2?1:0);poses[2].SetTime(Mathf.Repeat(seconds,bite.length));graph.Evaluate(0);blood?.Refresh();
         }

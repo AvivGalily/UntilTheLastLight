@@ -1,5 +1,17 @@
 # Until the Last Light — playable forest prototype
 
+**0.13.0:** Use the **mouse wheel** to switch axe/shotgun, or **TAB** to choose an owned weapon in the pack. TAB also closes it. The original fire-head frequency is restored: up to two active, with 42–60-second recurrence (48 after the introduction, 18 after load). The forest now contains **nine wolves**, up from five. First-person hands have smoother anatomy, a separate trigger pose, fitted cuffs/sleeves, detailed living skin and continuous UV-seam lighting. The Walker still retreats into mist and returns after 10–15 seconds; head music, collapse/burn/disappearance remain active.
+
+**עברית — 0.13.0:** הגלגלת מחליפה בין גרזן לרובה ציד שנאספו. TAB פותח וסוגר את התיק, ובו כפתור לבחירת כל נשק. תדירות היצור שיורק אש הוחזרה: עד שניים פעילים ומרווחים של 42–60 שניות. נוספו ארבעה זאבים, וביער תשעה בסך הכול. הידיים שופרו עם אצבעות חלקות יותר, אחיזת הדק נפרדת, עור חי ושרוולים עם חפתים וקפלים.
+
+In **0.13.0**, use **1** for the axe and **2** for the shotgun; both the number row and numpad work. A selection made during an axe swing or reload waits until that action finishes. **R or B** changes the flashlight battery with either weapon, including during a shotgun reload; **T** reloads the shotgun. The flashlight stays in the left hand and the shotgun in the right. Find the burning car beside the **research station**, with the wounded human casualty, shotgun and letter to Mr. Norton. Closing the letter introduces a dead human head crawling on six articulated legs. These creatures pursue you in the forest and in lit buildings; the flashlight does not repel them. An aimed shotgun blast or two axe hits kill one. A first fireball causes a burn that heals after ten seconds of active play; a second fireball during recovery is fatal. The HUD displays the recovery timer. The player's shadow matches the standing/crouching body, and the personal flashlight does not cast that body into its beam. Anatomical equipment arms continue into the body below the view.
+
+**עברית — אחיזה בנשק:** כשבוחרים ברובה הציד, הפנס נשאר ביד שמאל והרובה מוחזק ביד ימין. שתי הידיים נראות גם בזמן ירי וטעינה.
+
+**עברית — מקשי הנשק והפנס:** **1** לגרזן, **2** לרובה הציד, בשורת המספרים או בלוח הספרות. לחיצה במהלך מכה או טעינה נשמרת ומתבצעת בסיום הפעולה. **R או B** מחליפים סוללת פנס עם כל נשק, גם במהלך טעינת הרובה. **T** טוען את הרובה.
+
+**עברית:** לצד **תחנת המחקר** חפשו את הרכב הבוער, הגופה, רובה הציד והמכתב לנורטון. הסצנה הועברה במלואה מבקתת השומר. סגירת המכתב מפעילה את הופעת המפלצת החדשה. האור אינו מגן מפניה, גם בבתים. ירייה מכוונת או שתי מכות גרזן הורגות אותה. אחרי כדור אש ראשון צריך לשרוד עשר שניות עד להחלמה; פגיעה נוספת בזמן הזה הורגת. הצל מותאם למידות הגוף ולתנוחת הכריעה; הפנס האישי אינו מטיל אותו קדימה, והזרועות ממשיכות אל הגוף מחוץ לשדה הראייה.
+
 In **0.10.0**, the player casts a human shadow and holds the axe with a textured anatomical hand. The Walker resumes navigation after feeding instead of remaining stuck at the victim. A lethal attack now shows a 5.6-second close feeding sequence with camera fall, defensive hands, blood and new creature/tearing sounds before the death menu. Wolf bites include a short committed lunge and recovery; deaths show an articulated side collapse and settling.
 
 In **0.9.0**, the injured adult by the old oak is caught in spider silk. When the creature pounces, the silk tears and he falls into the existing feeding sequence; the subsequent flashlight failure and escape remain. The creature has new decayed-enamel and wounded-lip textures with pointed teeth and a smoother bite closure.
@@ -9,9 +21,9 @@ In **0.8.1**, all three buildings have modeled wooden entrance plaques with yell
 Open `Builds/Windows/UntilTheLastLight.exe` and choose **התחלת המסע / Begin the journey**. Hebrew is the default; change language on the title screen or in Settings. The choice is remembered.
 Keep the executable alongside `UntilTheLastLight_Data`, `UnityPlayer.dll` and the other build files.
 
-This is the **0.10.0** M2 forest slice. Restore the ranger cabin's circuit with the fuse from the east storehouse, then use the north gate. The four-cabin campaign and revolver finale are still pending.
+This is the **0.12.0** M2 forest slice. Restore the ranger cabin's circuit with the fuse from the east storehouse, then use the north gate. The four-cabin campaign and revolver finale are still pending.
 
-The playable area is now **280×280m**, compared with 120×120m previously. Search the surveyor's body beside the first bend north of the starting cabin with **E** to acquire the map. **M** opens it only after discovery. Four bodies carry documents that remain available in **J**. The sketch marks all buildings, bodies, protective lantern and exit, with no live position marker.
+The playable area is now **280×280m**, compared with 120×120m previously. Search the surveyor's body beside the first bend north of the starting cabin with **E** to acquire the map. **M** opens it only after discovery. The four trail bodies and the new wreck casualty carry documents that remain available in **J**. The sketch marks the existing forest landmarks, protective lantern and exit, with no live position marker.
 
 The abandoned research station has three rooms and a corridor. Its dim bulb **does not repel the creature**. The spider-human creature opens its tooth-filled jaw as it approaches; its eight legs move with its gait. Directional clicks and a rising drone/pulse follow real proximity. Distant wolf howls occur occasionally; visual warnings include a translated caption.
 
@@ -20,7 +32,8 @@ The abandoned research station has three rooms and a corridor. Its dim bulb **do
 ## Controls
 
 - WASD / mouse: move / look. Shift: run. Ctrl: crouch.
-- F: flashlight. Hold right mouse: boost. R: replace a battery.
+- F: flashlight. Hold right mouse: boost. R or B: replace a flashlight battery with either weapon.
+- 1: axe. 2: shotgun (number row or numpad). Left mouse: attack. T: reload the shotgun's two barrels in 1.7 seconds. A busy weapon finishes its swing/reload before a queued selection takes effect. Initial ammunition is 2 loaded + 12 spare; extra cartridge boxes are in the buildings.
 - E: interact. Hold E at an emergency charger: recover to 35% in 12 seconds.
 - E beside the first corpse: take the axe. Left mouse: swing; two hits kill an undead wolf.
 - Tab: inventory. M: map. J: journal. Esc: pause.

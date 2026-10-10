@@ -79,7 +79,7 @@ namespace Game.Editor
                 if(!human||human.bounds.size.y>.65f||Mathf.Max(human.bounds.size.x,human.bounds.size.z)<1.55f||!body.GetComponent<BloodySurface>())throw new Exception("Human corpse axes/anatomy/blood are wrong.");
             }
             if(!game.encounters||!game.damage||!game.axe||!game.foley||!game.foley.scream||!game.foley.hurt||!game.foley.injury)throw new Exception("Combat/foley feedback is unwired.");
-            if(game.wolves.Length!=5||!Array.TrueForAll(game.wolves,w=>w&&w.animator&&w.idle&&w.run&&w.bite&&w.death&&w.blood))throw new Exception("Five animated undead wolves are required.");
+            if(game.wolves.Length!=9||!Array.TrueForAll(game.wolves,w=>w&&w.animator&&w.idle&&w.run&&w.bite&&w.death&&w.blood))throw new Exception("Nine animated undead wolves are required.");
             var axe=Array.Find(game.items,i=>i.kind==ItemKind.Axe);
             if(!axe||Vector3.Distance(axe.transform.position,ForestLayout.Bodies[0])>2)throw new Exception("Axe must be beside the closest body.");
             var attack=game.inputTemplate.FindAction("Attack");

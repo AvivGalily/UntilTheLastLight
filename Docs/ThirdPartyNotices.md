@@ -1,8 +1,8 @@
-# Asset and tool provenance — 0.10.0
+# Asset and tool provenance — 0.11.3
 
 ## Player presence and fatal presentation
 
-`player_body_01` and `player_axe_hand_01` are derived in Blender from the project's retained CC0 MakeHuman/MPFB graphics and clothing, using the already credited Mindfront skin. They preserve source skin/clothing UVs; the anatomy is posed/extracted by `Tools/Blender/player_presence.py`. The shadow body, shaft grip, defensive hand poses and runtime camera/contact choreography are project authored. GPL authoring addon code remains outside the Unity game assets.
+`player_body_01` and `player_axe_hand_01` are derived in Blender from the project's retained CC0 MakeHuman/MPFB graphics and clothing, using the already credited Mindfront skin. They preserve source skin/clothing UVs; the anatomy is posed/extracted by `Tools/Blender/player_presence.py`. The shadow body, grounded bent-leg crouch morph, shaft grip, body-connected first-person forearm deformation, defensive hand poses and runtime camera/contact choreography are project authored. The existing hand also supplies the mirrored flashlight grip. GPL authoring addon code remains outside the Unity game assets.
 
 `wolf_motion.py` replaces the project's bite/death actions on the same credited CC0 NewDLC wolf, retaining its weighted anatomy, fur/bone maps and idle/run actions. The 1.3-second bite and 2.4-second death are original animation, not imported game clips.
 
@@ -82,8 +82,22 @@ The wolf's exposed half-skull, orbit, mandible, teeth and tissue are original ge
 
 Asset research considered the [Fab Zombie Wolf](https://www.fab.com/listings/3af4d914-b493-4005-97c0-8f7ea98a2513) (a paid anthropomorphic character rather than the required quadruped), [tylercwilson's wolf-skull scan](https://sketchfab.com/3d-models/wolf-skull-a2bc88557be8455fa0a46f8cd20d11cd), and tabletop STL options. The downloadable [NewDLC CC0 wolf](https://opengameart.org/content/3d-wolf) remains the licensed base. Horror presentation reference: [Dead Space lighting development talk by Motive](https://www.gdcvault.com/play/1029020/-Dead-Space-Harnessing-the). These research references supply no redistributed assets.
 
+## Norton wreck and lightless heads — 0.11.0
+
+The new vehicle adapts [Car by Creomoto](https://opengameart.org/content/car-0), licensed **CC0** by its creator. The original source and download SHA-256 are retained in `ArtSource/Vendor/creomoto`. MakeHuman/MPFB CC0 anatomy, clothing and Mindfront epidermis are reused for the dead human head, eviscerated adult casualty and shotgun hands. The six articulated legs, exposed intestines, shotgun, animation clips and Unity flame shader are original project work. Existing licensed PBR skin, fabric, wood and steel maps are reused; no new imagegen output is claimed for this release.
+
+`head_introduction`, `head_growl`, `head_bite`, `head_spit` and `head_death` are original processed layers from the previously credited CC0 ghost recording. `shotgun_fire`, `shotgun_reload`, `shotgun_empty`, `wreck_fire` and `fireball_impact` are original deterministic synthesis. `Tools/generate_norton_audio.py` reproduces them. [Nightdive's official The Thing: Remastered page](https://nightdivestudios.com/the-thing-remastered/) supplies the head-spider design reference; its commercial assets are not included. See `NortonEncounter.md` for implementation and source details.
+
+## Encounter art and score revision — 0.12.0
+
+The revised Cinder head retains the credited CC0 human anatomy, epidermis, pore/roughness and oral/bone maps. Sunken facial contours, torn lips, pointed teeth, tendons, claws, grounded death animation and char/ash shader are original project adaptations. `head_score.wav` is an original seamless twelve-second oscillator composition; it uses no additional recording or sample license. Source and deterministic reproduction remain in `Tools/Blender/norton_assets.py` and `Tools/generate_norton_audio.py`.
+
 ## Engine, authoring tools and fonts
 
 Unity Engine and packages retain their applicable Unity/package licenses. Unity runtime is included in the Windows build. [Blender](https://www.blender.org/about/license/) is a separate authoring tool and is not bundled.
 
 TextMesh Pro includes Liberation Sans under SIL OFL 1.1. Hebrew uses [Noto Sans Hebrew](https://github.com/notofonts/noto-fonts/tree/main/hinted/ttf/NotoSansHebrew), also SIL OFL 1.1. Their notices are stored with the fonts and copied into the Windows build.
+
+## Equipment hand revision — 0.13.0
+
+Both first-person hand grips retain the credited CC0 MakeHuman/MPFB anatomical surface and Mindfront skin albedo/normal maps. Subdivision, a separate shotgun index pose, fitted rounded cuffs/sleeves, cloth folds and UVs are project-authored adaptations. Dedicated PlayerSkin and PlayerSleeve materials reuse the licensed human skin and existing project fabric maps. Authored smooth UV-seam normals are retained during body-connected arm deformation. No new downloaded character, generated image or recording is included in this revision.

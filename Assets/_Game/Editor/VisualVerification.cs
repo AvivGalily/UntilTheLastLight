@@ -74,6 +74,7 @@ namespace Game.Editor
         }
         static void Shot(Camera camera,string name,Vector3 position,Vector3 target,bool beam)
         {
+            foreach(var arm in UnityEngine.Object.FindObjectsByType<FirstPersonArm>(FindObjectsSortMode.None))arm.Pose();
             camera.transform.SetPositionAndRotation(position,Quaternion.LookRotation(target-position));
             camera.fieldOfView=65;
             camera.GetComponentInChildren<Light>().enabled=beam;

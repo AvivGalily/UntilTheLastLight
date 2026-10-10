@@ -32,7 +32,7 @@ namespace Game
                 if(hit.collider.GetComponentInParent<PlayerMotor>()==game.player&&game.ReceiveHeadAttack(true,owner))PlayerImpacts++;
                 Impact();return;
             }
-            transform.position+=delta;flame.Simulate(dt,true,false,false);flame.Pause();
+            transform.position+=delta;flame.Play();flame.Simulate(dt,true,false,false);flame.Pause();
             glow.intensity=2.4f+Mathf.Sin(age*31)*.4f;
             if(age>7||transform.position.y<-.2f)Impact();
         }

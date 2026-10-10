@@ -6,6 +6,7 @@ namespace Game
         public CharacterController controller;
         public Camera view;
         public Transform hand;
+        public Transform handLight;
         public float Stamina { get; private set; } = 1;
         public bool Moving { get; private set; }
         public bool Sprinting { get; private set; }
@@ -57,7 +58,6 @@ namespace Game
         public bool PhysicalWound => physicalWound;
         public float FireRecoveryRemaining { get; private set; }
         bool physicalWound;
-        float fireContactCooldown;
         public bool Dead { get; private set; }
         public float Invulnerability { get; private set; }
         float shelterTime;
@@ -72,17 +72,16 @@ namespace Game
         {
             if(dt<=0)return;
             FireRecoveryRemaining=Mathf.Max(0,FireRecoveryRemaining-dt);
-            fireContactCooldown=Mathf.Max(0,fireContactCooldown-dt);
             Invulnerability = Mathf.Max(0, Invulnerability - dt);
             shelterTime = safe ? shelterTime + dt : 0;
             if (shelterTime >= tuning.woundRecovery) physicalWound = false;
         }
         public bool HitFire()
         {
-            if(Dead||fireContactCooldown>0)return false;
+            if(Dead)return false;
             if(FireRecoveryRemaining>0)Dead=true;else FireRecoveryRemaining=10;
-            fireContactCooldown=.2f;return true;
+            return true;
         }
-        public void Restore(bool wounded,float fireRemaining=0) { physicalWound = wounded; FireRecoveryRemaining=Mathf.Clamp(fireRemaining,0,10);fireContactCooldown=0;Dead = false; Invulnerability = 10; shelterTime = 0; }
+        public void Restore(bool wounded,float fireRemaining=0) { physicalWound = wounded; FireRecoveryRemaining=Mathf.Clamp(fireRemaining,0,10);Dead = false; Invulnerability = 10; shelterTime = 0; }
     }
 }

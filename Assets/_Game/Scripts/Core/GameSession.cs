@@ -72,6 +72,8 @@ namespace Game
         Dictionary<string, int> initialItems;
         float messageTimer, charging;
         WorldItem heldItem;
+        HeldWeapon? queuedWeapon;
+        public HeldWeapon RequestedWeapon=>queuedWeapon??Inventory.Weapon;
         bool started;
         ScreenMode settingsReturn=ScreenMode.Title;
         Vector3 gateClosed;
@@ -111,8 +113,23 @@ namespace Game
         public void AcquireMap() { HasMap=true;Notify(Text("map_acquired"),8); }
         public bool Pressed(string name) => inputs.TryGetValue(name, out var input) && input.WasPressedThisFrame();
         bool Held(string name) => inputs.TryGetValue(name, out var input) && input.IsPressed();
+        public bool SelectWeapon(HeldWeapon weapon)
+        {
+            if(!started||(!State.Running&&State.Mode!=ScreenMode.Inventory)||Condition.Dead||!Inventory.OwnsWeapon(weapon))return false;
+            queuedWeapon=weapon;ApplyWeaponSelection();hud.Invalidate();return true;
+        }
+        void ApplyWeaponSelection()
+        {
+            if(!queuedWeapon.HasValue|| (axe&&axe.Swinging)||(shotgun&&shotgun.ReloadRemaining>0))return;
+            if(Inventory.OwnsWeapon(queuedWeapon.Value))Inventory.Weapon=queuedWeapon.Value;
+            queuedWeapon=null;
+            // Inventory selection runs while simulation is paused: update both
+            // models immediately without consuming ammunition or advancing time.
+            axe?.Simulate(0,this);shotgun?.Simulate(0,this);
+        }
         public void StartNew()
         {
+            queuedWeapon=null;
             deathSequence?.ResetSequence();presence?.ResetPresence();
             Inventory.Restore(2, false); Flashlight.Restore(100, true); Condition.Restore(false);
             HasMap=false;horrorAudio?.ResetSequence(tuning.seed);ambience?.ResetSequence(tuning.seed);
@@ -147,7 +164,7 @@ namespace Game
         public void Notify(string message, float seconds = 4) { Message = message; messageTimer = seconds; }
         public void Pause() { if (started && State.Running) State.Set(ScreenMode.Pause); }
         public void Resume() { if (started&&!Condition.Dead) State.Set(ScreenMode.Playing); }
-        public void ReturnToTitle() { deathSequence?.ResetSequence();foley?.StopInjury();damage?.ResetFeedback();State.Set(ScreenMode.Title); }
+        public void ReturnToTitle() { queuedWeapon=null;deathSequence?.ResetSequence();foley?.StopInjury();damage?.ResetFeedback();State.Set(ScreenMode.Title); }
         public bool ReceiveAttack(bool lethal,ZombieWolf attackingWolf=null)
         {
             if(!State.Running||IsSafe||!Condition.Hit(tuning.player,lethal))return false;
@@ -201,6 +218,7 @@ namespace Game
                     if (!initialItems.ContainsKey(record.id) || record.remaining > initialItems[record.id]) throw new InvalidDataException("Unknown pickup in checkpoint.");
                 foreach(var id in data.deadWolves)if(!Array.Exists(wolves,w=>w.persistentId==id))throw new InvalidDataException("Unknown wolf in checkpoint.");
                 State.Set(ScreenMode.Pause);
+                queuedWeapon=null;
                 deathSequence?.ResetSequence();presence?.ResetPresence();
                 Inventory.Restore(data.batteries, data.fuse,data.axe); Flashlight.Restore(data.charge, data.flashlightOn);
                 Inventory.RestoreWeapon(data.shotgun,data.loadedShells,data.spareShells,(HeldWeapon)data.weapon);
@@ -233,14 +251,19 @@ namespace Game
             if(Pressed("Fullscreen"))ToggleFullscreen();
             Display.Tick();
             if(State.Mode==ScreenMode.Dying){deathSequence.Simulate(Time.deltaTime);hud.Refresh();return;}
+            if(Pressed("Inventory")&&started&&!Condition.Dead)
+            {
+                if(State.Running)State.Set(ScreenMode.Inventory);
+                else if(State.Mode==ScreenMode.Inventory)Resume();
+                hud.Refresh();return;
+            }
             if (Pressed("Back"))
             {
                 if (State.Running) Pause();
                 else if (State.Mode != ScreenMode.Title && State.Mode != ScreenMode.Dead && State.Mode != ScreenMode.Complete) Resume();
             }
             if (!State.Running) { hud.Refresh(); return; }
-            if (Pressed("Inventory")) State.Set(ScreenMode.Inventory);
-            else if (Pressed("Journal")) State.Set(ScreenMode.Journal);
+            if (Pressed("Journal")) State.Set(ScreenMode.Journal);
             else if (Pressed("Map")) OpenMap();
             if (!State.Running) { hud.Refresh(); return; }
             // One ordered simulation coordinator. Light snapshot follows movement; AI follows light.
@@ -250,10 +273,13 @@ namespace Game
             presence?.Simulate(dt,player);
             Physics.SyncTransforms();
             if (Pressed("Flashlight")) Flashlight.Toggle();
-            if(Pressed("EquipAxe")&&Inventory.HasAxe&&!axe.Swinging&&(!shotgun||shotgun.ReloadRemaining<=0))Inventory.Weapon=HeldWeapon.Axe;
-            if(Pressed("EquipShotgun")&&Inventory.HasShotgun&&!axe.Swinging&&shotgun.ReloadRemaining<=0)Inventory.Weapon=HeldWeapon.Shotgun;
+            if(inputs.TryGetValue("CycleWeapon",out var wheel)&&Mathf.Abs(wheel.ReadValue<float>())>.01f)
+                SelectWeapon(Inventory.NextWeapon(RequestedWeapon));
+            if(Pressed("EquipAxe"))SelectWeapon(HeldWeapon.Axe);
+            if(Pressed("EquipShotgun"))SelectWeapon(HeldWeapon.Shotgun);
+            ApplyWeaponSelection();
             if(Pressed("Reload")&&Inventory.ShotgunEquipped)shotgun.BeginReload(this);
-            if((Pressed("BatterySwap")||(Pressed("Reload")&&!Inventory.ShotgunEquipped))&&!Flashlight.BeginSwap(Inventory))Notify(Text(Flashlight.Faulted?"repair_house_only":"no_spares"));
+            if(Pressed("BatterySwap")&&!Flashlight.BeginSwap(Inventory))Notify(Text(Flashlight.Faulted?"repair_house_only":"no_spares"));
             Flashlight.Tick(dt, Held("Boost"));
             flashlightVisual.enabled = Flashlight.Active;
             flashlightVisual.range = Flashlight.Range;

@@ -150,21 +150,26 @@
       "source": "ArtSource/Blender/cinder_head_01.blend",
       "export": "Assets/_Game/Art/Meshes/cinder_head_01.fbx",
       "units": "metres",
-      "triangles": 59134,
+      "triangles": 71136,
       "lodTriangles": {
-        "LOD0": 59134
+        "LOD0": 71136
       },
       "materials": [
-        "CadaverEyes",
-        "CadaverLimb",
-        "CadaverSkin",
-        "CrawlerGums",
-        "CrawlerTeeth",
-        "CrawlerThroat",
-        "HumanBrows",
-        "HumanHair"
+        "CinderBone",
+        "CinderEyes",
+        "CinderGums",
+        "CinderLimb",
+        "CinderSkin",
+        "CinderTeeth",
+        "CinderThroat"
       ],
       "textures": [
+        "Assets/_Game/Art/Textures/HumanSkin0_BaseColor.png",
+        "Assets/_Game/Art/Textures/HumanSkin0_Normal.png",
+        "Assets/_Game/Art/Textures/HumanSkin0_Mask.png",
+        "Assets/_Game/Art/Textures/CrawlerSkin_BaseColor.png",
+        "Assets/_Game/Art/Textures/CrawlerSkin_Normal.png",
+        "Assets/_Game/Art/Textures/CrawlerSkin_Mask.png",
         "Assets/_Game/Art/Textures/CrawlerGums_BaseColor.png",
         "Assets/_Game/Art/Textures/CrawlerGums_Normal.png",
         "Assets/_Game/Art/Textures/CrawlerGums_Mask.png",
@@ -174,12 +179,12 @@
         "Assets/_Game/Art/Textures/CrawlerThroat_BaseColor.png",
         "Assets/_Game/Art/Textures/CrawlerThroat_Normal.png",
         "Assets/_Game/Art/Textures/CrawlerThroat_Mask.png",
-        "Assets/_Game/Art/Textures/HumanBrows_BaseColor.png",
-        "Assets/_Game/Art/Textures/HumanBrows_Normal.png",
-        "Assets/_Game/Art/Textures/HumanBrows_Mask.png",
-        "Assets/_Game/Art/Textures/HumanHair_BaseColor.png",
-        "Assets/_Game/Art/Textures/HumanHair_Normal.png",
-        "Assets/_Game/Art/Textures/HumanHair_Mask.png"
+        "Assets/_Game/Art/Textures/WolfBone_BaseColor.png",
+        "Assets/_Game/Art/Textures/WolfBone_Normal.png",
+        "Assets/_Game/Art/Textures/WolfBone_Mask.png",
+        "Assets/_Game/Art/Textures/HumanEyes_BaseColor.png",
+        "Assets/_Game/Art/Textures/HumanEyes_Normal.png",
+        "Assets/_Game/Art/Textures/HumanEyes_Mask.png"
       ],
       "collider": "separate simple Unity collider; decorative foliage has no collision",
       "blendShapes": [],
@@ -192,7 +197,7 @@
       ],
       "bones": 28,
       "license": "CC0 MakeHuman/MPFB anatomy and Mindfront skin; original project adaptation, six-legged rig and exposed viscera",
-      "status": "Human UV head on six articulated organic legs; 28 bones, idle/scuttle/bite/spit/death clips"
+      "status": "Sunken asymmetric anatomical UV head, necrotic lips and pointed rotten teeth; six continuous muscle/tendon legs and hooked claws; 28 bones; idle/scuttle/bite/spit and 3.2-second grounded folding/side-roll death; dedicated human pore/roughness materials with bruised veins and Unity char/ash dissolution"
     },
     {
       "id": "crow_01",
@@ -283,7 +288,13 @@
         "Assets/_Game/Art/Textures/HumanOutfit2_Mask.png",
         "Assets/_Game/Art/Textures/HumanSkin0_BaseColor.png",
         "Assets/_Game/Art/Textures/HumanSkin0_Normal.png",
-        "Assets/_Game/Art/Textures/HumanSkin0_Mask.png"
+        "Assets/_Game/Art/Textures/HumanSkin0_Mask.png",
+        "Assets/_Game/Art/Textures/CrawlerSkin_BaseColor.png",
+        "Assets/_Game/Art/Textures/CrawlerSkin_Normal.png",
+        "Assets/_Game/Art/Textures/CrawlerSkin_Mask.png",
+        "Assets/_Game/Art/Textures/CrawlerGums_BaseColor.png",
+        "Assets/_Game/Art/Textures/CrawlerGums_Normal.png",
+        "Assets/_Game/Art/Textures/CrawlerGums_Mask.png"
       ],
       "collider": "separate simple Unity collider; decorative foliage has no collision",
       "blendShapes": [],
@@ -845,17 +856,10 @@
       },
       "materials": [
         "BurnedRubber.001",
-        "Steel",
-        "Timber"
+        "ShotgunSteel",
+        "ShotgunWood"
       ],
-      "textures": [
-        "Assets/_Game/Art/Textures/Steel_BaseColor.png",
-        "Assets/_Game/Art/Textures/Steel_Normal.png",
-        "Assets/_Game/Art/Textures/Steel_Mask.png",
-        "Assets/_Game/Art/Textures/Timber_BaseColor.png",
-        "Assets/_Game/Art/Textures/Timber_Normal.png",
-        "Assets/_Game/Art/Textures/Timber_Mask.png"
-      ],
+      "textures": [],
       "collider": "separate simple Unity collider; decorative foliage has no collision",
       "blendShapes": [],
       "animations": [],
@@ -899,28 +903,28 @@
       "source": "ArtSource/Blender/player_axe_hand_01.blend",
       "export": "Assets/_Game/Art/Meshes/player_axe_hand_01.fbx",
       "units": "metres",
-      "triangles": 15408,
+      "triangles": 63632,
       "lodTriangles": {
-        "LOD0": 15408
+        "LOD0": 63632
       },
       "materials": [
-        "HumanOutfit2",
-        "HumanSkin0"
+        "PlayerSkin",
+        "PlayerSleeve"
       ],
       "textures": [
-        "Assets/_Game/Art/Textures/HumanOutfit2_BaseColor.png",
-        "Assets/_Game/Art/Textures/HumanOutfit2_Normal.png",
-        "Assets/_Game/Art/Textures/HumanOutfit2_Mask.png",
         "Assets/_Game/Art/Textures/HumanSkin0_BaseColor.png",
         "Assets/_Game/Art/Textures/HumanSkin0_Normal.png",
-        "Assets/_Game/Art/Textures/HumanSkin0_Mask.png"
+        "Assets/_Game/Art/Textures/HumanSkin0_Mask.png",
+        "Assets/_Game/Art/Textures/BodyFabric_BaseColor.png",
+        "Assets/_Game/Art/Textures/BodyFabric_Normal.png",
+        "Assets/_Game/Art/Textures/BodyFabric_Mask.png"
       ],
       "collider": "separate simple Unity collider; decorative foliage has no collision",
       "blendShapes": [],
       "animations": [],
       "bones": 0,
       "license": "CC0 MakeHuman/MPFB anatomy, clothing and Mindfront skin; project pose and extraction",
-      "status": "Human forearm, palm, nails and five fingers posed around the axe shaft; retained UV skin and clothing"
+      "status": "Subdivided CC0 anatomical palm, thumb/nails and four curled fingers; separate shotgun index pose; retained human UV epidermis/normal maps; fitted original sleeve and rounded cuff with fabric weave; body-connected forearm retains authored smooth UV-seam normals"
     },
     {
       "id": "player_body_01",
@@ -960,11 +964,41 @@
         "Assets/_Game/Art/Textures/HumanSkin0_Mask.png"
       ],
       "collider": "separate simple Unity collider; decorative foliage has no collision",
+      "blendShapes": [
+        "Crouch"
+      ],
+      "animations": [],
+      "bones": 0,
+      "license": "CC0 MakeHuman/MPFB anatomy, clothing and Mindfront skin; project pose and extraction",
+      "status": "Full clothed anatomical shadow body with grounded, bent-leg Crouch morph; Unity uniform capsule-height calibration"
+    },
+    {
+      "id": "player_shotgun_hand_01",
+      "source": "ArtSource/Blender/player_shotgun_hand_01.blend",
+      "export": "Assets/_Game/Art/Meshes/player_shotgun_hand_01.fbx",
+      "units": "metres",
+      "triangles": 63632,
+      "lodTriangles": {
+        "LOD0": 63632
+      },
+      "materials": [
+        "PlayerSkin",
+        "PlayerSleeve"
+      ],
+      "textures": [
+        "Assets/_Game/Art/Textures/HumanSkin0_BaseColor.png",
+        "Assets/_Game/Art/Textures/HumanSkin0_Normal.png",
+        "Assets/_Game/Art/Textures/HumanSkin0_Mask.png",
+        "Assets/_Game/Art/Textures/BodyFabric_BaseColor.png",
+        "Assets/_Game/Art/Textures/BodyFabric_Normal.png",
+        "Assets/_Game/Art/Textures/BodyFabric_Mask.png"
+      ],
+      "collider": "separate simple Unity collider; decorative foliage has no collision",
       "blendShapes": [],
       "animations": [],
       "bones": 0,
       "license": "CC0 MakeHuman/MPFB anatomy, clothing and Mindfront skin; project pose and extraction",
-      "status": "Full clothed anatomical shadow body"
+      "status": "Subdivided CC0 anatomical palm, thumb/nails and four curled fingers; separate shotgun index pose; retained human UV epidermis/normal maps; fitted original sleeve and rounded cuff with fabric weave; body-connected forearm retains authored smooth UV-seam normals"
     },
     {
       "id": "ranger_cabin_01",

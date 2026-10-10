@@ -24,12 +24,12 @@ namespace Game.Tests
         }
         [Test] public void PlayerShadowAndGripContainTexturedHumanAnatomy()
         {
-            foreach(string id in new[]{"player_body_01","player_axe_hand_01"})
+            foreach(string id in new[]{"player_body_01","player_axe_hand_01","player_shotgun_hand_01"})
             {
                 var source=AssetDatabase.LoadAssetAtPath<GameObject>("Assets/_Game/Art/Meshes/"+id+".fbx");Assert.That(source,Is.Not.Null);
-                var meshes=source.GetComponentsInChildren<MeshFilter>();Assert.That(meshes.Sum(m=>m.sharedMesh.vertexCount),Is.GreaterThan(id.Contains("hand")?300:8000));
-                Assert.True(meshes.All(m=>m.sharedMesh.uv.Length==m.sharedMesh.vertexCount));
-                Assert.True(source.GetComponentsInChildren<Renderer>().SelectMany(r=>r.sharedMaterials).Any(m=>m.name.StartsWith("HumanSkin")));
+                var meshes=source.GetComponentsInChildren<MeshFilter>().Select(m=>m.sharedMesh).Concat(source.GetComponentsInChildren<SkinnedMeshRenderer>().Select(m=>m.sharedMesh)).ToArray();Assert.That(meshes.Sum(m=>m.vertexCount),Is.GreaterThan(id.Contains("hand")?300:8000));
+                Assert.True(meshes.All(m=>m.uv.Length==m.vertexCount));
+                Assert.True(source.GetComponentsInChildren<Renderer>().SelectMany(r=>r.sharedMaterials).Any(m=>id.Contains("hand")?m.name=="PlayerSkin":m.name.StartsWith("HumanSkin")));
             }
         }
         [Test] public void WolfDeathHasArticulatedCollapseAndFiniteSettledPose()
@@ -84,6 +84,12 @@ namespace Game.Tests
             var data=new SaveData{checkpoint="Ranger cabin",charge=17,axe=true,deadWolves=new[]{"undead_wolf_0","undead_wolf_3"},documents=new string[0],pickups=new[]{new ItemRecord{id="surveyor_axe",remaining=0}}};
             var copy=JsonUtility.FromJson<SaveData>(JsonUtility.ToJson(data));SaveService.Validate(copy);Assert.True(copy.axe);Assert.That(copy.deadWolves,Is.EqualTo(data.deadWolves));
             copy.deadWolves=new[]{"undead_wolf_0","undead_wolf_0"};Assert.Throws<InvalidDataException>(()=>SaveService.Validate(copy));
+        }
+        [Test] public void AllNineWolfKillsSurviveTheExistingSaveSchema()
+        {
+            var data=new SaveData{checkpoint="Ranger cabin",charge=17,axe=true,deadWolves=Enumerable.Range(0,9).Select(n=>"undead_wolf_"+n).ToArray(),documents=new string[0],pickups=new ItemRecord[0]};
+            var copy=JsonUtility.FromJson<SaveData>(JsonUtility.ToJson(data));SaveService.Validate(copy);
+            Assert.That(copy.deadWolves,Is.EqualTo(data.deadWolves));Assert.That(copy.deadWolves[8],Is.EqualTo("undead_wolf_8"));
         }
         [Test] public void WolfClipsContainSkeletalMotionAndProperLoopFlags()
         {

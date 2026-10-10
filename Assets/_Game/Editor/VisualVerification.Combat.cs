@@ -1,5 +1,6 @@
 using System;
 using UnityEngine;
+using UnityEngine.AI;
 namespace Game.Editor
 {
     public static partial class VisualVerification
@@ -7,11 +8,23 @@ namespace Game.Editor
         static void VerifyCombat(GameSession game)
         {
             game.Resume();game.Flashlight.Restore(100,false);
+            var wolfIds=new System.Collections.Generic.HashSet<string>();var wolfPath=new NavMeshPath();
+            Require(game.wolves.Length==9,"expanded wolf population missing");
+            foreach(var resident in game.wolves)
+            {
+                var p=resident.transform.position;Require(wolfIds.Add(resident.persistentId),"duplicate wolf persistence identity");
+                Require(NavMesh.SamplePosition(p,out var ground,.15f,NavMesh.AllAreas)&&Vector3.Distance(ground.position,p)<.15f,"wolf starts outside navigation: "+resident.persistentId);
+                Require(!Physics.CheckCapsule(p+Vector3.up*.4f,p+Vector3.up*.8f,.34f,game.SolidMask,QueryTriggerInteraction.Ignore),"wolf trapped in scenery: "+resident.persistentId);
+                Require(NavMesh.CalculatePath(p,ForestLayout.Cabin+Vector3.forward*8,NavMesh.AllAreas,wolfPath)&&wolfPath.status==NavMeshPathStatus.PathComplete,"wolf territory disconnected: "+resident.persistentId);
+                Require(!game.Protection.InShelter(p+Vector3.up*.7f),"wolf starts inside refuge");
+            }
+            Debug.Log("WOLF POPULATION PASS: nine unique persistent wolves; clear grounded starts and complete routes from all original/new territories; no refuge spawn.");
             VerifyDisplayUI(game);
             VerifyCabinSigns(game);
             Vector3 clearing=new Vector3(-75,0,-86);
             game.player.Teleport(clearing,0);game.player.Simulate(game.tuning.player,Vector2.zero,Vector2.zero,false,false,.02f);Physics.SyncTransforms();
             VerifyPlayerPresence(game);
+            VerifyFogRetreat(game,clearing);
             Require(game.ThreatEnabled&&!game.Inventory.HasFuse,"threat still waits for fuse tutorial");
             int encounters=game.monster.EncounterCount;
             Require(game.encounters.TryReturn(game),"no reachable distant return candidate");

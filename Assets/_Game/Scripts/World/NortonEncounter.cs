@@ -11,6 +11,9 @@ namespace Game
         public Light carLight;
         public AudioSource introduction,fireVoice;
         public AudioClip introductionClip;
+        public AudioSource approachMusic;
+        public const float MinRespite=42,MaxRespite=60;
+        public bool MusicEngaged {get;private set;}
         public Transform wreck,casualty;
         public bool Unlocked {get;private set;}
         public bool Introduced {get;private set;}
@@ -22,12 +25,25 @@ namespace Game
         public void ResetEncounter(bool unlocked=false,bool introduced=false)
         {
             Unlocked=unlocked;Introduced=introduced;Appearances=0;clock=0;random=new System.Random(141818);NextAppearance=introduced?18:0;
-            foreach(var enemy in enemies){enemy.voice.Stop();enemy.gameObject.SetActive(false);}
+            foreach(var enemy in enemies)enemy.Retire();
+            StopMusic();
             foreach(var p in projectiles)p.ResetProjectile();introduction.Stop();
             foreach(var p in carEffects){p.Stop(true,ParticleSystemStopBehavior.StopEmittingAndClear);p.Play();p.Pause();}
             if(!fireVoice.isPlaying)fireVoice.Play();
         }
-        public void SilenceEnemies(){introduction.Stop();foreach(var enemy in enemies)enemy.voice.Stop();}
+        public void SilenceEnemies(){introduction.Stop();StopMusic();foreach(var enemy in enemies){enemy.voice.Stop();if(enemy.burnVoice)enemy.burnVoice.Stop();}}
+        float NextRespite()=>Mathf.Lerp(MinRespite,MaxRespite,(float)random.NextDouble());
+        void StopMusic(){MusicEngaged=false;if(approachMusic){approachMusic.Stop();approachMusic.volume=0;}}
+        void Music(float dt,GameSession game)
+        {
+            float distance=float.PositiveInfinity;
+            foreach(var e in enemies)if(e.gameObject.activeSelf&&e.Alive)distance=Mathf.Min(distance,Vector3.Distance(e.transform.position,game.player.transform.position));
+            if(float.IsPositiveInfinity(distance)){StopMusic();return;}
+            if(distance<24)MusicEngaged=true;
+            if(!MusicEngaged||!approachMusic)return;
+            if(!approachMusic.isPlaying)approachMusic.Play();
+            approachMusic.volume=Mathf.MoveTowards(approachMusic.volume,Mathf.Lerp(.035f,.13f,Mathf.InverseLerp(24,2,distance)),dt*.12f);
+        }
         public bool LaunchFireball(Vector3 origin,Vector3 target,CinderHead shooter)
         {
             foreach(var projectile in projectiles)if(!projectile.gameObject.activeSelf){projectile.Launch(origin,target,shooter);return true;}return false;
@@ -35,7 +51,9 @@ namespace Game
         public bool TrySpawn(GameSession game,bool initial=false)
         {
             CinderHead available=null;
-            foreach(var e in enemies)if(!e.gameObject.activeSelf||(!e.Alive&&e.DeathTime>12)){available=e;break;}
+            // Each pool slot stays occupied until its collapse/burn has finished.
+            // A second living head may join the encounter on the normal cadence.
+            foreach(var e in enemies)if(!e.gameObject.activeSelf){available=e;break;}
             if(!available)return false;
             Vector3 player=game.player.transform.position;
             Vector3 building=Vector3.Distance(player,ForestLayout.Cabin)<8?ForestLayout.Cabin:Vector3.Distance(player,ForestLayout.Store)<8?ForestLayout.Store:ForestLayout.Research;
@@ -57,7 +75,7 @@ namespace Game
         {
             if(dt<=0||!game.State.Running)return;clock+=dt;
             Shader.SetGlobalFloat("_NortonTime",clock);
-            foreach(var p in carEffects){p.Simulate(dt,true,false,false);p.Pause();}
+            foreach(var p in carEffects){p.Play();p.Simulate(dt,true,false,false);p.Pause();}
             carLight.intensity=3.3f+Mathf.Sin(clock*13)*.45f+Mathf.Sin(clock*23)*.35f;
             if(!Unlocked||game.Completed)return;
             if(game.forestEncounter&&game.forestEncounter.Choreographing)return;
@@ -68,14 +86,15 @@ namespace Game
             else
             {
                 NextAppearance-=dt;
-                if(NextAppearance<=0){if(TrySpawn(game))NextAppearance=42+(float)random.NextDouble()*18;else NextAppearance=5;}
+                if(NextAppearance<=0){if(TrySpawn(game))NextAppearance=NextRespite();else NextAppearance=5;}
             }
             foreach(var e in enemies)
             {
                 if(!e.gameObject.activeSelf)continue;
-                if(e.Alive&&Vector3.Distance(e.transform.position,game.player.transform.position)>80){e.voice.Stop();e.gameObject.SetActive(false);continue;}
+                if(e.Alive&&Vector3.Distance(e.transform.position,game.player.transform.position)>80){e.Retire();continue;}
                 e.Simulate(dt,game);if(!game.State.Running)return;
             }
+            Music(dt,game);
             foreach(var p in projectiles){p.Simulate(dt,game);if(!game.State.Running)return;}
         }
     }

@@ -12,8 +12,10 @@ namespace Game.Tests
         {var c=new PlayerCondition();c.Restore(false);Assert.True(c.HitFire());Assert.True(c.Wounded);Assert.False(c.Dead);c.Tick(1,false,new PlayerTuning());Assert.True(c.HitFire());Assert.True(c.Dead);}
         [Test] public void FireRecoversAfterTenSecondsOutsideShelter()
         {var c=new PlayerCondition();c.Restore(false);c.HitFire();c.Tick(9.99f,false,new PlayerTuning());Assert.True(c.Wounded);c.Tick(.011f,false,new PlayerTuning());Assert.False(c.Wounded);Assert.True(c.HitFire());Assert.False(c.Dead);}
-        [Test] public void SameContactCannotDoubleHitAndZeroTimeDoesNotHeal()
-        {var c=new PlayerCondition();c.HitFire();Assert.False(c.HitFire());c.Tick(0,true,new PlayerTuning());Assert.That(c.FireRecoveryRemaining,Is.EqualTo(10));Assert.False(c.Dead);}
+        [Test] public void ZeroTimeDoesNotHeal()
+        {var c=new PlayerCondition();c.HitFire();c.Tick(0,true,new PlayerTuning());Assert.That(c.FireRecoveryRemaining,Is.EqualTo(10));Assert.False(c.Dead);}
+        [Test] public void TwoDistinctFireballsInTheSameFrameAreFatal()
+        {var c=new PlayerCondition();Assert.True(c.HitFire());Assert.True(c.HitFire());Assert.True(c.Dead);}
         [Test] public void FireHealingDoesNotRemoveAnOrdinaryBiteWound()
         {var c=new PlayerCondition();var t=new PlayerTuning();c.Hit(t);c.HitFire();c.Tick(10,false,t);Assert.True(c.PhysicalWound);Assert.True(c.Wounded);Assert.That(c.FireRecoveryRemaining,Is.Zero);}
         [Test] public void ShotgunUsesOneShellAndReloadPreservesTotalAmmo()

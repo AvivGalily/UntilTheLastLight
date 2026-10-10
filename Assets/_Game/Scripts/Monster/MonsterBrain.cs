@@ -4,7 +4,7 @@ using UnityEngine.AI;
 
 namespace Game
 {
-    public enum MonsterState { Dormant, Watching, Stalking, Approaching, Hunting, AttackWindup, Repelled, Dead }
+    public enum MonsterState { Dormant, Watching, Stalking, Approaching, Hunting, AttackWindup, Repelled, RetreatingToFog, Dead }
     public sealed class MonsterBrain : MonoBehaviour
     {
         public Transform body;
@@ -22,6 +22,13 @@ namespace Game
         public float ActualSpeed {get;private set;}
         public int EncounterCount {get;private set;}
         public bool Relentless {get;set;}
+        public bool RetreatingToFog {get;private set;}
+        public float FogFade {get;private set;}
+        Renderer[] fogSurfaces;
+        UnityEngine.Rendering.ShadowCastingMode[] shadowModes;
+        MaterialPropertyBlock fogBlock;
+        NavMeshPath escapePath;
+        int escapeCorner;
         public float WindupDuration {get;private set;}=1.2f;
         float planning, cooldown, huntTime, retreatTime, life;
         float blockedTime;
@@ -30,7 +37,7 @@ namespace Game
         int patrol;
         public void Initialize(Vector3[] spawns, PlayerMotor player, LightProtectionService light, MonsterTuning tuning, bool restore)
         {
-            Relentless=false;gameObject.SetActive(false); HasSpawned = false; State = MonsterState.Dormant;
+            Relentless=RetreatingToFog=false;escapePath=null;gameObject.SetActive(false); HasSpawned = false; State = MonsterState.Dormant;
             Senses.Reset(); Planner.Clear(); Attack.ResetEncounter();
             planning=huntTime=retreatTime=life=blockedTime=0;Distance=100;ActualSpeed=0;EncounterCount=Detours=0;patrol=0;NavigationReady=false;
             foreach (Vector3 point in spawns)
@@ -45,7 +52,7 @@ namespace Game
                 bool inView = Vector3.Angle(player.view.transform.forward, nav.position + Vector3.up * 1.5f - player.view.transform.position) < player.view.fieldOfView * .8f;
                 if (inView && light.Clear(player.view.transform.position, nav.position + Vector3.up * 1.5f)) continue;
                 // One placement at creation/load; never called as an AI movement strategy.
-                transform.position = nav.position; HasSpawned = true;NavigationReady=true; gameObject.SetActive(true);
+                transform.position = nav.position;Distance=d;SetFogFade(Mathf.InverseLerp(24,tuning.fogRetreatDistance,d));HasSpawned = true;NavigationReady=true; gameObject.SetActive(true);
                 float closest=float.PositiveInfinity;for(int i=0;i<ForestLayout.Patrol.Length;i++){float near=Vector3.Distance(transform.position,ForestLayout.Patrol[i]);if(near<closest){closest=near;patrol=i;}}
                 cooldown = restore ? tuning.restoreGraceSeconds : 2;EncounterCount=1;Senses.Remember(player.transform.position,25);Transition(MonsterState.Watching, "initial spawn"); break;
             }
@@ -61,7 +68,7 @@ namespace Game
         public void RestoreTutorial(bool value) { EverRepelled=value; }
         public void Disappear()
         {
-            Attack.Cancel();Planner.Clear();Senses.Reset();HasSpawned=false;ActualSpeed=0;Distance=100;
+            Attack.Cancel();Planner.Clear();Senses.Reset();RetreatingToFog=false;escapePath=null;HasSpawned=false;ActualSpeed=0;Distance=100;
             foreach(var source in GetComponentsInChildren<AudioSource>())source.Stop();
             Transition(MonsterState.Dormant,"vanished out of view");gameObject.SetActive(false);
         }
@@ -70,12 +77,32 @@ namespace Game
             if(dt<=0)return;
             Vector3 before=transform.position;SimulateBrain(dt,game);
             ActualSpeed=Vector3.Distance(before,transform.position)/dt;
+            bool scripted=game.forestEncounter&&game.forestEncounter.OwnsMonster;
+            float distance=Vector3.Distance(transform.position,game.player.transform.position);
+            SetFogFade(game.mechanicsTest||scripted?0:Mathf.SmoothStep(0,1,Mathf.InverseLerp(24,game.tuning.monster.fogRetreatDistance,distance)));
+        }
+        void SetFogFade(float value)
+        {
+            FogFade=value;
+            if(fogSurfaces==null)
+            {
+                fogSurfaces=GetComponentsInChildren<Renderer>(true);shadowModes=new UnityEngine.Rendering.ShadowCastingMode[fogSurfaces.Length];fogBlock=new MaterialPropertyBlock();
+                for(int i=0;i<fogSurfaces.Length;i++)shadowModes[i]=fogSurfaces[i].shadowCastingMode;
+            }
+            for(int i=0;i<fogSurfaces.Length;i++)
+            {
+                var r=fogSurfaces[i];r.GetPropertyBlock(fogBlock);fogBlock.SetFloat("_FogFade",value);r.SetPropertyBlock(fogBlock);
+                r.shadowCastingMode=value>0?UnityEngine.Rendering.ShadowCastingMode.Off:shadowModes[i];
+            }
         }
         public void BeginEncounter(Vector3 position,Vector3 target)
         {
             gameObject.SetActive(false);transform.position=position;HasSpawned=true;ActualSpeed=0;
             Attack.ResetEncounter();Planner.Clear();Senses.Reset();Senses.Remember(target,28);
-            planning=huntTime=retreatTime=blockedTime=0;cooldown=2;NavigationReady=true;Distance=Vector3.Distance(position,target);EncounterCount++;
+            planning=huntTime=retreatTime=blockedTime=0;RetreatingToFog=false;escapePath=null;cooldown=2;NavigationReady=true;Distance=Vector3.Distance(position,target);EncounterCount++;
+            // Scripted leap/feeding can own a new encounter before Tick runs.
+            // The normal navigation tick applies distant mist concealment.
+            SetFogFade(0);
             gameObject.SetActive(true);if(breath&&breath.clip)breath.Play();Transition(MonsterState.Approaching,"distant return");
         }
         // Cinematic contact can leave the wide collision capsule outside the navigation surface.
@@ -112,6 +139,18 @@ namespace Game
             bool pursuing=game.ThreatEnabled&&!game.mechanicsTest&&!safe;
             if(Relentless||pursuing)Senses.Remember(playerFeet,28);
             game.Flashlight.ObserveProtection(protection != Protection.None || safe, dt);
+            if(RetreatingToFog&&!safe&&light.PointBlank(transform.position))
+            {RetreatingToFog=false;escapePath=null;cooldown=0;}
+            // Light wins this encounter: continue escaping after leaving the cone,
+            // rather than immediately returning to the beam's outer edge.
+            if(protection==Protection.Full&&!safe&&!game.mechanicsTest&&!(game.forestEncounter&&game.forestEncounter.OwnsMonster))RetreatingToFog=true;
+            if(RetreatingToFog)
+            {
+                Attack.Cancel();Planner.Clear();EverRepelled=true;Transition(MonsterState.RetreatingToFog,"escaping light into fog");
+                if(body)body.localRotation=Quaternion.identity;
+                if(protection!=Protection.None)Retreat(dt,game);else EscapeToFog(dt,game);
+                return;
+            }
             if (protection == Protection.Full || retreatTime > 0)
             {
                 Attack.Cancel(); Planner.Clear(); EverRepelled = true;
@@ -196,6 +235,30 @@ namespace Game
                 if (score > best) { best = score; destination = candidate; }
             }
             Move(destination, game, true);
+        }
+        void EscapeToFog(float dt,GameSession game)
+        {
+            var t=game.tuning.monster;Vector3 from=transform.position,target=game.player.transform.position;
+            if(escapePath==null||escapeCorner>=escapePath.corners.Length||Vector3.Distance(escapePath.corners[escapePath.corners.Length-1],target)<t.fogRetreatDistance-2)
+            {
+                escapePath=null;Vector3 away=Vector3.ProjectOnPlane(from-target,Vector3.up).normalized;
+                foreach(float angle in new[]{0f,30f,-30f,60f,-60f,90f,-90f,120f,-120f})
+                {
+                    Vector3 candidate=target+Quaternion.Euler(0,angle,0)*away*(t.fogRetreatDistance+3);
+                    if(!NavMesh.SamplePosition(candidate,out var nav,2,NavMesh.AllAreas)||Vector3.Distance(nav.position,target)<t.fogRetreatDistance)continue;
+                    if(!MonsterPathPlanner.StandingClear(nav.position,t,game.SolidMask)||game.Protection.Capsule(nav.position,t.radius,t.height)!=Protection.None)continue;
+                    var route=new NavMeshPath();
+                    if(!NavMesh.CalculatePath(from,nav.position,NavMesh.AllAreas,route)||route.status!=NavMeshPathStatus.PathComplete||route.corners.Length<2)continue;
+                    // Never pick a route that starts by running back towards the player.
+                    if(Vector3.Dot(route.corners[1]-from,away)<-.1f)continue;
+                    escapePath=route;escapeCorner=1;break;
+                }
+            }
+            if(escapePath==null){Retreat(dt,game);return;}
+            var points=escapePath.corners;
+            while(escapeCorner<points.Length&&Vector3.Distance(from,points[escapeCorner])<.15f)escapeCorner++;
+            if(escapeCorner>=points.Length)return;
+            if(!Move(Vector3.MoveTowards(from,points[escapeCorner],t.retreatSpeed*dt),game,true)){escapePath=null;Retreat(dt,game);}
         }
         bool TryDetour(float distance,GameSession game)
         {

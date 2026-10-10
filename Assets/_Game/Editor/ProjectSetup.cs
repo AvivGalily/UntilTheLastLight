@@ -43,10 +43,11 @@ namespace Game.Editor
             Directory.CreateDirectory("Docs");
             var tags = new SerializedObject(AssetDatabase.LoadAllAssetsAtPath("ProjectSettings/TagManager.asset")[0]);
             string[] layerNames={"WorldSolid","Player","Monster","Interactable","LightBlocker","Trigger","Decor"};
+            var renderingNames=tags.FindProperty("m_RenderingLayers");if(renderingNames.arraySize<2)renderingNames.arraySize=2;renderingNames.GetArrayElementAtIndex(1).stringValue="Player body shadow";
             for(int n=0;n<layerNames.Length;n++) tags.FindProperty("layers").GetArrayElementAtIndex(8+n).stringValue=layerNames[n];
             tags.ApplyModifiedPropertiesWithoutUndo();
             PlayerSettings.companyName="Blackpine Studio";PlayerSettings.productName="Until the Last Light";
-            PlayerSettings.bundleVersion="0.11.0";PlayerSettings.defaultScreenWidth=1600;PlayerSettings.defaultScreenHeight=900;
+            PlayerSettings.bundleVersion="0.13.0";PlayerSettings.defaultScreenWidth=1600;PlayerSettings.defaultScreenHeight=900;
             PlayerSettings.fullScreenMode=FullScreenMode.FullScreenWindow;PlayerSettings.resizableWindow=true;PlayerSettings.runInBackground=false;
             PlayerSettings.SetScriptingBackend(UnityEditor.Build.NamedBuildTarget.Standalone,ScriptingImplementation.Mono2x);
             PlayerSettings.SetApiCompatibilityLevel(UnityEditor.Build.NamedBuildTarget.Standalone,ApiCompatibilityLevel.NET_Standard);
@@ -58,21 +59,22 @@ namespace Game.Editor
             var renderer=Asset<UniversalRendererData>(Root+"/Data/Renderer.asset");
             var pipeline=AssetDatabase.LoadAssetAtPath<UniversalRenderPipelineAsset>(Root+"/Data/UniversalPipeline.asset");
             if(!pipeline){pipeline=UniversalRenderPipelineAsset.Create(renderer);AssetDatabase.CreateAsset(pipeline,Root+"/Data/UniversalPipeline.asset");}
-            pipeline.supportsHDR=true;pipeline.msaaSampleCount=2;pipeline.shadowDistance=55;
+            pipeline.supportsHDR=true;pipeline.msaaSampleCount=2;pipeline.shadowDistance=40;
             pipeline.supportsCameraDepthTexture=true;
-            pipeline.mainLightShadowmapResolution=2048;pipeline.additionalLightsShadowmapResolution=2048;pipeline.shadowCascadeCount=2;
+            pipeline.mainLightShadowmapResolution=4096;pipeline.additionalLightsShadowmapResolution=2048;pipeline.shadowCascadeCount=2;pipeline.cascade2Split=.18f;
             var pipelineSettings=new SerializedObject(pipeline);
             pipelineSettings.FindProperty("m_MainLightRenderingMode").intValue=(int)LightRenderingMode.PerPixel;
             pipelineSettings.FindProperty("m_MainLightShadowsSupported").boolValue=true;
             pipelineSettings.FindProperty("m_AdditionalLightsRenderingMode").intValue=(int)LightRenderingMode.PerPixel;
             pipelineSettings.FindProperty("m_AdditionalLightShadowsSupported").boolValue=true;
             pipelineSettings.FindProperty("m_SoftShadowsSupported").boolValue=true;
+            pipelineSettings.FindProperty("m_SupportsLightLayers").boolValue=true;
             pipelineSettings.ApplyModifiedPropertiesWithoutUndo();pipeline.maxAdditionalLightsCount=8;
             GraphicsSettings.defaultRenderPipeline=pipeline;QualitySettings.renderPipeline=pipeline;
             QualitySettings.vSyncCount=1;
             tuning=Asset<GameTuning>(Root+"/Data/BalancedPrototype.asset");
             tuning.monster.radius=.7f;tuning.monster.height=1.95f;tuning.monster.pointBlankRange=2.8f;
-            tuning.monster.encounterMinSeconds=28;tuning.monster.encounterMaxSeconds=46;tuning.monster.hiddenMinSeconds=3;tuning.monster.hiddenMaxSeconds=6;tuning.monster.vanishMinDistance=14;
+            tuning.monster.hiddenMinSeconds=10;tuning.monster.hiddenMaxSeconds=15;tuning.monster.vanishMinDistance=14;tuning.monster.fogRetreatDistance=32;
             tuning.monster.encounterMinSeconds=32;tuning.monster.encounterMaxSeconds=52;tuning.monster.encounterCooldown=14;tuning.monster.huntSeconds=14;
             EditorUtility.SetDirty(tuning);CreateInput();font=CreateFont();
             timber=Material("Weathered timber",new Color(.21f,.17f,.13f)); ground=Material("Forest floor",new Color(.09f,.12f,.115f));
@@ -126,11 +128,15 @@ namespace Game.Editor
             var move=map.AddAction("Move",InputActionType.Value);move.expectedControlType="Vector2";
             move.AddCompositeBinding("2DVector").With("Up","<Keyboard>/w").With("Down","<Keyboard>/s").With("Left","<Keyboard>/a").With("Right","<Keyboard>/d");
             map.AddAction("Look",InputActionType.Value,"<Mouse>/delta").expectedControlType="Vector2";
-            string[,] bindings={{"Sprint","<Keyboard>/leftShift"},{"Crouch","<Keyboard>/leftCtrl"},{"Interact","<Keyboard>/e"},{"Flashlight","<Keyboard>/f"},{"Boost","<Mouse>/rightButton"},{"Reload","<Keyboard>/r"},{"Inventory","<Keyboard>/tab"},{"Journal","<Keyboard>/j"},{"Map","<Keyboard>/m"}};
+            string[,] bindings={{"Sprint","<Keyboard>/leftShift"},{"Crouch","<Keyboard>/leftCtrl"},{"Interact","<Keyboard>/e"},{"Flashlight","<Keyboard>/f"},{"Boost","<Mouse>/rightButton"},{"Reload","<Keyboard>/t"},{"Journal","<Keyboard>/j"},{"Map","<Keyboard>/m"}};
             for(int i=0;i<bindings.GetLength(0);i++)map.AddAction(bindings[i,0],InputActionType.Button,bindings[i,1]);
             map.AddAction("Attack",InputActionType.Button,"<Mouse>/leftButton");
-            map.AddAction("EquipAxe",InputActionType.Button,"<Keyboard>/digit1");map.AddAction("EquipShotgun",InputActionType.Button,"<Keyboard>/digit2");map.AddAction("BatterySwap",InputActionType.Button,"<Keyboard>/b");
+            map.AddAction("EquipAxe",InputActionType.Button,"<Keyboard>/1").AddBinding("<Keyboard>/numpad1");
+            map.AddAction("EquipShotgun",InputActionType.Button,"<Keyboard>/2").AddBinding("<Keyboard>/numpad2");
+            map.AddAction("BatterySwap",InputActionType.Button,"<Keyboard>/r").AddBinding("<Keyboard>/b");
+            map.AddAction("CycleWeapon",InputActionType.Value,"<Mouse>/scroll/y").expectedControlType="Axis";
             var ui=asset.AddActionMap("UI");ui.AddAction("Back",InputActionType.Button,"<Keyboard>/escape");
+            ui.AddAction("Inventory",InputActionType.Button,"<Keyboard>/tab");
             ui.AddAction("Fullscreen",InputActionType.Button,"<Keyboard>/f11");
             File.WriteAllText(path,asset.ToJson());
             UnityEngine.Object.DestroyImmediate(asset);AssetDatabase.ImportAsset(path);inputs=AssetDatabase.LoadAssetAtPath<InputActionAsset>(path);
@@ -170,7 +176,7 @@ namespace Game.Editor
             if(!mechanics){session.ambience=CreateForestAmbience();session.atmosphere=CreateForestAtmosphere(player.view);}
             WireCombat(session,mechanics);
             if(!mechanics)WireLivingForest(session);
-            WireNorton(session,mechanics);session.items=items.ToArray();
+            WireNorton(session,mechanics);session.items=items.ToArray();ConfigurePlayerShadowLights(session);
             PrefabUtility.SaveAsPrefabAsset(player.gameObject,Root+"/Prefabs/Player.prefab");
             var spawn=new GameObject("checkpoint_ranger_cabin").transform;spawn.position=start;session.cabinSpawn=spawn;
             var points=new List<Transform>();
@@ -192,6 +198,7 @@ namespace Game.Editor
             var old=AssetDatabase.LoadAssetAtPath<NavMeshData>(navPath);
             if(old){EditorUtility.CopySerialized(navigation.navMeshData,old);navigation.RemoveData();navigation.navMeshData=old;navigation.AddData();}
             else AssetDatabase.CreateAsset(navigation.navMeshData,navPath);
+            if(!mechanics)PlaceWolvesOnNavigation(session);
             EditorSceneManager.SaveScene(scene,Root+"/Scenes/"+sceneName+".unity");
         }
         static PlayerMotor CreatePlayer(Vector3 position)
@@ -212,7 +219,7 @@ namespace Game.Editor
             Primitive("Gloved hand",PrimitiveType.Capsule,new Vector3(.23f,-.30f,.30f),new Vector3(.09f,.10f,.13f),timber,hand,false).transform.localRotation=Quaternion.Euler(25,0,0);
             flashlight.GetComponent<Renderer>().enabled=false;
             foreach(var r in hand.GetComponentsInChildren<Renderer>())if(r.name=="Lens")r.enabled=false;
-            ForestArt.Model("field_flashlight_01",new Vector3(-.24f,-.24f,.40f),Quaternion.Euler(90,0,0),hand);
+            motor.handLight=ForestArt.Model("field_flashlight_01",new Vector3(-.22f,-.18f,.43f),Quaternion.Euler(90,0,0),hand).transform;
             foreach(var r in hand.GetComponentsInChildren<Renderer>())if(r.name=="Gloved hand")r.transform.localPosition=new Vector3(-.23f,-.30f,.30f);
             PrefabUtility.SaveAsPrefabAsset(root,Root+"/Prefabs/Player.prefab");return motor;
         }

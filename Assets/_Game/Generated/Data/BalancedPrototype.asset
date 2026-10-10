@@ -66,8 +66,9 @@ MonoBehaviour:
     pointBlankRange: 2.8
     encounterMinSeconds: 32
     encounterMaxSeconds: 52
-    hiddenMinSeconds: 3
-    hiddenMaxSeconds: 6
+    hiddenMinSeconds: 10
+    hiddenMaxSeconds: 15
     vanishMinDistance: 14
+    fogRetreatDistance: 32
     pathCandidates: 12
   seed: 1407

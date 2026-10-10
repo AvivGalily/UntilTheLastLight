@@ -18,7 +18,7 @@ namespace Game
         }
         public void Simulate(float dt,GameSession game)
         {
-            if(dt<=0||game.Completed||game.mechanicsTest)return;if(rng==null)ResetSequence(game.tuning.seed);
+            if(dt<=0||!game.State.Running||game.Completed||game.mechanicsTest)return;if(rng==null)ResetSequence(game.tuning.seed);
             var monster=game.monster;
             // The scripted ambush can explicitly restore the same hidden creature.
             if(Hidden&&monster.HasSpawned){Hidden=false;remaining=NextInterval(game);unseen=0;}
@@ -38,8 +38,28 @@ namespace Game
             if(game.IsSafe||monster.Attack.WindingUp)return;
             if(!monster.HasSpawned)
             {if(TryReturn(game)){remaining=NextInterval(game);unseen=0;}return;}
+            float distance=Vector3.Distance(monster.transform.position,game.player.transform.position);
+            if(monster.RetreatingToFog)
+            {
+                // Dense fog conceals the final physical retreat even if the camera
+                // remains pointed at it. In clearer weather wait until out of view.
+                bool concealed=unseen>0||FogConceals(distance)||monster.FogFade>=.99f;
+                if(distance>=game.tuning.monster.fogRetreatDistance&&concealed)Hide(game);
+                return;
+            }
             if(remaining>0||unseen<3||Vector3.Distance(monster.transform.position,game.player.transform.position)<game.tuning.monster.vanishMinDistance)return;
-            monster.Disappear();Hidden=true;Vanishes++;
+            Hide(game);
+        }
+        public static bool FogConceals(float distance)
+        {
+            if(!RenderSettings.fog)return false;
+            float visibility=RenderSettings.fogMode==FogMode.Linear?Mathf.InverseLerp(RenderSettings.fogEndDistance,RenderSettings.fogStartDistance,distance):
+                Mathf.Exp(RenderSettings.fogMode==FogMode.Exponential?-RenderSettings.fogDensity*distance:-Mathf.Pow(RenderSettings.fogDensity*distance,2));
+            return visibility<=.035f;
+        }
+        void Hide(GameSession game)
+        {
+            game.monster.Disappear();Hidden=true;Vanishes++;
             hiddenRemaining=Mathf.Lerp(game.tuning.monster.hiddenMinSeconds,game.tuning.monster.hiddenMaxSeconds,(float)rng.NextDouble());
         }
         float NextInterval(GameSession game)=>Mathf.Lerp(game.tuning.monster.encounterMinSeconds,game.tuning.monster.encounterMaxSeconds,(float)rng.NextDouble());

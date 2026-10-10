@@ -18,7 +18,7 @@
     },
     {
       "id": "controls",
-      "value": "WASD move · Shift run · Ctrl crouch · E interact · F light · Right click boost · B battery · R reload · 1 axe / 2 shotgun · Left click attack · Tab pack · J notes · M map · Esc pause · F11 fullscreen"
+      "value": "WASD move · Shift run · Ctrl crouch · E interact · F light · Right click boost · R/B battery · T reload shotgun · 1 axe / 2 shotgun · Left click attack · Tab pack · J notes · M map · Esc pause · F11 fullscreen\nMouse wheel: switch weapon · TAB: weapon selection in pack"
     },
     {
       "id": "begin",
@@ -222,11 +222,11 @@
     },
     {
       "id": "resources",
-      "value": "LIGHT {0:0}%   SPARES {1}"
+      "value": "LIGHT {0:0}%   SPARES {1}\nR / B — flashlight battery"
     },
     {
       "id": "light_off",
-      "value": "LIGHT OFF"
+      "value": "LIGHT OFF · SPARES {0}\nR / B — flashlight battery"
     },
     {
       "id": "breath",
@@ -586,7 +586,7 @@
     },
     {
       "id": "shotgun_acquired",
-      "value": "Shotgun acquired. Left click fires · R reloads · 1 axe / 2 shotgun · B flashlight battery."
+      "value": "Shotgun acquired. Left click fires · T reloads · wheel or 1/2 switches · TAB weapon selection · R/B flashlight battery."
     },
     {
       "id": "shells_acquired",
@@ -598,11 +598,11 @@
     },
     {
       "id": "shotgun_empty",
-      "value": "The barrels are empty. Press R to reload."
+      "value": "The barrels are empty. Press T to reload."
     },
     {
       "id": "shotgun_hud",
-      "value": "Shotgun {0}/2 · spare {1} · R reload · 1 axe"
+      "value": "Shotgun {0}/2 · spare {1} · T reload · 1 axe"
     },
     {
       "id": "shotgun_stowed",
@@ -635,6 +635,30 @@
     {
       "id": "checkpoint_norton",
       "value": "Norton's letter"
+    },
+    {
+      "id": "weapon_axe",
+      "value": "Axe"
+    },
+    {
+      "id": "weapon_shotgun",
+      "value": "Shotgun"
+    },
+    {
+      "id": "weapon_equip",
+      "value": "Equip: {0}"
+    },
+    {
+      "id": "weapon_selected",
+      "value": "Selected: {0}"
+    },
+    {
+      "id": "weapon_missing",
+      "value": "{0} — not collected"
+    },
+    {
+      "id": "weapon_pack",
+      "value": "Selected weapon: {0}\nMouse wheel or 1/2 to switch. TAB opens/closes the pack."
     }
   ]
 }

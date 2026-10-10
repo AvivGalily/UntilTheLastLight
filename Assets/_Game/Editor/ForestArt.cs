@@ -145,20 +145,49 @@ namespace Game.Editor
             palette["Mouth"].shader=Shader.Find("Universal Render Pipeline/Unlit");palette["Mouth"].color=new Color(.035f,.008f,.009f);
             palette["Teeth"].color=new Color(.55f,.52f,.44f);
             NortonMaterials();
+            PlayerMaterials();
+        }
+        static void PlayerMaterials()
+        {
+            string path=ProjectSetup.Root+"/Materials/PlayerSkin.mat";
+            var skin=AssetDatabase.LoadAssetAtPath<Material>(path);
+            if(!skin){skin=new Material(palette["HumanSkin0"]);AssetDatabase.CreateAsset(skin,path);}else skin.CopyPropertiesFromMaterial(palette["HumanSkin0"]);
+            skin.SetColor("_BaseColor",new Color(.96f,.87f,.81f));skin.SetFloat("_BumpScale",1.05f);skin.SetFloat("_Smoothness",.65f);
+            skin.SetFloat("_Subsurface",.14f);skin.SetFloat("_OcclusionStrength",.35f);skin.SetFloat("_IlluminanceRolloff",.22f);
+            skin.SetFloat("_HighlightRolloff",1.5f);skin.SetFloat("_CadaverDecay",0);skin.SetFloat("_CinderDecay",0);
+            palette["PlayerSkin"]=skin;EditorUtility.SetDirty(skin);
+            var cloth=Pbr("BodyFabric","PlayerSleeve",new Vector2(2,3));palette["PlayerSleeve"]=cloth;
+            cloth.SetColor("_BaseColor",new Color(.17f,.23f,.20f));cloth.SetFloat("_BumpScale",.65f);cloth.SetFloat("_Smoothness",.3f);
+            EditorUtility.SetDirty(cloth);
         }
         static void NortonMaterials()
         {
-            string[] keys={"CadaverSkin","CadaverLimb","CadaverEyes","Viscera","BurnedSteel","BurnedRubber","BurnedGlass"};
-            string[] sources={"HumanSkin0","CrawlerSkin","HumanEyes","CrawlerGums","Steel","Steel","Steel"};
-            Color[] colors={new Color(.56f,.64f,.57f),new Color(.40f,.43f,.36f),new Color(.58f,.58f,.52f),new Color(.60f,.31f,.35f),new Color(.10f,.095f,.08f),new Color(.026f,.024f,.021f),new Color(.07f,.09f,.08f)};
+            string[] keys={"CadaverSkin","CadaverLimb","CadaverEyes","Viscera","BurnedSteel","BurnedRubber","BurnedGlass","ShotgunSteel","ShotgunWood"};
+            string[] sources={"HumanSkin0","CrawlerSkin","HumanEyes","CrawlerGums","Steel","Steel","Steel","Steel","Timber"};
+            Color[] colors={new Color(.76f,.80f,.72f),new Color(.60f,.61f,.51f),new Color(.65f,.65f,.58f),new Color(.76f,.42f,.47f),new Color(.10f,.095f,.08f),new Color(.026f,.024f,.021f),new Color(.07f,.09f,.08f),new Color(.20f,.22f,.23f),new Color(.38f,.24f,.12f)};
             for(int i=0;i<keys.Length;i++)
             {
                 string path=ProjectSetup.Root+"/Materials/"+keys[i]+".mat";var surface=AssetDatabase.LoadAssetAtPath<Material>(path);
                 if(!surface){surface=new Material(palette[sources[i]]);AssetDatabase.CreateAsset(surface,path);}else surface.CopyPropertiesFromMaterial(palette[sources[i]]);
                 surface.SetColor("_BaseColor",colors[i]);surface.SetFloat("_Smoothness",keys[i]=="Viscera"?.63f:.13f);
-                if(keys[i]=="CadaverLimb"){surface.SetFloat("_WorldSkin",1);surface.SetFloat("_UseSkinAtlas",1);surface.SetFloat("_SkinScale",3.2f);}
+                if(keys[i]=="CadaverLimb"){surface.SetFloat("_WorldSkin",0);surface.SetFloat("_UseSkinAtlas",0);surface.SetTextureScale("_BaseMap",new Vector2(2,2));}
+                if(keys[i].StartsWith("Cadaver"))surface.SetFloat("_CadaverDecay",keys[i]=="CadaverEyes"?.9f:.8f);
                 if(keys[i]=="BurnedRubber")surface.SetFloat("_Metallic",0);
                 palette[keys[i]]=surface;EditorUtility.SetDirty(surface);
+            }
+            string[] headKeys={"CinderSkin","CinderLimb","CinderEyes","CinderHair","CinderGums","CinderTeeth","CinderThroat","CinderBone"};
+            string[] headSources={"HumanSkin0","CrawlerSkin","HumanEyes","HumanHair","CrawlerGums","CrawlerTeeth","CrawlerThroat","WolfBone"};
+            for(int i=0;i<headKeys.Length;i++)
+            {
+                string path=ProjectSetup.Root+"/Materials/"+headKeys[i]+".mat";var m=AssetDatabase.LoadAssetAtPath<Material>(path);
+                if(!m){m=new Material(palette[headSources[i]]);AssetDatabase.CreateAsset(m,path);}else m.CopyPropertiesFromMaterial(palette[headSources[i]]);
+                m.shader=palette["CrawlerSkin"].shader;m.SetFloat("_WorldSkin",0);m.SetFloat("_UseSkinAtlas",0);m.SetFloat("_CharAmount",0);m.SetFloat("_BurnAway",0);
+                m.SetFloat("_CadaverDecay",i<2?.52f:0);m.SetFloat("_CinderDecay",i<2?1:0);m.SetFloat("_SkinSpecular",.032f);m.SetFloat("_Subsurface",i<2?.10f:0);
+                m.SetFloat("_BumpScale",i<2?.8f:.6f);m.SetFloat("_Smoothness",i<2?.72f:i==2?.85f:i==4||i==6?.8f:.5f);
+                m.SetFloat("_IlluminanceRolloff",.7f);m.SetFloat("_HighlightRolloff",1.3f);
+                m.SetColor("_BaseColor",i<2?new Color(.94f,.82f,.84f):i==2?new Color(.66f,.56f,.49f):i==4?new Color(.48f,.18f,.22f):i==5?new Color(.76f,.70f,.52f):i==7?new Color(.64f,.61f,.5f):Color.white);
+                if(i==1)m.SetTextureScale("_BaseMap",new Vector2(2,2));
+                palette[headKeys[i]]=m;EditorUtility.SetDirty(m);
             }
         }
         static Material Pbr(string key,string name,Vector2? tile=null)
