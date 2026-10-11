@@ -146,6 +146,24 @@ namespace Game.Editor
             palette["Teeth"].color=new Color(.55f,.52f,.44f);
             NortonMaterials();
             PlayerMaterials();
+            foreach(string key in new[]{"IntroSkin0","IntroSkin1","IntroOutfit0","IntroOutfit1","IntroOutfit2","IntroEyes0","IntroEyes1","IntroEyes2"})
+            {
+                var surface=Pbr(key,key);surface.shader=Shader.Find("Universal Render Pipeline/Lit");
+                surface.SetColor("_BaseColor",Color.white);surface.SetFloat("_Metallic",0);
+                surface.SetFloat("_Smoothness",key.StartsWith("IntroEyes")?.52f:key.StartsWith("IntroSkin")?.24f:.12f);
+                surface.SetFloat("_BumpScale",.18f);
+                // Living skin has its own clean albedo, without corpse shaders/maps.
+                if(key.StartsWith("IntroSkin")){surface.DisableKeyword("_NORMALMAP");surface.DisableKeyword("_METALLICSPECGLOSSMAP");surface.DisableKeyword("_OCCLUSIONMAP");}
+                if(key.StartsWith("IntroEyes"))
+                {
+                    // The CC0 high-poly cornea uses a transparent atlas region.
+                    // Opaque rendering covers the sclera/iris with a black shell.
+                    surface.SetFloat("_AlphaClip",1);surface.SetFloat("_Cutoff",.42f);surface.EnableKeyword("_ALPHATEST_ON");
+                    surface.SetOverrideTag("RenderType","TransparentCutout");surface.renderQueue=2450;
+                    surface.DisableKeyword("_METALLICSPECGLOSSMAP");surface.DisableKeyword("_OCCLUSIONMAP");
+                }
+                EditorUtility.SetDirty(surface);
+            }
         }
         static void PlayerMaterials()
         {

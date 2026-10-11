@@ -138,6 +138,15 @@ namespace Game.Editor
             var ui=asset.AddActionMap("UI");ui.AddAction("Back",InputActionType.Button,"<Keyboard>/escape");
             ui.AddAction("Inventory",InputActionType.Button,"<Keyboard>/tab");
             ui.AddAction("Fullscreen",InputActionType.Button,"<Keyboard>/f11");
+            ui.FindAction("Back").AddBinding("<Gamepad>/start");
+            var opening=asset.AddActionMap("Intro");
+            var steer=opening.AddAction("Steer",InputActionType.Value);steer.expectedControlType="Axis";
+            steer.AddCompositeBinding("1DAxis").With("Negative","<Keyboard>/a").With("Positive","<Keyboard>/d");
+            steer.AddCompositeBinding("1DAxis").With("Negative","<Keyboard>/leftArrow").With("Positive","<Keyboard>/rightArrow");
+            steer.AddBinding("<Gamepad>/leftStick/x");
+            opening.AddAction("SkipIntro",InputActionType.Button,"<Keyboard>/space").AddBinding("<Gamepad>/buttonSouth");
+            opening.AddAction("LookAround",InputActionType.Value,"<Mouse>/delta").expectedControlType="Vector2";
+            opening.AddAction("LookStick",InputActionType.Value,"<Gamepad>/rightStick").expectedControlType="Vector2";
             File.WriteAllText(path,asset.ToJson());
             UnityEngine.Object.DestroyImmediate(asset);AssetDatabase.ImportAsset(path);inputs=AssetDatabase.LoadAssetAtPath<InputActionAsset>(path);
         }
@@ -199,6 +208,7 @@ namespace Game.Editor
             if(old){EditorUtility.CopySerialized(navigation.navMeshData,old);navigation.RemoveData();navigation.navMeshData=old;navigation.AddData();}
             else AssetDatabase.CreateAsset(navigation.navMeshData,navPath);
             if(!mechanics)PlaceWolvesOnNavigation(session);
+            if(!mechanics)WireForestIntro(session);
             EditorSceneManager.SaveScene(scene,Root+"/Scenes/"+sceneName+".unity");
         }
         static PlayerMotor CreatePlayer(Vector3 position)

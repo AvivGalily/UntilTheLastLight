@@ -1,0 +1,121 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: dc9e394df5b990f48aea8751aa2f13dc, type: 3}
+  m_Name: ForestIntroConfig
+  m_EditorClassIdentifier: Game.Runtime::Game.ForestIntroConfig
+  fadeIn: 3
+  dialogueStart: 8
+  gateApproach: 50
+  gateCrossed: 64
+  silence: 69
+  discovery: 80
+  threat: 84
+  blast: 92
+  blackout: 92.18
+  cabinWake: 98
+  duration: 110
+  cabinFade: 3
+  skipHold: 2
+  steeringLimit: 0.85
+  gateSteeringLimit: 0.08
+  steeringResponse: 3
+  wheelDegrees: 35
+  suspension: 0.009
+  headTilt: 2.2
+  gateDistance: 185
+  gateAssistDistance: 20
+  driveDistance: 265
+  lines:
+  - id: L01
+    speakerKey: intro_tyler
+    passenger: 1
+    start: 8
+    duration: 4.39
+    hebrewVoice: {fileID: 0}
+    englishVoice: {fileID: 8300000, guid: 76c39d894de2b58478b0dd76e269304c, type: 3}
+  - id: L02
+    speakerKey: intro_jack
+    passenger: 0
+    start: 14
+    duration: 4.07
+    hebrewVoice: {fileID: 0}
+    englishVoice: {fileID: 8300000, guid: 0a363033b048a7944917ecc1df795b25, type: 3}
+  - id: L03
+    speakerKey: intro_tyler
+    passenger: 1
+    start: 20
+    duration: 6.55
+    hebrewVoice: {fileID: 0}
+    englishVoice: {fileID: 8300000, guid: 2f0477a64aad7cd4c9a508cc6ecc4c17, type: 3}
+  - id: L04
+    speakerKey: intro_ethan
+    passenger: 2
+    start: 34
+    duration: 3.03
+    hebrewVoice: {fileID: 0}
+    englishVoice: {fileID: 8300000, guid: bceff3b252378094db140754c1d576b9, type: 3}
+  - id: L05
+    speakerKey: intro_jack
+    passenger: 0
+    start: 40
+    duration: 4.39
+    hebrewVoice: {fileID: 0}
+    englishVoice: {fileID: 8300000, guid: 3d1584048d47c8f4a8e12c4d490e6aff, type: 3}
+  - id: L06
+    speakerKey: intro_ethan
+    passenger: 2
+    start: 44.6
+    duration: 3.43
+    hebrewVoice: {fileID: 0}
+    englishVoice: {fileID: 8300000, guid: 1e1721d638521154fb26122b4691f4c6, type: 3}
+  - id: L07
+    speakerKey: intro_tyler
+    passenger: 1
+    start: 50
+    duration: 5.19
+    hebrewVoice: {fileID: 0}
+    englishVoice: {fileID: 8300000, guid: e668257b3930aaa48b497bdaca27361c, type: 3}
+  - id: L08
+    speakerKey: intro_jack
+    passenger: 0
+    start: 57
+    duration: 6.23
+    hebrewVoice: {fileID: 0}
+    englishVoice: {fileID: 8300000, guid: 82c082dee5bf89e42af968af187c1b9a, type: 3}
+  - id: L09
+    speakerKey: intro_tyler
+    passenger: 1
+    start: 64.5
+    duration: 3.91
+    hebrewVoice: {fileID: 0}
+    englishVoice: {fileID: 8300000, guid: 4ba5117d87edf9f449f8b1de9cd21978, type: 3}
+  - id: L10
+    speakerKey: intro_ethan
+    passenger: 2
+    start: 80
+    duration: 2.15
+    hebrewVoice: {fileID: 0}
+    englishVoice: {fileID: 8300000, guid: ae7d3391107ec844fb610bc3c0f580d1, type: 3}
+  - id: L11
+    speakerKey: intro_jack
+    passenger: 0
+    start: 86.25
+    duration: 3.19
+    hebrewVoice: {fileID: 0}
+    englishVoice: {fileID: 8300000, guid: e43a95f16a71f0a448ddc92d4703717a, type: 3}
+  - id: L12
+    speakerKey: intro_tyler
+    passenger: 1
+    start: 89.6
+    duration: 2.23
+    hebrewVoice: {fileID: 0}
+    englishVoice: {fileID: 8300000, guid: d47a21bb1d757ae46a5b52220f916cdb, type: 3}

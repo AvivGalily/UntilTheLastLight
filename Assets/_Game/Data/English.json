@@ -659,6 +659,86 @@
     {
       "id": "weapon_pack",
       "value": "Selected weapon: {0}\nMouse wheel or 1/2 to switch. TAB opens/closes the pack."
+    },
+    {
+      "id": "intro_L01",
+      "value": "Am I the only one who still can't believe what they're paying us?"
+    },
+    {
+      "id": "intro_L02",
+      "value": "If you feel guilty, I'll happily take your cut."
+    },
+    {
+      "id": "intro_L03",
+      "value": "Not a chance. One night's work, a month's pay. What could go wrong?"
+    },
+    {
+      "id": "intro_L04",
+      "value": "Doesn't it bother you they never said what we're hunting?"
+    },
+    {
+      "id": "intro_L05",
+      "value": "Wildlife. That's what the contract said."
+    },
+    {
+      "id": "intro_L06",
+      "value": "It also said no phones. You're all fine with that?"
+    },
+    {
+      "id": "intro_L07",
+      "value": "They paid half up front. For that money, I'd leave my pants at home."
+    },
+    {
+      "id": "intro_L08",
+      "value": "Look at that gate... Since when do you need a fence like that for boars?"
+    },
+    {
+      "id": "intro_L09",
+      "value": "Maybe the boars around here hate visitors."
+    },
+    {
+      "id": "intro_L10",
+      "value": "Wait... do you hear that?"
+    },
+    {
+      "id": "intro_L11",
+      "value": "That's... that's not an animal."
+    },
+    {
+      "id": "intro_L12",
+      "value": "Drive! Drive, now!"
+    },
+    {
+      "id": "intro_jack",
+      "value": "Jack"
+    },
+    {
+      "id": "intro_tyler",
+      "value": "Tyler"
+    },
+    {
+      "id": "intro_ethan",
+      "value": "Ethan"
+    },
+    {
+      "id": "intro_steer",
+      "value": "A / D — Steer  |  Mouse — Look around  |  Controller: both sticks"
+    },
+    {
+      "id": "intro_skip",
+      "value": "Hold SPACE / controller A for 2 seconds to skip"
+    },
+    {
+      "id": "intro_paused",
+      "value": "Drive paused. A checkpoint is saved after waking in the cabin."
+    },
+    {
+      "id": "intro_subtitles",
+      "value": "Opening subtitles: {0}"
+    },
+    {
+      "id": "intro_flash",
+      "value": "Opening flash: {0}"
     }
   ]
 }

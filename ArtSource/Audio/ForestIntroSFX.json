@@ -1,0 +1,104 @@
+{
+  "sampleRate": 22050,
+  "clips": [
+    {
+      "clip": "intro_diesel",
+      "seconds": 6,
+      "peak": 0.65,
+      "rms": 0.2673,
+      "clippedSamples": 0,
+      "sha256": "703d0c22ce1156e2abe9fb59a4d52d90464191fc0c1b3140653cd4d94020cedb"
+    },
+    {
+      "clip": "intro_gravel",
+      "seconds": 6,
+      "peak": 0.65,
+      "rms": 0.1455,
+      "clippedSamples": 0,
+      "sha256": "6837768dc09d71667b407e7d226e20d5149d984f91b9036452a41fdd6c0ec45b"
+    },
+    {
+      "clip": "intro_cabin_wind",
+      "seconds": 6,
+      "peak": 0.65,
+      "rms": 0.1162,
+      "clippedSamples": 0,
+      "sha256": "de3cc0f1fc2b4fe8d1fba826ccabbff9b191e7601948bb9e56bbe293f8e9bd21"
+    },
+    {
+      "clip": "intro_gate_creak",
+      "seconds": 2.5,
+      "peak": 0.65,
+      "rms": 0.161,
+      "clippedSamples": 0,
+      "sha256": "cafb58abc53d43ffa98225223f85e5a09e1eec062137a3f306c4a83361178160"
+    },
+    {
+      "clip": "intro_gate_latch",
+      "seconds": 0.7,
+      "peak": 0.65,
+      "rms": 0.0907,
+      "clippedSamples": 0,
+      "sha256": "74ae246c3d3f5d3f8f26882a963d86105d91a721d94a3ccaa2cab2a280fe11c1"
+    },
+    {
+      "clip": "intro_branch_snap",
+      "seconds": 0.8,
+      "peak": 0.65,
+      "rms": 0.0685,
+      "clippedSamples": 0,
+      "sha256": "2fcd60b9905e9be92db9e7641212040ed3b63079639ba6e80324fc077ad64476"
+    },
+    {
+      "clip": "intro_threat",
+      "seconds": 8,
+      "peak": 0.8,
+      "rms": 0.1098,
+      "clippedSamples": 0,
+      "sha256": "31e2569549e5037cffb44d511b4530881e04307df87752d8b5b45221e3fbdcf1"
+    },
+    {
+      "clip": "intro_blast",
+      "seconds": 3.8,
+      "peak": 0.8,
+      "rms": 0.0662,
+      "clippedSamples": 0,
+      "sha256": "5db43e8d3a18c8bb695e3cf892efeebea4a76c9b1fab5d5f36881a9e90281b2c"
+    },
+    {
+      "clip": "intro_impact_rattle",
+      "seconds": 1.6,
+      "peak": 0.65,
+      "rms": 0.0831,
+      "clippedSamples": 0,
+      "sha256": "ca48cab7ce32237b45d017533cd714945f0d1a241495d8425c53f9c0b93d448e"
+    },
+    {
+      "clip": "intro_tinnitus",
+      "seconds": 6,
+      "peak": 0.65,
+      "rms": 0.3402,
+      "clippedSamples": 0,
+      "sha256": "6695c42b1eb98fa347fb8113ff9f960999dfb64ddbf836b340471449d15692c1"
+    }
+  ],
+  "sources": [
+    {
+      "file": "ArtSource/Vendor/enemy-voices-cc0/ghost.wav",
+      "license": "CC0",
+      "sha256": "d3d2db1f5cf0d00017c9415099bedd6cca878ef8782a751460d07ed14c2ab9d6"
+    },
+    {
+      "file": "ArtSource/Vendor/yells-cc0/yelling sounds/3grunt1.wav",
+      "license": "CC0",
+      "sha256": "57b3a59c39ffe74a1706bcb85c451443c3b388d1f6423827b2af4af508c8416b"
+    },
+    {
+      "file": "ArtSource/Vendor/yells-cc0/yelling sounds/3yell13.wav",
+      "license": "CC0",
+      "sha256": "b8838d5dd7ea7f6c069774545b460223ca17327998251f76b99b82455177420f"
+    }
+  ],
+  "credits": "Ogrebane: Ghost; Brandon Morris / HaelDB: human grunts/yells. See Docs/ThirdPartyNotices.md.",
+  "mix": "Threat approaches from 84s; dialogue ducking retained. Boom at 92s; interior rattle at +0.09s; tinnitus through wake."
+}

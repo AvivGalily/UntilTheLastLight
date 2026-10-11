@@ -1,0 +1,47 @@
+{
+  "build": "0.13.0",
+  "bytes": 575578898,
+  "processId": 5780,
+  "exitCode": 0,
+  "graphics": "Direct3D 11 / Intel(R) Iris(R) Xe Graphics (ID=0xa7a0)",
+  "startupErrors": 0,
+  "editTestsPassed": 95,
+  "playTestsPassed": 14,
+  "unitTestsNote": "Both suites rerun and passed for the final 0.13.0 assets/code.",
+  "runtimeSmoke": "passed",
+  "nortonSmoke": "passed",
+  "standaloneDisplay": "passed",
+  "displayMeasurements": [
+    {
+      "mode": "FullScreenWindow",
+      "width": 1920,
+      "height": 1080,
+      "passed": true
+    },
+    {
+      "mode": "Windowed",
+      "width": 1600,
+      "height": 900,
+      "passed": true
+    },
+    {
+      "mode": "FullScreenWindow",
+      "width": 1920,
+      "height": 1080,
+      "passed": true
+    }
+  ],
+  "batchMode": false,
+  "checkedAt": "2026-10-12T00:05:00.5925507+03:00",
+  "introSmoke": "passed: supplied 12 VO and 4 effects; complete opening/cabin; real input; timed single cues; pause/skip/save/Continue",
+  "suppliedAudioFiles": 16,
+  "voicesManifest": "Docs/Audio/ForestOpening_VoiceManifest.json",
+  "audioProvenance": "Docs/Audio/ForestOpening_SuppliedAudio.json",
+  "sourceManifest": "ArtSource/Audio/Runway/Forest_Opening_Audio_Manifest.json",
+  "skinProvenance": "ArtSource/Textures/IntroHealthySkin_Imagegen.json",
+  "artEvidence": [
+    "Docs/Screenshots/73-intro-drive-english.png",
+    "Docs/Screenshots/78-intro-jack-alive.png",
+    "Docs/Screenshots/79-intro-back-seat-hunters.png"
+  ]
+}

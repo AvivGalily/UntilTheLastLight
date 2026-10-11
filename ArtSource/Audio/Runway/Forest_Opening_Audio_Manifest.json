@@ -1,0 +1,134 @@
+{
+  "project": "Last Light / Forest Opening",
+  "language": "en-US",
+  "voices": {
+    "Tyler": "Chad",
+    "Jack": "Clint",
+    "Ethan": "Brodie"
+  },
+  "dialogue": [
+    {
+      "id": "L01",
+      "speaker": "Tyler",
+      "text": "Am I the only one who still can't believe what they're paying us?",
+      "assetName": "VO_Tyler_L01",
+      "runwayTaskId": "81f8e2ef-5d27-48b5-aeb8-22feca579e7a",
+      "expectedExtension": ".mp3"
+    },
+    {
+      "id": "L02",
+      "speaker": "Jack",
+      "text": "If you feel guilty, I'll happily take your cut.",
+      "assetName": "VO_Jack_L02",
+      "runwayTaskId": "f7069302-b36b-4c6d-8bb5-2767ddcb7526",
+      "expectedExtension": ".mp3"
+    },
+    {
+      "id": "L03",
+      "speaker": "Tyler",
+      "text": "Not a chance. One night's work, a month's pay. What could go wrong?",
+      "assetName": "VO_Tyler_L03",
+      "runwayTaskId": "6be067cb-2801-4d61-ada3-6864c2291926",
+      "expectedExtension": ".mp3"
+    },
+    {
+      "id": "L04",
+      "speaker": "Ethan",
+      "text": "Doesn't it bother you they never said what we're hunting?",
+      "assetName": "VO_Ethan_L04",
+      "runwayTaskId": "e28316ff-27d0-48e7-927a-d541b481ec34",
+      "expectedExtension": ".mp3"
+    },
+    {
+      "id": "L05",
+      "speaker": "Jack",
+      "text": "Wildlife. That's what the contract said.",
+      "assetName": "VO_Jack_L05",
+      "runwayTaskId": "4403588d-0c3e-45ff-bb33-27ffda651986",
+      "expectedExtension": ".mp3"
+    },
+    {
+      "id": "L06",
+      "speaker": "Ethan",
+      "text": "It also said no phones. You're all fine with that?",
+      "assetName": "VO_Ethan_L06",
+      "runwayTaskId": "37d6b370-4663-436a-ac39-94500169e752",
+      "expectedExtension": ".mp3"
+    },
+    {
+      "id": "L07",
+      "speaker": "Tyler",
+      "text": "They paid half up front. For that money, I'd leave my pants at home.",
+      "assetName": "VO_Tyler_L07",
+      "runwayTaskId": "71379eb6-6bfe-4bbe-8fd9-aaa5b34d81b4",
+      "expectedExtension": ".mp3"
+    },
+    {
+      "id": "L08",
+      "speaker": "Jack",
+      "text": "Look at that gate... Since when do you need a fence like that for boars?",
+      "assetName": "VO_Jack_L08",
+      "runwayTaskId": "7c6f1af3-9259-45eb-ae3c-2562fbf70f23",
+      "expectedExtension": ".mp3"
+    },
+    {
+      "id": "L09",
+      "speaker": "Tyler",
+      "text": "Maybe the boars around here hate visitors.",
+      "assetName": "VO_Tyler_L09",
+      "runwayTaskId": "5da3f456-7876-4926-982c-9cb81a652c1f",
+      "expectedExtension": ".mp3"
+    },
+    {
+      "id": "L10",
+      "speaker": "Ethan",
+      "text": "Wait... do you hear that?",
+      "assetName": "VO_Ethan_L10",
+      "runwayTaskId": "6bafd2ee-6474-48a0-83be-5254f0cf6127",
+      "expectedExtension": ".mp3"
+    },
+    {
+      "id": "L11",
+      "speaker": "Jack",
+      "text": "That's... that's not an animal.",
+      "assetName": "VO_Jack_L11",
+      "runwayTaskId": "a61075fb-c5a0-4cf2-9606-f6dce48eeca5",
+      "expectedExtension": ".mp3"
+    },
+    {
+      "id": "L12",
+      "speaker": "Tyler",
+      "text": "Drive! Drive, now!",
+      "assetName": "VO_Tyler_L12",
+      "runwayTaskId": "6df3d597-7ce8-4f1a-9373-fc3e17b43805",
+      "expectedExtension": ".mp3"
+    }
+  ],
+  "effects": [
+    {
+      "assetName": "SFX_ForestVehicleAmbience",
+      "runwayTaskId": "23c9c238-04f7-491c-bd5d-dbf78c58b6e7",
+      "loop": true,
+      "expectedExtension": ".mp3"
+    },
+    {
+      "assetName": "SFX_ForestGate",
+      "runwayTaskId": "0e0b8c51-4dd8-4206-810b-acfdaaeeb2a6",
+      "loop": false,
+      "expectedExtension": ".mp3"
+    },
+    {
+      "assetName": "SFX_CreatureApproach",
+      "runwayTaskId": "54d27905-4b94-4997-a310-461dfea62552",
+      "loop": false,
+      "expectedExtension": ".mp3"
+    },
+    {
+      "assetName": "SFX_VehicleExplosion",
+      "runwayTaskId": "8ddb3999-f3f3-4c26-91a4-64472fe189d8",
+      "loop": false,
+      "expectedExtension": ".mp3"
+    }
+  ],
+  "notes": "Audio jobs submitted to Runway. Download generated clips from Runway workspace when complete; Unity can import MP3 directly, or convert to WAV. Check rendering and adjust timing to actual length. Generate separate tinnitus and wakeup foley if desired."
+}

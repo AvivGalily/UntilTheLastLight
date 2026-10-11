@@ -41,6 +41,9 @@ namespace Game
         public NortonEncounter norton;
         public ShotgunCombat shotgun;
         public ZombieWolf[] wolves=new ZombieWolf[0];
+        public ForestIntroDirector intro;
+        public bool introSubtitles=true,reducedIntroFlash;
+        public bool IntroCompleted {get;private set;}
         public Localization Locale { get; private set; }
         public DisplaySettings Display {get;private set;}
         public bool HasMap { get; private set; }
@@ -55,7 +58,7 @@ namespace Game
         public SaveService Save { get; private set; }
         public bool PowerOn { get; private set; }
         public bool Completed { get; set; }
-        public bool ThreatEnabled => mechanicsTest || (started&&!Completed);
+        public bool ThreatEnabled => mechanicsTest || (started&&!Completed&&!(intro&&intro.Active));
         public bool IsSafe => Protection.InShelter(player.view.transform.position);
         public int SolidMask { get; private set; }
         public float ActiveSeconds { get; private set; }
@@ -129,6 +132,7 @@ namespace Game
         }
         public void StartNew()
         {
+            intro?.Cancel();State.Set(ScreenMode.Pause);started=false;IntroCompleted=false;
             queuedWeapon=null;
             deathSequence?.ResetSequence();presence?.ResetPresence();
             Inventory.Restore(2, false); Flashlight.Restore(100, true); Condition.Restore(false);
@@ -142,10 +146,27 @@ namespace Game
             foreach (var item in items) { item.remaining = initialItems[item.persistentId]; item.gameObject.SetActive(true); }
             player.Teleport(cabinSpawn.position, cabinSpawn.eulerAngles.y);
             atmosphere?.ResetSequence(tuning.seed,player.view.transform.position);
-            SpawnMonster(false); started = true; State.Set(ScreenMode.Playing);
             forestEncounter?.ResetEncounter(false,false);wildlife?.ResetForest();
+            if(!mechanicsTest&&intro&&intro.enabled)
+            {
+                monster.gameObject.SetActive(false);
+                // Ordinary forest loops resume only after the cabin handoff.
+                if(ambience)foreach(var source in ambience.GetComponentsInChildren<AudioSource>())source.Stop();
+                intro.Begin(this);hud.Invalidate();hud.Refresh();return;
+            }
+            CompleteOpening();
+        }
+        public void CompleteOpening()
+        {
+            if(started)return;
+            player.Teleport(cabinSpawn.position,cabinSpawn.eulerAngles.y);
+            player.view.transform.localPosition=Vector3.up*tuning.player.standingHeight;
+            atmosphere?.ResetSequence(tuning.seed,player.view.transform.position);
+            ambience?.ResetSequence(tuning.seed);SpawnMonster(false);
+            IntroCompleted=true;started=true;State.Set(ScreenMode.Playing);
             SaveCheckpoint("Ranger cabin");
             Notify(Text("new_hint"),9);
+            hud.Invalidate();hud.Refresh();
         }
         void SpawnMonster(bool restore)
         {
@@ -162,9 +183,9 @@ namespace Game
         public void ReadNote(string id)
         { Documents.Add(id); OpenDocument = id; State.Set(ScreenMode.Journal);if(id==NortonEncounter.Letter&&norton&&!norton.Unlocked){norton.ReadLetter();SaveCheckpoint("checkpoint_norton");} }
         public void Notify(string message, float seconds = 4) { Message = message; messageTimer = seconds; }
-        public void Pause() { if (started && State.Running) State.Set(ScreenMode.Pause); }
-        public void Resume() { if (started&&!Condition.Dead) State.Set(ScreenMode.Playing); }
-        public void ReturnToTitle() { queuedWeapon=null;deathSequence?.ResetSequence();foley?.StopInjury();damage?.ResetFeedback();State.Set(ScreenMode.Title); }
+        public void Pause() { if (started && State.Running || intro&&intro.Active&&State.Mode==ScreenMode.Intro) {State.Set(ScreenMode.Pause);intro?.RefreshPresentation();} }
+        public void Resume() { if(intro&&intro.Active){State.Set(ScreenMode.Intro);intro.RefreshPresentation();}else if (started&&!Condition.Dead) State.Set(ScreenMode.Playing); }
+        public void ReturnToTitle() { intro?.Cancel();queuedWeapon=null;deathSequence?.ResetSequence();foley?.StopInjury();damage?.ResetFeedback();State.Set(ScreenMode.Title); }
         public bool ReceiveAttack(bool lethal,ZombieWolf attackingWolf=null)
         {
             if(!State.Running||IsSafe||!Condition.Hit(tuning.player,lethal))return false;
@@ -189,13 +210,14 @@ namespace Game
         { Notify(Text(Flashlight.Faulted?"repair_house_only":Flashlight.BeginSwap(Inventory, true) ? "fresh" : "no_spares")); }
         public void SaveCheckpoint(string name)
         {
-            if (mechanicsTest) return;
+            if (mechanicsTest || !started || intro&&intro.Active) return;
             var pickupData = new List<ItemRecord>();
             foreach (var item in items)
                 if (item.kind == ItemKind.Batteries || item.kind == ItemKind.Fuse || item.kind==ItemKind.Axe || item.kind==ItemKind.Shotgun || item.kind==ItemKind.Shells)
                     pickupData.Add(new ItemRecord { id = item.persistentId, remaining = item.remaining });
             var data = new SaveData {
                 checkpoint = name, activeSeconds = ActiveSeconds, charge = Flashlight.Charge,
+                introCompleted=IntroCompleted,
                 flashlightOn = Flashlight.SwitchedOn, batteries = Inventory.Batteries, fuse = Inventory.HasFuse,
                 powerOn = PowerOn, wounded = Condition.PhysicalWound, completed = Completed,fireRecovery=Condition.FireRecoveryRemaining,
                 shotgun=Inventory.HasShotgun,loadedShells=Inventory.LoadedShells,spareShells=Inventory.SpareShells,weapon=(int)Inventory.Weapon,
@@ -217,6 +239,7 @@ namespace Game
                 foreach (var record in data.pickups)
                     if (!initialItems.ContainsKey(record.id) || record.remaining > initialItems[record.id]) throw new InvalidDataException("Unknown pickup in checkpoint.");
                 foreach(var id in data.deadWolves)if(!Array.Exists(wolves,w=>w.persistentId==id))throw new InvalidDataException("Unknown wolf in checkpoint.");
+                intro?.Cancel();IntroCompleted=true;
                 State.Set(ScreenMode.Pause);
                 queuedWeapon=null;
                 deathSequence?.ResetSequence();presence?.ResetPresence();
@@ -250,6 +273,19 @@ namespace Game
             if (State == null) return;
             if(Pressed("Fullscreen"))ToggleFullscreen();
             Display.Tick();
+            if(intro&&intro.Active)
+            {
+                if(Pressed("Back"))
+                {
+                    if(State.Mode==ScreenMode.Intro)Pause();
+                    else if(State.Mode==ScreenMode.Settings)LeaveSettings();
+                    else Resume();
+                }
+                float steer=inputs.TryGetValue("Steer",out var steerAction)?steerAction.ReadValue<float>():0;
+                Vector2 openingLook=inputs.TryGetValue("LookAround",out var lookAction)?lookAction.ReadValue<Vector2>():Vector2.zero;
+                if(inputs.TryGetValue("LookStick",out var stickAction))openingLook+=stickAction.ReadValue<Vector2>()*(900*Time.deltaTime);
+                intro.Simulate(Time.deltaTime,steer,Held("SkipIntro"),openingLook);intro.RefreshPresentation();hud.Refresh();return;
+            }
             if(State.Mode==ScreenMode.Dying){deathSequence.Simulate(Time.deltaTime);hud.Refresh();return;}
             if(Pressed("Inventory")&&started&&!Condition.Dead)
             {

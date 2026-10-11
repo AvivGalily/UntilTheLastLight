@@ -153,6 +153,9 @@ namespace Game.Editor
                 if(stage==0)
                 {
                     bool preferred=game.Locale.Hebrew;game.Locale.SetHebrew(true);game.State.Set(ScreenMode.Title);UIShot(game,"11-hebrew-title");game.Locale.SetHebrew(preferred);
+                    // This suite exercises existing cabin/forest mechanics. The
+                    // opening's complete route is covered by IntroVerification.
+                    if(game.intro)game.intro.enabled=false;
                     game.StartNew();Require(game.monster.HasSpawned,"no legal monster spawn");
                     game.OpenMap();Require(game.State.Running&&!game.HasMap,"map granted before discovery");
                     Array.Find(game.items,item=>item.kind==ItemKind.MapCorpse).Use(game);
@@ -181,7 +184,14 @@ namespace Game.Editor
                     game.player.Teleport(game.cabinSpawn.position,0);game.Flashlight.Restore(100,true);
                     game.horrorAudio.Simulate(40,game);Require(game.horrorAudio.wolf.isPlaying,"scheduled wolf howl missing");
                     game.monster.warningSource.Stop();game.ambience.Simulate(11,game);
-                    Require(game.ambience.insects.isPlaying&&game.ambience.BirdCalls>0&&game.ambience.birds.isPlaying,"night wildlife playback missing");
+                    Require(game.ambience.insects.isPlaying&&game.ambience.insects.volume>0&&game.ambience.insects.volume<=.0121f&&game.ambience.BirdCalls>0&&game.ambience.birds.isPlaying,"quiet building crickets or intermittent night wildlife missing");
+                    game.player.Teleport(ForestLayout.Cabin+Vector3.forward*30,0);game.ambience.Simulate(1,game);
+                    Require(!game.ambience.insects.isPlaying&&game.ambience.insects.volume==0,"crickets leaked into open forest");
+                    game.player.Teleport(ForestLayout.Cabin+Vector3.forward*6,0);game.ambience.Simulate(2,game);float outsideCrickets=game.ambience.insects.volume;
+                    Require(outsideCrickets>0&&outsideCrickets<=.0121f,"building approach did not restore quiet crickets");
+                    game.player.Teleport(game.cabinSpawn.position,0);game.ambience.Simulate(2,game);
+                    Require(game.ambience.insects.volume>0&&game.ambience.insects.volume<=.00457f,"indoor cricket muffling missing");
+                    Debug.Log("BUILDING CRICKETS PASS: quiet near buildings, silent in open forest, more muffled indoors, no autoplay.");
                     float wildlifeTime=game.ambience.ActiveTime;game.ambience.Simulate(0,game);Require(game.ambience.ActiveTime==wildlifeTime,"wildlife advanced with zero time");
                     var beforeFog=game.atmosphere.wisps[0].transform.position;
                     game.atmosphere.Simulate(1,game);float fogTime=game.atmosphere.ActiveTime;

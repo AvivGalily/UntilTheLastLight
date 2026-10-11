@@ -1,5 +1,5 @@
 param(
-    [ValidateSet('Import','Mechanics','Generate','Validate','EditTests','PlayTests','Build','Capture','SignCapture','CreatureCapture','Smoke','Open')][string]$Task = 'Generate',
+    [ValidateSet('Import','Mechanics','Generate','Validate','EditTests','PlayTests','Build','Capture','SignCapture','CreatureCapture','Smoke','Intro','IntroSmoke','IntroVoices','IntroAudio','Ambience','Open')][string]$Task = 'Generate',
     [string]$Unity = 'C:\dev\UnityEditors\6000.3.24f1\Editor\Unity.exe'
 )
 $ErrorActionPreference = 'Stop'
@@ -22,6 +22,11 @@ switch ($Task) {
  'SignCapture' { $arguments += @('-executeMethod','Game.Editor.VisualVerification.CaptureSigns') }
  'CreatureCapture' { $arguments += @('-executeMethod','Game.Editor.CreatureVerification.Capture') }
  'Smoke' { $arguments += @('-executeMethod','Game.Editor.VisualVerification.Smoke') }
+ 'Intro' { $arguments += @('-quit','-executeMethod','Game.Editor.ProjectSetup.InstallForestIntro') }
+ 'IntroSmoke' { $arguments += @('-executeMethod','Game.Editor.IntroVerification.Run') }
+ 'IntroVoices' { $arguments += @('-quit','-executeMethod','Game.Editor.IntroVoiceSetup.Install') }
+ 'IntroAudio' { $arguments += @('-quit','-executeMethod','Game.Editor.IntroAudioSetup.InstallSupplied') }
+ 'Ambience' { $arguments += @('-quit','-executeMethod','Game.Editor.ForestAmbienceSetup.InstallBuildingCrickets') }
 }
 $process = Start-Process -FilePath $Unity -ArgumentList $arguments -WindowStyle Hidden -PassThru
 # Wait for the editor, not its persistent licensing/helper process tree.

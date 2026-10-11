@@ -113,7 +113,7 @@ namespace Game.Editor
         static ForestAmbience CreateForestAmbience()
         {
             var root=new GameObject("Night wildlife",typeof(ForestAmbience));var ambience=root.GetComponent<ForestAmbience>();
-            ambience.insects=root.AddComponent<AudioSource>();ambience.insects.clip=Clip("night_crickets");ambience.insects.loop=true;ambience.insects.playOnAwake=false;
+            ambience.insects=root.AddComponent<AudioSource>();ambience.insects.clip=Clip("night_crickets");ambience.insects.loop=true;ambience.insects.volume=0;ambience.insects.playOnAwake=false;
             AudioSource Voice(string name,float min,float max)
             {
                 var source=new GameObject(name,typeof(AudioSource),typeof(AudioLowPassFilter)).GetComponent<AudioSource>();source.transform.SetParent(root.transform,false);

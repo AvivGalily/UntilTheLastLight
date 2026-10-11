@@ -27,9 +27,33 @@ namespace Game.Editor
                 var ids=new HashSet<string>();foreach(var item in game.items)if(!item||string.IsNullOrEmpty(item.persistentId)||!ids.Add(item.persistentId))throw new Exception("Duplicate/missing persistent item ID.");
                 if(!NavMesh.SamplePosition(game.cabinSpawn.position,out _,2,NavMesh.AllAreas))throw new Exception("Checkpoint is outside navigation.");
                 foreach(var root in game.gameObject.scene.GetRootGameObjects())foreach(var transform in root.GetComponentsInChildren<Transform>(true))if(GameObjectUtility.GetMonoBehavioursWithMissingScriptCount(transform.gameObject)>0)throw new Exception("Missing script: "+transform.name);
-                if(name=="ForestGame")ValidateArt(game);
+                if(name=="ForestGame"){ValidateArt(game);ValidateIntro(game);}
             }
             Debug.Log("VALIDATION PASS: wired scenes, unique IDs, navigation, URP, no missing scripts.");
+        }
+        static void ValidateIntro(GameSession game)
+        {
+            var intro=game.intro;
+            if(!intro||!intro.config||!intro.bridge||!intro.vehicle||!intro.audioDirector||!intro.dialogue||!intro.fade||!intro.overlay)throw new Exception("Opening sequence not wired.");
+            if(intro.bridge.cabinAnchor!=game.cabinSpawn||intro.vehicle.waypoints.Length<3||intro.config.duration<90||intro.config.duration>115||intro.config.lines.Length!=12)throw new Exception("Opening cabin/path/timing configuration invalid.");
+            if(intro.vehicle.hands.grips.Length!=2||intro.vehicle.hands.arms.Length!=2||intro.dialogue.passengers.Length!=3||intro.dialogue.voices.Length!=3||intro.gateLeaves.Length!=2)throw new Exception("Opening driver/hunters/gate incomplete.");
+            if(game.inputTemplate.FindActionMap("Intro")==null||game.inputTemplate.FindAction("Intro/Steer")==null||game.inputTemplate.FindAction("Intro/SkipIntro")==null||game.inputTemplate.FindAction("Intro/LookAround")==null||game.inputTemplate.FindAction("Intro/LookStick")==null)throw new Exception("Opening input map missing.");
+            if(intro.bridge.mirrorCamera.GetComponent<AudioListener>()||intro.bridge.mirrorCamera.targetTexture==null)throw new Exception("Opening mirror/listener wiring invalid.");
+            foreach(var passenger in intro.dialogue.passengers)if(!passenger||!passenger.head||!passenger.spine)throw new Exception("Opening passenger skeleton missing.");
+            var audio=intro.audioDirector;
+            if(!audio.vehicleAmbience||!audio.vehicleAmbience.clip||audio.vehicleAmbience.clip.name!="SFX_ForestVehicleAmbience"||!audio.vehicleAmbience.loop||
+                !audio.gate||audio.gate.loop||!audio.gateClip||audio.gateClip.name!="SFX_ForestGate"||
+                !audio.threat||audio.threat.loop||!audio.threatClip||audio.threatClip.name!="SFX_CreatureApproach"||
+                !audio.effects||audio.effects.loop||!audio.blastClip||audio.blastClip.name!="SFX_VehicleExplosion"||!audio.wakeCreak)
+                throw new Exception("Supplied opening SFX/loop modes missing.");
+            var sound=audio.transform.Find("Opening sound layers");
+            if(!sound||sound.GetComponentsInChildren<AudioSource>(true).Length!=6)throw new Exception("Previous opening layers still present or supplied sources missing.");
+            foreach(var clip in new[]{audio.vehicleAmbience.clip,audio.gateClip,audio.threatClip,audio.blastClip})
+                if(!clip.preloadAudioData)throw new Exception("Supplied effect not preloaded: "+clip.name);
+            foreach(var line in intro.config.lines)
+                if(!line.englishVoice||line.englishVoice.channels!=1||!line.englishVoice.preloadAudioData||line.englishVoice.length+.06f>line.duration)throw new Exception("Opening VO missing, unprepared or cut off: "+line.id);
+            foreach(var renderer in intro.bridge.environment.GetComponentsInChildren<Renderer>(true))
+                foreach(var material in renderer.sharedMaterials)if(!material||!material.shader||ShaderUtil.ShaderHasError(material.shader))throw new Exception("Missing opening material: "+renderer.name);
         }
         static void ValidateArt(GameSession game)
         {
@@ -67,8 +91,11 @@ namespace Game.Editor
                 throw new Exception("Crawler human-skin 4K atlas is missing or disconnected.");
             int bodies=0,maps=0;foreach(var item in game.items){if(item.kind==ItemKind.Corpse)bodies++;if(item.kind==ItemKind.MapCorpse)maps++;}
             if(bodies!=4||maps!=1)throw new Exception("Expected five bodies, one carrying the field map.");
-            if(!game.ambience||!game.ambience.insects.clip||!game.ambience.owlClip||!game.ambience.nightjarClip||!game.ambience.frogClip||!game.ambience.leafClip)
+            if(!game.ambience||!game.ambience.owlClip||!game.ambience.nightjarClip||!game.ambience.frogClip||!game.ambience.leafClip)
                 throw new Exception("Night wildlife soundscape is missing clips.");
+            if(!game.ambience.insects||!game.ambience.insects.clip||game.ambience.insects.clip.name!="night_crickets"||
+                !game.ambience.insects.loop||game.ambience.insects.playOnAwake||game.ambience.insects.volume!=0||game.ambience.cricketVolume>.015f)
+                throw new Exception("Quiet gameplay-only building crickets are not configured.");
             if(!game.atmosphere||game.atmosphere.wisps.Length!=42||!RenderSettings.fog||RenderSettings.fogDensity<ForestAtmosphere.BaseDensity)
                 throw new Exception("Dense fog/airborne wisps are not connected.");
             for(int n=0;n<4;n++)

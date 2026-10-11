@@ -1,1 +1,1 @@
-{"name":"Game.PlayModeTests","references":["Game.Runtime"],"optionalUnityReferences":["TestAssemblies"]}
+{"name":"Game.PlayModeTests","references":["Game.Runtime","Unity.TextMeshPro","Unity.ugui"],"optionalUnityReferences":["TestAssemblies"]}

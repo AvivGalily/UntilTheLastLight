@@ -40,13 +40,13 @@ namespace Game
             heading=Text("Heading",overlay.transform,new Vector2(140,-152),new Vector2(1550,180),64,cream);
             body=Text("Body",overlay.transform,new Vector2(145,-352),new Vector2(1000,590),25,cream);
             footer=Text("Footer",overlay.transform,new Vector2(145,-997),new Vector2(1620,65),18,new Color(.54f,.59f,.57f));
-            buttons=new Button[9];buttonLabels=new TMP_Text[9];
+            buttons=new Button[11];buttonLabels=new TMP_Text[11];
             for(int i=0;i<buttons.Length;i++)
             {
-                var item=Node("Choice "+i,overlay.transform);Place(item,new Vector2(1230,-365-i*66),new Vector2(530,60));
+                var item=Node("Choice "+i,overlay.transform);Place(item,new Vector2(1230,-365-i*56),new Vector2(530,52));
                 item.AddComponent<Image>().color=new Color(.08f,.12f,.13f,.95f);buttons[i]=item.AddComponent<Button>();
                 var colors=buttons[i].colors;colors.highlightedColor=colors.selectedColor=new Color(.8f,.7f,.43f);buttons[i].colors=colors;
-                buttonLabels[i]=Text("Label",item.transform,new Vector2(20,0),new Vector2(490,60),23,cream);buttonLabels[i].alignment=TextAlignmentOptions.MidlineLeft;
+                buttonLabels[i]=Text("Label",item.transform,new Vector2(20,0),new Vector2(490,52),23,cream);buttonLabels[i].alignment=TextAlignmentOptions.MidlineLeft;
             }
             mapRoot=Node("Paper map",overlay.transform);Place(mapRoot,new Vector2(145,-345),new Vector2(1010,610));
             mapRoot.AddComponent<Image>().color=new Color(.16f,.19f,.16f);
@@ -94,7 +94,7 @@ namespace Game
         {
             if(game==null)return;
             if(revision!=game.Locale.Revision||document!=game.OpenDocument){revision=game.Locale.Revision;document=game.OpenDocument;Invalidate();hint=false;}
-            bool playing=game.State.Running,dying=game.State.Mode==ScreenMode.Dying;hudRoot.SetActive(playing);overlay.SetActive(!playing&&!dying);
+            bool playing=game.State.Running,dying=game.State.Mode==ScreenMode.Dying||game.State.Mode==ScreenMode.Intro;hudRoot.SetActive(playing);overlay.SetActive(!playing&&!dying);
             if(blood)blood.color=new Color(1,1,1,game.damage?game.damage.Blood:0);
             if(dying)return;
             overlay.GetComponent<Image>().color=new Color(.018f,.03f,.034f,game.State.Mode==ScreenMode.Dead?.73f:.95f);
@@ -116,7 +116,7 @@ namespace Game
                     Put(heading,T("title"));Put(eyebrow,T("eyebrow"));Put(body,T("intro"));Put(footer,T("demo_footer"));
                     Choice(0,T("begin"),game.StartNew);Choice(1,T("continue"),game.Continue,game.Save.Exists);Choice(2,T("settings"),game.OpenSettings);Choice(3,T("language"),game.ToggleLanguage);Choice(4,T("exit"),()=>Application.Quit());break;
                 case ScreenMode.Pause:
-                    Put(heading,T("pause_title"));Put(body,T("pause_body",game.CheckpointLabel));Choice(0,T("resume"),Close);Choice(1,T("load"),game.Continue,game.Save.Exists);Choice(2,T("settings"),game.OpenSettings);Choice(3,T("main"),game.ReturnToTitle);break;
+                    Put(heading,T("pause_title"));Put(body,T(game.intro&&game.intro.Active?"intro_paused":"pause_body",game.CheckpointLabel));Choice(0,T("resume"),Close);Choice(1,T("load"),game.Continue,game.Save.Exists);Choice(2,T("settings"),game.OpenSettings);Choice(3,T("main"),game.ReturnToTitle);break;
                 case ScreenMode.Inventory:
                     Put(heading,T("pack_title"));Put(body,InventoryText());
                     Choice(0,WeaponChoice(HeldWeapon.Axe),()=>game.SelectWeapon(HeldWeapon.Axe),game.Inventory.HasAxe);
@@ -141,7 +141,10 @@ namespace Game
                     Choice(3,T("bob",T(game.player.headBob?"on":"off")),()=>game.player.headBob=!game.player.headBob);
                     Choice(4,T("visual",T(game.visualWarnings?"on":"off")),()=>game.visualWarnings=!game.visualWarnings);
                     Choice(5,T("volume",AudioListener.volume*100),()=>AudioListener.volume=AudioListener.volume<=.05f?1:Mathf.Max(0,AudioListener.volume-.25f));
-                    Choice(6,T("language"),game.ToggleLanguage);Choice(7,T("display",T(game.Display.Fullscreen?"fullscreen":"windowed")),game.ToggleFullscreen);Choice(8,T("back"),game.LeaveSettings);break;
+                    Choice(6,T("language"),game.ToggleLanguage);Choice(7,T("display",T(game.Display.Fullscreen?"fullscreen":"windowed")),game.ToggleFullscreen);
+                    Choice(8,T("intro_subtitles",T(game.introSubtitles?"on":"off")),()=>game.introSubtitles=!game.introSubtitles);
+                    Choice(9,T("intro_flash",T(game.reducedIntroFlash?"off":"on")),()=>game.reducedIntroFlash=!game.reducedIntroFlash);
+                    Choice(10,T("back"),game.LeaveSettings);break;
                 case ScreenMode.Dead:Put(heading,T("dead_title"));Put(body,T("dead_body"));Choice(0,T("continue"),game.Continue,game.Save.Exists);Choice(1,T("again"),game.StartNew);Choice(2,T("main"),game.ReturnToTitle);break;
                 case ScreenMode.Complete:Put(heading,T("complete_title"));Put(eyebrow,T("complete_eyebrow"));Put(body,T("complete_body",TimeSpan.FromSeconds(game.ActiveSeconds).ToString(@"mm\:ss"),game.Documents.Count));Choice(0,T("main"),game.ReturnToTitle);Choice(1,T("again"),game.StartNew);break;
             }

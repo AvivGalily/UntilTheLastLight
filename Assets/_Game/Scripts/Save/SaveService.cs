@@ -15,6 +15,7 @@ namespace Game
         public string[] documents;
         public ItemRecord[] pickups;
         public bool tutorialRepelled;
+        public bool introCompleted;
         public bool mapAcquired;
         public bool axe;
         public bool forestEncounterSeen,flashlightFaulted;

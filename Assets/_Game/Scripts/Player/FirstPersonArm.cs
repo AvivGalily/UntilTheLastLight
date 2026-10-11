@@ -6,6 +6,7 @@ namespace Game
     public sealed class FirstPersonArm:MonoBehaviour
     {
         public Camera eyes;
+        public Transform bodyFrame;
         public Vector3 bodyAnchor=new Vector3(.26f,-.50f,.025f);
         Mesh mesh;
         MeshFilter surface;
@@ -14,7 +15,7 @@ namespace Game
         float[] weights,gradient;
         Vector3 end,lastDelta,axis;
         bool ready,applied;
-        public Vector3 ForearmEnd=>eyes?eyes.transform.TransformPoint(bodyAnchor):Vector3.zero;
+        public Vector3 ForearmEnd=>bodyFrame?bodyFrame.TransformPoint(bodyAnchor):eyes?eyes.transform.TransformPoint(bodyAnchor):Vector3.zero;
         public void Pose()
         {
             if(!eyes)return;

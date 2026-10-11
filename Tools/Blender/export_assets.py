@@ -31,7 +31,7 @@ for path in paths:
     for obj in meshes:
         if not obj.data.vertices or not obj.data.uv_layers: raise ValueError('Empty mesh or missing UVs')
         if any(not math.isfinite(axis) for vertex in obj.data.vertices for axis in vertex.co): raise ValueError('Invalid vertex')
-        if max(obj.dimensions)>30 or max(obj.dimensions)<(.001 if path.stem in ('crow_01','cinder_head_01') else .01 if path.stem=='hanging_survivor_01' else .1): raise ValueError('Implausible metres: '+obj.name)
+        if max(obj.dimensions)>30 or max(obj.dimensions)<(.001 if path.stem in ('crow_01','cinder_head_01') else .01 if path.stem=='hanging_survivor_01' or path.stem.startswith(('intro_jack','intro_tyler','intro_ethan')) else .1): raise ValueError('Implausible metres: '+obj.name)
         if path.stem.endswith('hero_01'):
             if not obj.data.shape_keys or len(obj.data.shape_keys.key_blocks)<3: raise ValueError('Missing Dread shapes')
             shapes.extend(key.name for key in obj.data.shape_keys.key_blocks if key.name!='Basis')
@@ -89,6 +89,11 @@ for path in paths:
     if path.stem=='burning_car_01':
         records[-1]['license']='CC0 Creomoto Car from OpenGameArt; project wreck adaptation'
         records[-1]['status']='Metre-scale crushed/charred CC0 vehicle; source retained in ArtSource/Vendor/creomoto'
+    if path.stem.startswith(('intro_jack','intro_tyler','intro_ethan')):
+        records[-1]['license']='CC0 MakeHuman/MPFB anatomy, clothes and Mindfront/Jartur69 skin; imagegen healthy skin derivative; project seated rest rig'
+        records[-1]['status']='Living seated hunter with matching forest-corpse age/build/clothes: Jack=body02, Tyler=body01, Ethan=body03; clean skin, distinct iris maps, head/spine/arm acting and supplied English dialogue VO. Stylized opening acting, not motion capture.'
+    if path.stem in ('intro_vehicle_01','intro_wheel_01'):
+        records[-1]['status']='Original procedural metre-scale 4x4 interior or separate steering rim; editable source. Functional art pass; production vehicle detail remains unfinished.'
 (root/'Docs').mkdir(exist_ok=True)
-(root/'Docs'/'AssetManifest.json').write_text(json.dumps({'seed':1407,'assets':sorted(records,key=lambda record:record['id']),'otherAssets':'Unity interaction/collision, blood shaders and overlays; original synthesized audio and CC0 recorded footsteps/human injury voices. See ThirdPartyNotices.md'},indent=2),encoding='utf-8')
+(root/'Docs'/'AssetManifest.json').write_text(json.dumps({'seed':1407,'assets':sorted(records,key=lambda record:record['id']),'otherAssets':'Unity interaction/collision, blood shaders and overlays; original SFX, CC0 footsteps/voices, and twelve supplied Runway opening dialogue takes plus four supplied effects. See ThirdPartyNotices.md and ArtSource/Audio/Runway.'},indent=2),encoding='utf-8')
 print('EXPORTED',len(paths),'validated assets; manifest contains',len(records),'project assets')
