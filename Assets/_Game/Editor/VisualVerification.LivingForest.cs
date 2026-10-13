@@ -10,7 +10,9 @@ namespace Game.Editor
     {
         static void RigShot(GameSession game,string name,bool beam)
         {
+            var arms=UnityEngine.Object.FindObjectsByType<FirstPersonArm>(FindObjectsSortMode.None);foreach(var arm in arms)arm.Pose();
             var skins=new List<SkinnedMeshRenderer>();skins.AddRange(game.forestEncounter.victim.GetComponentsInChildren<SkinnedMeshRenderer>());
+            foreach(var arm in arms)skins.AddRange(arm.GetComponentsInChildren<SkinnedMeshRenderer>());
             skins.AddRange(game.monster.GetComponentsInChildren<SkinnedMeshRenderer>());
             foreach(var wolf in game.wolves)skins.AddRange(wolf.GetComponentsInChildren<SkinnedMeshRenderer>());
             if(game.norton)foreach(var head in game.norton.enemies)if(head.gameObject.activeSelf)skins.AddRange(head.GetComponentsInChildren<SkinnedMeshRenderer>());

@@ -15,12 +15,13 @@ def open_source():
     bpy.context.view_layer.update()
     return rig
 
-def sleeve(hand):
+def sleeve(hand,frame):
     """A fitted forearm sleeve/cuff, rather than displaced source-shirt faces."""
     material=bpy.data.materials.get('PlayerSleeve') or bpy.data.materials.new('PlayerSleeve')
     material.diffuse_color=(.14,.18,.16,1)
     vertices=[];faces=[];segments=40;rings=30
-    skin=[v.co.copy() for v in hand.data.vertices]
+    inverse=frame.inverted()
+    skin=[inverse@v.co for v in hand.data.vertices]
     end=min(v.y for v in skin)+.005
     for ring in range(rings):
         t=ring/(rings-1);y=-.108+(end+.108)*t
@@ -38,7 +39,8 @@ def sleeve(hand):
     for ring in range(rings-1):
         for n in range(segments):
             faces.append((ring*segments+n,ring*segments+(n+1)%segments,(ring+1)*segments+(n+1)%segments,(ring+1)*segments+n))
-    mesh=bpy.data.meshes.new('Fitted field jacket cuff');mesh.from_pydata(vertices,[],faces);mesh.materials.append(material)
+    if frame.determinant()<0:faces=[tuple(reversed(face)) for face in faces]
+    mesh=bpy.data.meshes.new('Fitted field jacket cuff');mesh.from_pydata([frame@Vector(v) for v in vertices],[],faces);mesh.materials.append(material)
     layer=mesh.uv_layers.new(name='UVMap')
     for face in mesh.polygons:
         ring=face.index//segments;n=face.index%segments
@@ -47,7 +49,7 @@ def sleeve(hand):
     ob=bpy.data.objects.new('Rounded cuff and sleeve folds',mesh);bpy.context.collection.objects.link(ob)
     H.activate(hand);ob.select_set(True);bpy.ops.object.join()
 
-def bake(name,keep=None,transform=None,poses=None):
+def bake(name,keep=None,transform=None,poses=None,sleeve_frame=None):
     deps=bpy.context.evaluated_depsgraph_get();parts=[]
     for ob in list(bpy.context.scene.objects):
         if ob.type!='MESH':continue
@@ -78,12 +80,12 @@ def bake(name,keep=None,transform=None,poses=None):
     bpy.ops.object.select_all(action='DESELECT')
     for ob in parts:ob.select_set(True)
     bpy.context.view_layer.objects.active=parts[0];bpy.ops.object.join();ob=bpy.context.object;ob.name=name
-    if name in ('player_axe_hand_01','player_shotgun_hand_01'):
+    if name in ('player_axe_hand_01','player_shotgun_hand_01','player_flashlight_hand_01'):
         for material in ob.data.materials:
             if material and material.name.startswith('HumanSkin'):material.name='PlayerSkin'
         smooth=ob.modifiers.new('Continuous finger and knuckle contours','SUBSURF');smooth.levels=2;smooth.uv_smooth='PRESERVE_BOUNDARIES'
         bpy.ops.object.modifier_apply(modifier=smooth.name)
-        sleeve(ob)
+        sleeve(ob,sleeve_frame)
     for p in ob.data.polygons:p.use_smooth=True
     bpy.ops.wm.save_as_mainfile(filepath=str(H.SOURCE/(name+'.blend')),compress=True)
     bpy.ops.export_scene.fbx(filepath=str(H.MESH/(name+'.fbx')),object_types={'MESH'},axis_forward='-Z',axis_up='Y',apply_unit_scale=True,bake_anim=False)
@@ -109,43 +111,84 @@ def crouch_pose(rig):
         for b in rig.pose.bones:b.matrix_basis=basis[b.name]
     return restore
 
+def gait_pose(rig,phase,running=False):
+    basis={b.name:b.matrix_basis.copy() for b in rig.pose.bones}
+    feet={side:rig.pose.bones['foot.'+side].head.copy() for side in ('L','R')}
+    reach=.47 if running else .39
+    offsets=[(reach,-reach),(0,0),(-reach,reach),(0,0)][phase]
+    # Lower the pelvis enough for the extended stance leg to reach the floor.
+    root=rig.pose.bones['root'];root.location+=root.bone.matrix_local.to_3x3().inverted()@Vector((0,0,-(.15 if running else .11)))
+    bpy.context.view_layer.update()
+    for side,offset in zip(('L','R'),offsets):
+        upper=['upperleg01.'+side,'upperleg02.'+side];lower=['lowerleg01.'+side,'lowerleg02.'+side]
+        target=feet[side]+Vector((0,-offset,.18 if running else .12)) if (phase==1 and side=='R') or (phase==3 and side=='L') else feet[side]+Vector((0,-offset,0))
+        hip=rig.pose.bones[upper[0]].head.copy();thigh=sum(rig.pose.bones[n].length for n in upper);shin=sum(rig.pose.bones[n].length for n in lower)
+        line=target-hip;distance=min(line.length,thigh+shin-.001);direction=line.normalized()
+        along=(thigh*thigh-shin*shin+distance*distance)/(2*distance)
+        bend=Vector((0,-1,0));bend-=direction*bend.dot(direction);bend.normalize()
+        knee=hip+direction*along+bend*math.sqrt(max(0,thigh*thigh-along*along))
+        for name in upper:H.point_bone(rig,name,knee-rig.pose.bones[name].head)
+        for name in lower:H.point_bone(rig,name,target-rig.pose.bones[name].head)
+        # Restore the planted boot's rest orientation after leg articulation.
+        foot=rig.pose.bones['foot.'+side];rest=foot.bone.matrix_local
+        foot.matrix=Matrix.Translation(foot.head)@rest.to_quaternion().to_matrix().to_4x4()
+        sign=1 if side=='L' else -1
+        swing=offset*(1.3 if running else .8)
+        H.point_bone(rig,'upperarm01.'+side,(sign*.18,swing,-1))
+        H.point_bone(rig,'lowerarm01.'+side,(sign*.1,-.65 if running else -.3,-1))
+    def restore():
+        for b in rig.pose.bones:b.matrix_basis=basis[b.name]
+    return restore
+
 def body():
     rig=open_source()
     for side,sign in [('L',1),('R',-1)]:
         H.point_bone(rig,'upperarm01.'+side,(sign*.20,0,-1))
         H.point_bone(rig,'lowerarm01.'+side,(sign*.10,-.32,-1))
-    bake('player_body_01',poses={'Crouch':lambda:crouch_pose(rig)})
+    poses={'Crouch':lambda:crouch_pose(rig)}
+    for running in (False,True):
+        for phase in range(4):poses[('Run' if running else 'Walk')+str(phase)]=lambda phase=phase,running=running:gait_pose(rig,phase,running)
+    bake('player_body_01',poses=poses)
 
-def grip(trigger=False):
+def grip(trigger=False,side='R',radius=.027,return_pose=False):
     rig=open_source()
     # Curl real finger segments around a 3 cm shaft, preserving skin UVs/nails.
-    roots=[rig.pose.bones['finger'+str(i)+'-1.R'].head.copy() for i in range(2,6)]
+    roots=[rig.pose.bones[f'finger{i}-1.{side}'].head.copy() for i in range(2,6)]
     axis=(roots[-1]-roots[0]).normalized();origin=sum(roots,Vector())/4
-    outward=(rig.pose.bones['finger3-2.R'].tail-origin);outward-=axis*outward.dot(axis);outward.normalize()
-    normal=axis.cross(outward).normalized();centre=origin+outward*.037-normal*.018
+    outward=origin-rig.pose.bones['wrist.'+side].head;outward-=axis*outward.dot(axis);outward.normalize()
+    normal=axis.cross(outward).normalized()*(1 if side=='L' else -1);centre=origin+normal*radius
     for finger in range(2,6):
-        root=rig.pose.bones[f'finger{finger}-1.R'].head.copy();along=(root-centre).dot(axis)
-        angles=[(1,18),(2,42),(3,74)] if trigger and finger==2 else [(1,38),(2,102),(3,160)]
-        for joint,angle in angles:
-            radians=math.radians(angle)
-            target=centre+axis*along+outward*(math.sin(radians)*.026)+normal*(math.cos(radians)*.026)
-            bone=rig.pose.bones[f'finger{finger}-{joint}.R']
+        root=rig.pose.bones[f'finger{finger}-1.{side}'].head-centre;along=root.dot(axis)
+        r=math.hypot(root.dot(outward),root.dot(normal));angle=math.atan2(root.dot(outward),-root.dot(normal))
+        for joint in (1,2,3):
+            bone=rig.pose.bones[f'finger{finger}-{joint}.{side}']
+            angle+=2*math.asin(min(.99,bone.length/(2*r)))
+            target=centre+axis*along+outward*(math.sin(angle)*r)-normal*(math.cos(angle)*r)
+            if trigger and finger==2:
+                direction=[outward*.7-normal*.65+axis*.15,outward*.5+normal*.7+axis*.5,-outward*.6+normal*.4+axis*.7][joint-1]
+                target=bone.head+direction
             H.point_bone(rig,bone.name,target-bone.head)
     # Opposed thumb closes across the fingers.
-    for joint in [1,2,3]:
-        bone=rig.pose.bones[f'finger1-{joint}.R']
-        target=centre+axis*.035+normal*.024+outward*(.032-joint*.014)
+    for joint,(f,a,n) in enumerate([(-.044,-.038,-.020),(-.024,-.038,.014),(-.018,-.010,.021)],1):
+        bone=rig.pose.bones[f'finger1-{joint}.{side}']
+        target=centre+outward*f+axis*a+normal*n*(radius/.027)
         H.point_bone(rig,bone.name,target-bone.head)
     bpy.context.view_layer.update()
     # Match the shaft to Blender Z; the palm is offset beside it, not over it.
-    arm_groups={'lowerarm01.R'}|{bone.name for bone in rig.pose.bones['lowerarm01.R'].children_recursive}
+    arm_groups={'lowerarm01.'+side}|{bone.name for bone in rig.pose.bones['lowerarm01.'+side].children_recursive}
     frame=Matrix((normal,outward,axis)).transposed().to_4x4()
-    transform=frame.inverted()@Matrix.Translation(-centre)
+    # Axe: vertical shaft, inward palm and a wrist behind the grip.
+    # Flashlight/shotgun: support their longitudinal axes from underneath.
+    destination=Matrix(((0,0,1),(-1 if side=='L' else 1,0,0),(0,1,0))).transposed().to_4x4() if trigger or side=='L' else Matrix.Diagonal((1,-1,-1,1))
+    transform=destination@frame.inverted()@Matrix.Translation(-centre)
+    assert transform.to_3x3().determinant()>.999,'Equipment hand must use a proper anatomical rotation'
     def keep(ob,v):
         return any(ob.vertex_groups[g.group].name in arm_groups and g.weight>.025 for g in v.groups)
-    bake('player_shotgun_hand_01' if trigger else 'player_axe_hand_01',keep,transform)
+    name='player_shotgun_hand_01' if trigger else 'player_flashlight_hand_01' if side=='L' else 'player_axe_hand_01'
+    if return_pose:return rig,transform,name
+    bake(name,keep,transform,sleeve_frame=destination)
 
 if __name__=='__main__':
     task=sys.argv[sys.argv.index('--')+1] if '--' in sys.argv else 'all'
     if task in ('all','body'):body()
-    if task in ('all','hands'):grip();grip(True)
+    if task in ('all','hands'):grip();grip(True,radius=.030);grip(side='L',radius=.040)

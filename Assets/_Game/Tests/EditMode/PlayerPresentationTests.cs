@@ -40,30 +40,26 @@ namespace Game.Tests
                 Assert.True(motor.hand.GetComponentsInChildren<Renderer>(true).All(r=>r.shadowCastingMode==ShadowCastingMode.Off));
             }finally{UnityEngine.Object.DestroyImmediate(go);}
         }
-        [Test] public void FingersFollowWeaponAndForearmCutsStayOutsideViewDuringSwing()
+        [Test] public void WeightedArmsKeepBoneLengthsAndGripTargetsDuringSwing()
         {
             var go=Player();try
             {
-                var arms=go.GetComponentsInChildren<FirstPersonArm>(true);Assert.That(arms.Length,Is.EqualTo(3));
+                var arms=go.GetComponent<PlayerMotor>().hand.GetComponentsInChildren<FirstPersonArm>(true);Assert.That(arms.Length,Is.EqualTo(3));
                 foreach(var arm in arms)
                 {
-                    var filter=arm.GetComponentInChildren<MeshFilter>();var rest=filter.sharedMesh.vertices;var normals=filter.sharedMesh.normals;
-                    var local=rest.Select(v=>arm.transform.InverseTransformPoint(filter.transform.TransformPoint(v))).ToArray();float far=local.Max(v=>v.z);
-                    Assert.That(far,Is.GreaterThan(.25f));var fingers=Enumerable.Range(0,rest.Length).Where(i=>local[i].z<.065f).ToArray();var cut=Enumerable.Range(0,rest.Length).Where(i=>local[i].z>far-.025f).ToArray();
+                    var skin=arm.GetComponentInChildren<SkinnedMeshRenderer>();var rest=skin.sharedMesh.vertices;var normals=skin.sharedMesh.normals;
+                    Assert.NotNull(arm.upper);Assert.NotNull(arm.lower);Assert.NotNull(arm.wrist);Assert.That(skin.bones.Length,Is.GreaterThan(10));
+                    Assert.That(arm.wristOffset.magnitude,Is.LessThan(.17f),"FBX must export evaluated grip-frame bones, not the old whole-character positions");
+                    Assert.That(arm.upperLength,Is.InRange(.15f,.4f));Assert.That(arm.lowerLength,Is.InRange(.15f,.4f));
                     var parent=arm.transform.parent;var rotation=parent.localRotation;
                     foreach(float angle in new[]{0,-48f,85f,0})
                     {
-                        parent.localRotation=Quaternion.Euler(angle,0,0)*rotation;arm.Pose();var posed=filter.sharedMesh.vertices;
-                        foreach(int i in fingers)Assert.That((posed[i]-rest[i]).sqrMagnitude,Is.LessThan(.00000001f));
-                        var posedNormals=filter.sharedMesh.normals;
-                        foreach(int i in fingers)Assert.That(Vector3.Dot(normals[i],posedNormals[i]),Is.GreaterThan(.9999f),"finger UV seam lost authored smooth normal");
-                        Vector3 centre=Vector3.zero;
-                        foreach(int i in cut)
-                        {
-                            var world=filter.transform.TransformPoint(posed[i]);centre+=world;var viewport=arm.eyes.WorldToViewportPoint(world);
-                            Assert.False(viewport.z>arm.eyes.nearClipPlane&&viewport.x>0&&viewport.x<1&&viewport.y>0&&viewport.y<1,"visible forearm cut");
-                        }
-                        Assert.That(Vector3.Distance(centre/cut.Length,arm.ForearmEnd),Is.LessThan(.002f));
+                        parent.localRotation=Quaternion.Euler(angle,0,0)*rotation;arm.Pose();
+                        Assert.That(Vector3.Distance(arm.upper.position,arm.lower.position),Is.EqualTo(arm.upperLength).Within(.002f));
+                        Assert.That(Vector3.Distance(arm.lower.position,arm.wrist.position),Is.EqualTo(arm.lowerLength).Within(.002f));
+                        Assert.That(Vector3.Distance(arm.wrist.position,arm.transform.TransformPoint(arm.wristOffset)),Is.LessThan(.01f),"wrist detached from authored equipment grip");
+                        Assert.That(skin.sharedMesh.vertices,Is.EqualTo(rest),"IK must not shear or stretch shared geometry");
+                        Assert.That(skin.sharedMesh.normals,Is.EqualTo(normals));
                     }
                     parent.localRotation=rotation;
                 }
@@ -89,14 +85,72 @@ namespace Game.Tests
             {
                 foreach(var arm in go.GetComponentsInChildren<FirstPersonArm>(true))
                 {
-                    var filter=arm.GetComponentInChildren<MeshFilter>();var renderer=filter.GetComponent<Renderer>();
-                    Assert.That(filter.sharedMesh.vertexCount,Is.GreaterThan(20000));
+                    var renderer=arm.GetComponentInChildren<SkinnedMeshRenderer>();
+                    Assert.That(renderer.sharedMesh.vertexCount,Is.GreaterThan(20000));
                     var skin=renderer.sharedMaterials.Single(m=>m.name=="PlayerSkin");var sleeve=renderer.sharedMaterials.Single(m=>m.name=="PlayerSleeve");
                     Assert.That(skin.GetTexture("_BaseMap").width,Is.GreaterThanOrEqualTo(2048));Assert.NotNull(skin.GetTexture("_BumpMap"));
                     Assert.NotNull(sleeve.GetTexture("_BumpMap"));Assert.AreNotSame(skin.GetTexture("_BaseMap"),sleeve.GetTexture("_BaseMap"));
-                    Assert.Zero(skin.GetFloat("_CadaverDecay"));Assert.That(filter.sharedMesh.subMeshCount,Is.EqualTo(2));
+                    Assert.Zero(skin.GetFloat("_CadaverDecay"));Assert.That(renderer.sharedMesh.subMeshCount,Is.EqualTo(2));
                 }
             }finally{UnityEngine.Object.DestroyImmediate(go);}
+        }
+        [Test] public void WalkAndRunPosesMoveTheLegsWhileKeepingThePlantedBootOnTheGround()
+        {
+            var go=Player();try
+            {
+                var p=go.GetComponent<PlayerPresence>();p.ResetPresence();var mesh=p.bodyMorph.sharedMesh;var deltas=new Vector3[mesh.vertexCount];
+                Assert.That(p.walkShapes.All(s=>s>=0)&&p.runShapes.All(s=>s>=0),Is.True);
+                foreach(int shape in p.walkShapes.Concat(p.runShapes))
+                {
+                    p.bodyMorph.SetBlendShapeWeight(shape,100);var bounds=BakedBody(p);
+                    Assert.That(bounds.min.y,Is.InRange(-.04f,.055f),"Planted boot floats or sinks");
+                    Assert.That(bounds.size.y,Is.InRange(1.5f,1.95f));
+                    mesh.GetBlendShapeFrameVertices(shape,mesh.GetBlendShapeFrameCount(shape)-1,deltas,null,null);
+                    Assert.That(deltas.Count(v=>p.bodyMorph.transform.TransformVector(v).sqrMagnitude>.0025f),Is.GreaterThan(1000),"Gait does not articulate the body: "+mesh.GetBlendShapeName(shape)+"; raw="+deltas.Max(v=>v.magnitude)+"; world="+deltas.Max(v=>p.bodyMorph.transform.TransformVector(v).magnitude));
+                    p.bodyMorph.SetBlendShapeWeight(shape,0);
+                }
+            }finally{UnityEngine.Object.DestroyImmediate(go);}
+        }
+        [Test] public void EquipmentUsesNativeLeftFlashlightAndRightWeaponMeshesWithoutMirroring()
+        {
+            var go=Player();try
+            {
+                var p=go.GetComponent<PlayerPresence>();var gun=go.GetComponent<ShotgunCombat>();
+                Assert.That(p.flashlightGrip.name,Is.EqualTo("player_flashlight_hand_01"));
+                Assert.That(p.axeGrip.name,Is.EqualTo("player_axe_hand_01"));
+                foreach(var arm in go.GetComponent<PlayerMotor>().hand.GetComponentsInChildren<FirstPersonArm>(true))
+                {
+                    Assert.That(arm.transform.localScale.x,Is.GreaterThan(0));
+                    Assert.That(arm.forearmAxis,Is.EqualTo(arm.transform==p.flashlightGrip?Vector3.left:arm.transform.IsChildOf(gun.heldModel)?Vector3.right:Vector3.back));
+                }
+            }finally{UnityEngine.Object.DestroyImmediate(go);}
+        }
+        [Test] public void FallenPassengerPrefabsRetainTheLivingCastHairAndOutfitMaps()
+        {
+            foreach(string name in new[]{"jack","tyler","ethan"})
+            {
+                var fallen=AssetDatabase.LoadAssetAtPath<GameObject>("Assets/_Game/Generated/Prefabs/arrival_"+name+"_01.prefab");
+                var alive=AssetDatabase.LoadAssetAtPath<GameObject>("Assets/_Game/Generated/Prefabs/intro_"+name+"_01.prefab");
+                Assert.That(fallen.GetComponent<HunterIdentity>().characterId,Is.EqualTo(name));Assert.That(fallen.GetComponent<HunterIdentity>().deceased,Is.EqualTo(name!="jack"));
+                Assert.That(fallen.GetComponent<HunterIdentity>().encounterRole,Is.EqualTo(name=="tyler"?"first-body":name=="jack"?"web-victim":"wreck-body"));
+                Assert.That(alive.GetComponent<HunterIdentity>().characterId,Is.EqualTo(name));
+                var liveMaterials=alive.GetComponentsInChildren<Renderer>().SelectMany(r=>r.sharedMaterials).Distinct().ToArray();
+                var deadMaterials=fallen.GetComponentsInChildren<Renderer>().SelectMany(r=>r.sharedMaterials).ToArray();
+                foreach(var material in liveMaterials.Where(m=>m.name.StartsWith("IntroHair")||m.name.StartsWith("IntroOutfit")))Assert.That(deadMaterials.Contains(material),Is.True,"Cast hair or clothing differs");
+                Assert.That(deadMaterials.First(m=>m.name.StartsWith("ArrivalSkin")).GetTexture("_BaseMap"),Is.SameAs(liveMaterials.First(m=>m.name.StartsWith("IntroSkin")).GetTexture("_BaseMap")));
+            }
+        }
+        [Test] public void HoldingEquipmentCannotEnablePlayerFillLight()
+        {
+            var go=Player();try{var p=go.GetComponent<PlayerPresence>();p.RefreshEquipment(true);Assert.False(p.gripLight.enabled);Assert.Zero(p.gripLight.intensity);}finally{UnityEngine.Object.DestroyImmediate(go);}
+        }
+        [Test] public void ExposedIntestinesHaveDetailedMappedWetTissueMaterial()
+        {
+            var prefab=AssetDatabase.LoadAssetAtPath<GameObject>("Assets/_Game/Generated/Prefabs/arrival_ethan_01.prefab");
+            var renderer=prefab.GetComponentsInChildren<MeshRenderer>().First(r=>r.sharedMaterials.Any(m=>m.name=="IntestinalSerosa"));
+            var material=renderer.sharedMaterials.First(m=>m.name=="IntestinalSerosa");
+            Assert.That(material.GetTexture("_BaseMap").width,Is.GreaterThanOrEqualTo(1024));Assert.That(material.GetFloat("_Smoothness"),Is.GreaterThan(.5f));
+            var mesh=renderer.GetComponent<MeshFilter>().sharedMesh;Assert.That(mesh.uv.Length,Is.EqualTo(mesh.vertexCount));Assert.That(mesh.uv.Max(uv=>uv.y),Is.GreaterThan(1));
         }
         [Test] public void WreckAndAllFindsAreOutsideResearchStationInsteadOfRangerCabin()
         {

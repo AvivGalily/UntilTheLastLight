@@ -36,7 +36,9 @@ namespace Game.Editor
             var intro=game.intro;
             if(!intro||!intro.config||!intro.bridge||!intro.vehicle||!intro.audioDirector||!intro.dialogue||!intro.fade||!intro.overlay)throw new Exception("Opening sequence not wired.");
             if(intro.bridge.cabinAnchor!=game.cabinSpawn||intro.vehicle.waypoints.Length<3||intro.config.duration<90||intro.config.duration>115||intro.config.lines.Length!=12)throw new Exception("Opening cabin/path/timing configuration invalid.");
-            if(intro.vehicle.hands.grips.Length!=2||intro.vehicle.hands.arms.Length!=2||intro.dialogue.passengers.Length!=3||intro.dialogue.voices.Length!=3||intro.gateLeaves.Length!=2)throw new Exception("Opening driver/hunters/gate incomplete.");
+            if(intro.vehicle.hands.grips.Length!=2||!intro.vehicle.hands.driver||intro.vehicle.hands.driver.arms.Length!=2||intro.dialogue.passengers.Length!=3||intro.dialogue.voices.Length!=3||intro.gateLeaves.Length!=2)throw new Exception("Opening driver/hunters/gate incomplete.");
+            foreach(var arm in intro.vehicle.hands.driver.arms)if(!arm.upper||!arm.lower||!arm.wrist||!arm.grip||arm.upperLength<.15f||arm.lowerLength<.15f)throw new Exception("Anatomical driver arm rig missing.");
+            foreach(var renderer in intro.vehicle.hands.driver.GetComponentsInChildren<SkinnedMeshRenderer>())if(renderer.bones.Length<20)throw new Exception("Driver body lacks weighted anatomical bones.");
             if(game.inputTemplate.FindActionMap("Intro")==null||game.inputTemplate.FindAction("Intro/Steer")==null||game.inputTemplate.FindAction("Intro/SkipIntro")==null||game.inputTemplate.FindAction("Intro/LookAround")==null||game.inputTemplate.FindAction("Intro/LookStick")==null)throw new Exception("Opening input map missing.");
             if(intro.bridge.mirrorCamera.GetComponent<AudioListener>()||intro.bridge.mirrorCamera.targetTexture==null)throw new Exception("Opening mirror/listener wiring invalid.");
             foreach(var passenger in intro.dialogue.passengers)if(!passenger||!passenger.head||!passenger.spine)throw new Exception("Opening passenger skeleton missing.");
@@ -102,7 +104,7 @@ namespace Game.Editor
             {
                 var body=GameObject.Find("Forest body "+n);var group=body.GetComponentInChildren<LODGroup>();
                 if(!group||group.GetLODs().Length!=3)throw new Exception("Human body distance LODs missing.");
-                var human=Array.Find(group.GetLODs()[0].renderers,r=>Array.Exists(r.sharedMaterials,m=>m&&m.name.StartsWith("HumanSkin")));
+                var human=Array.Find(group.GetLODs()[0].renderers,r=>Array.Exists(r.sharedMaterials,m=>m&&(m.name.StartsWith("HumanSkin")||m.name.StartsWith("ArrivalSkin"))));
                 if(!human||human.bounds.size.y>.65f||Mathf.Max(human.bounds.size.x,human.bounds.size.z)<1.55f||!body.GetComponent<BloodySurface>())throw new Exception("Human corpse axes/anatomy/blood are wrong.");
             }
             if(!game.encounters||!game.damage||!game.axe||!game.foley||!game.foley.scream||!game.foley.hurt||!game.foley.injury)throw new Exception("Combat/foley feedback is unwired.");

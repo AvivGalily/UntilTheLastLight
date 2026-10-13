@@ -10,6 +10,7 @@ namespace Game
         public bool ThreatStarted=>threatened;
         public bool BlastStarted=>blasted;
         float speechDuck;
+        public void PlayGate(){if(!gated){gated=true;gate.PlayOneShot(gateClip);}}
         public void ResetAudio()
         {
             StopAudio();gated=threatened=blasted=woke=false;speechDuck=0;
@@ -29,7 +30,6 @@ namespace Game
             float fade=1-Mathf.InverseLerp(c.silence,c.silence+4,t);
             vehicleAmbience.volume=drive?.18f*fade:0;
             gate.volume=.28f;
-            if(!gated&&t>=c.gateCrossed+1){gated=true;gate.PlayOneShot(gateClip);}
             // Use the supplied approach once, just before Ethan hears it. Its
             // movement reaches the vehicle at the authored threat beat.
             float approach=c.discovery-.25f;

@@ -25,15 +25,27 @@ MonoBehaviour:
   duration: 110
   cabinFade: 3
   skipHold: 2
-  steeringLimit: 0.85
+  steeringLimit: 1.6
   gateSteeringLimit: 0.08
-  steeringResponse: 3
-  wheelDegrees: 35
+  steeringResponse: 4.5
+  wheelDegrees: 45
   suspension: 0.009
   headTilt: 2.2
   gateDistance: 185
   gateAssistDistance: 20
   driveDistance: 265
+  boostMultiplier: 1.6
+  boostLead: 12
+  gateOpenAngle: 90
+  gateClearance: 6
+  gateCloseDuration: 1.1
+  lookYawLimit: 175
+  lookPitchLimit: 65
+  headLookMultiplier: 1.35
+  sideLean: 0.07
+  rearLean: 0.32
+  controlsHintDuration: 12
+  seatedViewPitch: 8
   lines:
   - id: L01
     speakerKey: intro_tyler

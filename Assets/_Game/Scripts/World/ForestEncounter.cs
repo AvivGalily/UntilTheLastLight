@@ -52,6 +52,7 @@ namespace Game
         {
             Initialize();Seen=seen;TriggerCount=seen?1:0;Elapsed=escapeTime=heartbeatTime=ScoreIntensity=0;bite=BloodBursts=0;
             Phase=seen?(faulted?ForestEncounterPhase.Refuge:ForestEncounterPhase.Resolved):ForestEncounterPhase.Waiting;
+            var identity=victim.GetComponent<HunterIdentity>();if(identity)identity.deceased=seen;
             StopSound();voice.Stop();impact.Stop();spray.Stop(true,ParticleSystemStopBehavior.StopEmittingAndClear);
             victim.position=hangPosition;victim.rotation=hangRotation;wounds.amount=seen?1:.75f;
             mixer.SetInputWeight(0,1);mixer.SetInputWeight(1,0);mixer.SetInputWeight(2,0);pose.SetTime(0);graph.Evaluate(0);web.ResetWeb(seen);pool.gameObject.SetActive(seen);
@@ -98,7 +99,7 @@ namespace Game
                 var airborne=Quaternion.LookRotation((feedingPoint-leapStart).normalized)*Quaternion.Euler(Mathf.Lerp(-24,12,t),0,0);
                 game.monster.transform.rotation=Quaternion.Slerp(airborne,Quaternion.identity,Mathf.SmoothStep(0,1,(t-.55f)/.45f));
                 game.creature.PoseEncounter(dt,game.monster,t,false);
-                if(t>=1){Phase=ForestEncounterPhase.Feeding;Elapsed=0;web.Release();PoseFallen(0);EmitBlood(45);impact.PlayOneShot(biteClip,.9f);}
+                if(t>=1){Phase=ForestEncounterPhase.Feeding;Elapsed=0;var identity=victim.GetComponent<HunterIdentity>();if(identity)identity.deceased=true;web.Release();PoseFallen(0);EmitBlood(45);impact.PlayOneShot(biteClip,.9f);}
             }
             if(Phase==ForestEncounterPhase.Feeding)
             {

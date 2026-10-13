@@ -110,7 +110,7 @@ def main():
         effects.append(dict(entry,role=role,**stats));effect_data[role]=(data,channels)
         print(entry['assetName'],stats['duration'],'s;',channels,'channels; loop',loop,flush=True)
     effect_manifest={'provider':'User-supplied Runway MP3s','sourceManifest':(SOURCE/manifest_path.name).relative_to(ROOT).as_posix(),
-                     'effects':effects,'timing':{'vehicle':'drive to blackout; fades at forest silence','gate':'gateCrossed+1, aligned to closing leaves',
+                     'effects':effects,'timing':{'vehicle':'drive to blackout; fades at forest silence','gate':'after scheduled crossing and actual vehicle-tail clearance; once with closing leaves',
                      'threat':'discovery-0.25, just before Ethan hears it; moves from rear-left to vehicle at threat beat',
                      'blast':'blast; complete 6-second tail through blackout'},'missing':[]}
     (DOCS/'ForestOpening_SuppliedAudio.json').write_text(json.dumps(effect_manifest,indent=2)+'\n',encoding='utf-8')

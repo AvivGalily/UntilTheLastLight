@@ -1,0 +1,18 @@
+{
+  "tool": "built-in image_gen.imagegen",
+  "generatedArtwork": true,
+  "photographedTissue": false,
+  "date": "2026-10-12",
+  "generationBrief": "Uniform tileable game surface of realistic moist intestinal serosa: pink/salmon tissue, fine branching red and blue/purple capillaries, subtle translucent membranes and micro surface detail, diffuse neutral lighting, no distinct organ, scene, border or lettering.",
+  "source": "ArtSource/Textures/IntestinalSerosa_Imagegen.png",
+  "gameFile": "Assets/_Game/Art/Textures/IntestinalSerosa_BaseColor.png",
+  "dimensions": [
+    1254,
+    1254
+  ],
+  "sourceSha256": "9f9d95d9d298eae28aa6c85947d0883129e16d8b78a48117e713b488206ddae2",
+  "gameSha256": "9f9d95d9d298eae28aa6c85947d0883129e16d8b78a48117e713b488206ddae2",
+  "model": "eviscerated_casualty_01",
+  "uv": "continuous cylindrical unwrap; repeat along arc length",
+  "material": "URP Lit IntestinalSerosa; smoothness 0.72, metallic 0"
+}

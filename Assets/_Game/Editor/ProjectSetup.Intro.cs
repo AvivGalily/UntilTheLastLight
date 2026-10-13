@@ -80,20 +80,32 @@ namespace Game.Editor
                 for(int n=0;n<mats.Length;n++){if(mats[n].name=="Ranger canvas")mats[n]=dash;else if(mats[n].name=="Oxidized steel")mats[n]=paint;else if(mats[n].name=="PlayerSleeve")mats[n]=cloth;}
                 renderer.sharedMaterials=mats;
             }
-            drive.driverEye=IntroNode("Driver eye anchor",vehicle.transform,new Vector3(-.44f,1.44f,-.12f));
-            var wheel=IntroNode("Steering pivot",vehicle.transform,new Vector3(-.44f,1.12f,.61f));
+            drive.driverEye=IntroNode("Driver eye anchor",vehicle.transform,new Vector3(-.44f,1.44f,.12f));
+            var wheel=IntroNode("Steering pivot",vehicle.transform,new Vector3(-.44f,1.12f,.50f));
             ForestArt.Model("intro_wheel_01",Vector3.zero,Quaternion.identity,wheel);
             drive.hands=vehicle.AddComponent<SteeringWheelHands>();drive.hands.wheel=wheel;
-            drive.hands.grips=new Transform[2];drive.hands.arms=new FirstPersonArm[2];
+            drive.hands.grips=new Transform[2];drive.hands.arms=new FirstPersonArm[0];
+            wheel.localRotation=Quaternion.Euler(18,0,0);
+            var driver=ForestArt.Model("intro_driver_01",new Vector3(-.44f,.07f,.04f),Quaternion.identity,vehicle.transform);
+            driver.name="Seated driver body and anatomical wheel hands";
+            drive.hands.driver=driver.AddComponent<IntroDriverPose>();var driverPose=drive.hands.driver;driverPose.arms=new IntroDriverPose.Arm[2];
+            Transform DriverBone(string name)=>driver.GetComponentsInChildren<Transform>().First(t=>t.name==name);
+            var driverOutfit=new Material(AssetDatabase.LoadAssetAtPath<Material>(Root+"/Materials/IntroOutfit0.mat"));driverOutfit.name="Driver field jacket";driverOutfit.color=new Color(.64f,.78f,.68f);
+            string driverMaterial=Root+"/Materials/Intro driver clothing.mat";var previousDriver=AssetDatabase.LoadAssetAtPath<Material>(driverMaterial);
+            if(previousDriver){EditorUtility.CopySerialized(driverOutfit,previousDriver);UnityEngine.Object.DestroyImmediate(driverOutfit);driverOutfit=previousDriver;}else AssetDatabase.CreateAsset(driverOutfit,driverMaterial);
+            foreach(var renderer in driver.GetComponentsInChildren<SkinnedMeshRenderer>())
+            {
+                renderer.updateWhenOffscreen=true;renderer.receiveShadows=true;
+                var mats=renderer.sharedMaterials;for(int n=0;n<mats.Length;n++)if(mats[n].name=="IntroOutfit0")mats[n]=driverOutfit;renderer.sharedMaterials=mats;
+            }
             for(int n=0;n<2;n++)
             {
                 float sign=n==0?-1:1;
                 var grip=IntroNode(n==0?"Left rim grip":"Right rim grip",wheel,new Vector3(sign*.211f,.102f,0));drive.hands.grips[n]=grip;
-                var model=ForestArt.Model("player_axe_hand_01",Vector3.zero,Quaternion.Euler(0,0,n==0?-26:26),grip);
-                if(n==0)model.transform.localScale=new Vector3(-1,1,1);
-                var arm=model.AddComponent<FirstPersonArm>();arm.eyes=game.player.view;arm.bodyFrame=drive.driverEye;arm.bodyAnchor=new Vector3(sign*.26f,-.48f,.04f);drive.hands.arms[n]=arm;
-                foreach(var r in model.GetComponentsInChildren<Renderer>()){r.shadowCastingMode=ShadowCastingMode.Off;r.receiveShadows=false;}
+                string side=driver.transform.InverseTransformPoint(DriverBone("wrist.L").position).x*sign>0?"L":"R";
+                driverPose.arms[n]=new IntroDriverPose.Arm{upper=DriverBone("upperarm01."+side),lower=DriverBone("lowerarm01."+side),wrist=DriverBone("wrist."+side),grip=grip,pole=new Vector3(sign*.28f,.76f,.18f)};
             }
+            driverPose.Bind();driverPose.Pose();
             drive.headlights=new Light[2];
             for(int n=0;n<2;n++)
             {
@@ -129,6 +141,7 @@ namespace Game.Editor
             for(int n=0;n<3;n++)
             {
                 var npc=ForestArt.Model(models[n],seats[n],Quaternion.identity,vehicle.transform);npc.name=new[]{"Jack front passenger","Tyler rear right","Ethan rear left"}[n];
+                npc.AddComponent<HunterIdentity>().characterId=new[]{"jack","tyler","ethan"}[n];
                 foreach(var r in npc.GetComponentsInChildren<Renderer>())r.receiveShadows=true;
                 Transform Bone(string name)=>npc.GetComponentsInChildren<Transform>().FirstOrDefault(t=>t.name==name);
                 var passenger=npc.AddComponent<IntroPassenger>();passenger.head=Bone("head");passenger.spine=Bone("spine01");passenger.jaw=Bone("jaw");passenger.gesture=Bone("lowerarm01.R");dialogue.passengers[n]=passenger;
@@ -153,8 +166,11 @@ namespace Game.Editor
                 for(int bar=0;bar<=12;bar++)IntroBox("Gate upright",leaf,new Vector3(-sign*bar*.25f,1.48f,0),new Vector3(.035f,2.65f,.035f),iron);
                 IntroBox("Heavy latch",leaf,new Vector3(-sign*2.85f,1.30f,-.03f),new Vector3(.30f,.09f,.08f),iron);
                 for(int bolt=0;bolt<4;bolt++)IntroBox("Gate hinge bolt",leaf,new Vector3(0,.6f+bolt*.55f,-.05f),new Vector3(.085f,.06f,.04f),iron);
-                leaf.localRotation=Quaternion.Euler(0,sign*82,0);
-                for(int fence=0;fence<5;fence++)ForestArt.Model("forest_fence_01",new Vector3(sign*(5.4f+fence*4.1f),0,0),Quaternion.identity,gate);
+                leaf.localRotation=Quaternion.Euler(0,sign*c.gateOpenAngle,0);
+                // The retained fence FBX is ten metres wide. Unscaled copies
+                // overlap the entrance even when the hinged leaves are open.
+                for(int fence=0;fence<5;fence++)
+                {var section=ForestArt.Model("forest_fence_01",new Vector3(sign*(5.4f+fence*4.1f),0,0),Quaternion.identity,gate);section.transform.localScale=new Vector3(.41f,1,1);}
             }
             var signBoard=IntroBox("Faded warning plate",gate,new Vector3(-3.3f,2.4f,-.31f),new Vector3(1.05f,.53f,.035f),iron);
             var lettering=IntroNode("Faded sign lettering",signBoard.transform,new Vector3(0,0,-.58f)).gameObject.AddComponent<TextMeshPro>();lettering.font=font;lettering.text="PRIVATE\nNO ENTRY";lettering.fontSize=1.4f;lettering.alignment=TextAlignmentOptions.Center;lettering.color=new Color(.50f,.48f,.36f);lettering.rectTransform.sizeDelta=new Vector2(.9f,.45f);lettering.transform.localScale=new Vector3(1/1.05f,1/.53f,1/.035f);

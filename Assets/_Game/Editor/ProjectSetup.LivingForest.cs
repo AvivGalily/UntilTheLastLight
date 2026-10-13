@@ -26,7 +26,7 @@ namespace Game.Editor
                 // Weathered branch under the feet. Its collider is decorative only.
                 ForestArt.Model("fallen_log_01",perch-Vector3.up*.12f,Quaternion.Euler(0,0,-4),null,.4f).name="Raven roost branch";
             }
-            string path="Assets/_Game/Art/Meshes/hanging_survivor_01.fbx";
+            string path="Assets/_Game/Art/Meshes/web_jack_01.fbx";
             var importer=(ModelImporter)AssetImporter.GetAtPath(path);importer.animationType=ModelImporterAnimationType.Generic;importer.avatarSetup=ModelImporterAvatarSetup.CreateFromThisModel;
             importer.importAnimation=true;importer.optimizeGameObjects=false;importer.animationCompression=ModelImporterAnimationCompression.Off;
             var clips=importer.defaultClipAnimations;foreach(var clip in clips){clip.name=clip.takeName.Contains("Overpowered")?"Victim_Overpowered":clip.takeName.Contains("Dying")?"Victim_Dying":"Victim_Hanging";clip.loopTime=clip.name=="Victim_Hanging";clip.lockRootPositionXZ=true;clip.lockRootHeightY=true;clip.lockRootRotation=true;}importer.clipAnimations=clips;importer.SaveAndReimport();
@@ -35,7 +35,7 @@ namespace Game.Editor
             // FBX mirrors Blender's X axis; turn the long overhang toward the victim.
             var treeArt=ForestArt.Model("gallows_oak_01",Vector3.zero,Quaternion.Euler(0,180,0),root.transform);
             treeArt.layer=LayerMask.NameToLayer("WorldSolid");var trunk=treeArt.AddComponent<CapsuleCollider>();trunk.radius=.45f;trunk.height=6;trunk.center=Vector3.up*3;
-            var victim=ForestArt.Model("hanging_survivor_01",new Vector3(2.25f,.85f,0),Quaternion.Euler(0,180,0),root.transform);
+            var victim=ForestArt.Model("web_jack_01",new Vector3(2.25f,.85f,0),Quaternion.Euler(0,180,0),root.transform);
             encounter.victim=victim.transform;encounter.victimAnimator=victim.GetComponentInChildren<Animator>();encounter.victimAnimator.applyRootMotion=false;encounter.victimAnimator.cullingMode=AnimatorCullingMode.AlwaysAnimate;
             encounter.hanging=AssetDatabase.LoadAllAssetsAtPath(path).OfType<AnimationClip>().First(c=>c.name=="Victim_Hanging");
             encounter.overpowered=AssetDatabase.LoadAllAssetsAtPath(path).OfType<AnimationClip>().First(c=>c.name=="Victim_Overpowered");

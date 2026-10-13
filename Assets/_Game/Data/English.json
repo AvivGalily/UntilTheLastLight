@@ -722,7 +722,7 @@
     },
     {
       "id": "intro_steer",
-      "value": "A / D — Steer  |  Mouse — Look around  |  Controller: both sticks"
+      "value": "Mouse — Look  |  A/D / arrows — Steer  |  W — Accelerate  |  Controller: sticks + RT"
     },
     {
       "id": "intro_skip",

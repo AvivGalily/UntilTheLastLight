@@ -1,3 +1,4 @@
+using System.Linq;
 using UnityEditor;
 using UnityEngine;
 using UnityEngine.Rendering;
@@ -8,7 +9,7 @@ namespace Game.Editor
     {
         static void WirePlayerPresentation(GameSession game)
         {
-            foreach(string id in new[]{"player_axe_hand_01","player_shotgun_hand_01","player_body_01"})
+            foreach(string id in new[]{"player_axe_hand_01","player_shotgun_hand_01","player_flashlight_hand_01","player_body_01"})
             {
                 var importer=(ModelImporter)AssetImporter.GetAtPath("Assets/_Game/Art/Meshes/"+id+".fbx");
                 importer.isReadable=true;importer.importBlendShapes=true;importer.SaveAndReimport();
@@ -22,15 +23,17 @@ namespace Game.Editor
             presence.bodyMorph=presence.shadowBody.GetComponentInChildren<SkinnedMeshRenderer>();
             if(presence.bodyMorph)presence.bodyMorph.updateWhenOffscreen=true;
             if(presence.bodyMorph)for(int i=0;i<presence.bodyMorph.sharedMesh.blendShapeCount;i++)if(presence.bodyMorph.sharedMesh.GetBlendShapeName(i).EndsWith("Crouch"))presence.crouchShape=i;
+            presence.BindGaitShapes();
             foreach(var r in presence.bodyRenderers){r.shadowCastingMode=ShadowCastingMode.ShadowsOnly;r.receiveShadows=false;r.renderingLayerMask=PlayerPresence.BodyShadowLayer;}
             presence.ResetPresence();
-            presence.axeGrip=ForestArt.Model("player_axe_hand_01",new Vector3(-.008f,.22f,0),Quaternion.Euler(0,60,0),game.axe.heldModel,1/.62f).transform;
+            presence.axeGrip=ForestArt.Model("player_axe_hand_01",new Vector3(-.014f,.22f,0),Quaternion.Euler(0,-90,0),game.axe.heldModel,1/.62f).transform;
             AttachBodyArm(presence.axeGrip,game.player.view,false);
-            presence.flashlightGrip=ForestArt.Model("player_axe_hand_01",new Vector3(-.22f,-.195f,.405f),Quaternion.Euler(90,0,0),game.player.hand).transform;
-            presence.flashlightGrip.localScale=new Vector3(-1,1,1);AttachBodyArm(presence.flashlightGrip,game.player.view,true);
+            presence.flashlightGrip=ForestArt.Model("player_flashlight_hand_01",new Vector3(-.22f,-.18f,.395f),Quaternion.identity,game.player.hand).transform;
+            AttachBodyArm(presence.flashlightGrip,game.player.view,true);
+            presence.flashlightGrip.GetComponent<FirstPersonArm>().forearmAxis=Vector3.left;
             game.player.hand.Find("Gloved hand").GetComponent<Renderer>().enabled=false;
             var fill=new GameObject("Subtle first person grip fill",typeof(Light));fill.transform.SetParent(game.player.view.transform,false);fill.transform.localPosition=new Vector3(0,-.14f,.22f);
-            presence.gripLight=fill.GetComponent<Light>();presence.gripLight.type=LightType.Point;presence.gripLight.range=1;presence.gripLight.intensity=.34f;presence.gripLight.color=new Color(.84f,.80f,.73f);presence.gripLight.shadows=LightShadows.None;presence.gripLight.enabled=false;
+            presence.gripLight=fill.GetComponent<Light>();presence.gripLight.type=LightType.Point;presence.gripLight.range=1;presence.gripLight.intensity=0;presence.gripLight.shadows=LightShadows.None;presence.gripLight.enabled=false;
             var sequence=game.player.gameObject.AddComponent<PlayerDeathSequence>();game.deathSequence=sequence;
             sequence.voice=PlayerVoice(game.player.transform,"Fatal close creature voice");sequence.impacts=PlayerVoice(game.player.transform,"Fatal tearing and impact");
             sequence.devourClip=Clip("walker_devour");sequence.tearClip=Clip("flesh_tear");sequence.stingClip=Clip("fatal_sting");
@@ -39,9 +42,9 @@ namespace Game.Editor
             sequence.defensiveHands=new Transform[2];
             for(int i=0;i<2;i++)
             {
-                var hand=ForestArt.Model("player_axe_hand_01",new Vector3(i==0?-.3f:.3f,-.25f,.48f),Quaternion.Euler(35,i==0?-15:15,i==0?-22:22),game.player.view.transform);
-                if(i==0)hand.transform.localScale=new Vector3(-1,1,1);
+                var hand=ForestArt.Model(i==0?"player_flashlight_hand_01":"player_axe_hand_01",new Vector3(i==0?-.3f:.3f,-.25f,.48f),Quaternion.Euler(35,i==0?-15:15,i==0?-22:22),game.player.view.transform);
                 sequence.defensiveHands[i]=hand.transform;hand.SetActive(false);
+                AttachBodyArm(hand.transform,game.player.view,i==0);
             }
             var go=new GameObject("Fatal contact blood spray",typeof(ParticleSystem));go.transform.SetParent(game.player.transform,false);
             sequence.spray=go.GetComponent<ParticleSystem>();var main=sequence.spray.main;
@@ -58,7 +61,11 @@ namespace Game.Editor
         }
         static void AttachBodyArm(Transform grip,Camera eyes,bool left)
         {
-            var arm=grip.gameObject.AddComponent<FirstPersonArm>();arm.eyes=eyes;arm.bodyAnchor=new Vector3(left?-.26f:.26f,-.50f,.025f);
+            var arm=grip.gameObject.AddComponent<FirstPersonArm>();arm.eyes=eyes;arm.bodyAnchor=new Vector3(left?-.26f:.26f,-.50f,.025f);arm.forearmAxis=Vector3.back;
+            string side=left?"L":"R";var bones=grip.GetComponentsInChildren<Transform>();
+            arm.upper=bones.First(t=>t.name=="upperarm01."+side);arm.lower=bones.First(t=>t.name=="lowerarm01."+side);arm.wrist=bones.First(t=>t.name=="wrist."+side);
+            foreach(var skin in grip.GetComponentsInChildren<SkinnedMeshRenderer>()){skin.updateWhenOffscreen=true;var bounds=skin.localBounds;bounds.Expand(2);skin.localBounds=bounds;}
+            arm.Bind();arm.Pose();
         }
         static void ConfigurePlayerShadowLights(GameSession game)
         {

@@ -147,6 +147,7 @@ namespace Game.Editor
             opening.AddAction("SkipIntro",InputActionType.Button,"<Keyboard>/space").AddBinding("<Gamepad>/buttonSouth");
             opening.AddAction("LookAround",InputActionType.Value,"<Mouse>/delta").expectedControlType="Vector2";
             opening.AddAction("LookStick",InputActionType.Value,"<Gamepad>/rightStick").expectedControlType="Vector2";
+            opening.AddAction("Accelerate",InputActionType.Button,"<Keyboard>/w").AddBinding("<Gamepad>/rightTrigger");
             File.WriteAllText(path,asset.ToJson());
             UnityEngine.Object.DestroyImmediate(asset);AssetDatabase.ImportAsset(path);inputs=AssetDatabase.LoadAssetAtPath<InputActionAsset>(path);
         }
@@ -208,7 +209,7 @@ namespace Game.Editor
             if(old){EditorUtility.CopySerialized(navigation.navMeshData,old);navigation.RemoveData();navigation.navMeshData=old;navigation.AddData();}
             else AssetDatabase.CreateAsset(navigation.navMeshData,navPath);
             if(!mechanics)PlaceWolvesOnNavigation(session);
-            if(!mechanics)WireForestIntro(session);
+            if(!mechanics){WireForestIntro(session);InstallArrivalHunters(session);}
             EditorSceneManager.SaveScene(scene,Root+"/Scenes/"+sceneName+".unity");
         }
         static PlayerMotor CreatePlayer(Vector3 position)

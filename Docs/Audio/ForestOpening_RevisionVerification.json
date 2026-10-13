@@ -1,12 +1,12 @@
 {
   "build": "0.13.0",
-  "bytes": 575578898,
-  "processId": 5780,
+  "bytes": 607312206,
+  "processId": 18152,
   "exitCode": 0,
   "graphics": "Direct3D 11 / Intel(R) Iris(R) Xe Graphics (ID=0xa7a0)",
   "startupErrors": 0,
-  "editTestsPassed": 95,
-  "playTestsPassed": 14,
+  "editTestsPassed": 107,
+  "playTestsPassed": 17,
   "unitTestsNote": "Both suites rerun and passed for the final 0.13.0 assets/code.",
   "runtimeSmoke": "passed",
   "nortonSmoke": "passed",
@@ -32,16 +32,103 @@
     }
   ],
   "batchMode": false,
-  "checkedAt": "2026-10-12T00:05:00.5925507+03:00",
+  "checkedAt": "2026-10-12T16:36:09.6301420+03:00",
   "introSmoke": "passed: supplied 12 VO and 4 effects; complete opening/cabin; real input; timed single cues; pause/skip/save/Continue",
   "suppliedAudioFiles": 16,
   "voicesManifest": "Docs/Audio/ForestOpening_VoiceManifest.json",
   "audioProvenance": "Docs/Audio/ForestOpening_SuppliedAudio.json",
   "sourceManifest": "ArtSource/Audio/Runway/Forest_Opening_Audio_Manifest.json",
   "skinProvenance": "ArtSource/Textures/IntroHealthySkin_Imagegen.json",
+  "buildingCrickets": {
+    "clip": "night_crickets.wav",
+    "maximumSourceVolume": 0.012,
+    "fadeFromWalls": [
+      2,
+      10
+    ],
+    "openingPlayback": false,
+    "runtimeSmoke": "passed"
+  },
+  "openingControls": {
+    "yawLimit": 175,
+    "pitchLimit": 65,
+    "lookMultiplier": 1.35,
+    "sideLean": 0.07,
+    "steeringOffset": 1.6,
+    "heading": "forward route",
+    "gateOffset": 0.08,
+    "accelerator": "W / right trigger",
+    "dialogueClock": "unchanged",
+    "runtimeSmoke": "passed"
+  },
+  "driver": {
+    "asset": "intro_driver_01",
+    "body": "seated clothed torso/legs/boots; own head excluded",
+    "hands": "independent native left/right anatomy; mirrored palm frames; length-preserving finger curls; opposed inner-rim thumbs; skeletal two-bone IK",
+    "mirroredJointErrorMetres": 0.0,
+    "provenance": "ArtSource/IntroDriverPose.json"
+  },
+  "playerPresentation": {
+    "footsteps": "non-looping single grounded footfalls; stop immediately on idle or menus",
+    "cadence3Seconds": {
+      "walk": 8,
+      "run": 11
+    },
+    "shadow": "four articulated Walk and four Run poses; grounded boots; shared displacement phase",
+    "hands": "native left flashlight/right axe/right stock grip; weighted shoulder/elbow/wrist IK, preserved bone lengths and immutable mesh data",
+    "handsProvenance": "ArtSource/FirstPersonArms.json",
+    "personalFillLight": "permanently disabled; no active player light with flashlight off, outside firing/death effects",
+    "encounterCast": {
+      "tyler": "first map-bearing corpse",
+      "jack": "animated web victim",
+      "ethan": "eviscerated wreck casualty"
+    },
+    "fallenCastProvenance": "ArtSource/EncounterCast.json",
+    "intestinesTexture": "ArtSource/Textures/IntestinalSerosa_Imagegen.json",
+    "mapCarrierPersistentId": "corpse_0",
+    "wreckCarrierPersistentId": "norton_casualty",
+    "runtimeSmoke": "passed",
+    "breathing": {
+      "sprint": "heavy only",
+      "sprintVolumeCap": 0.05,
+      "recovery": "calm only while stationary; fades with stamina deficit",
+      "recoveryVolumeCap": 0.018,
+      "walking": "both sources stopped, including winded walking",
+      "fullBreathThreshold": 0.995,
+      "resetMenusDisable": "both sources stopped",
+      "playModeRegressions": 3,
+      "runtimeSmoke": "passed"
+    }
+  },
+  "gate": {
+    "fixedFenceWidth": 4.1,
+    "openDegrees": 90,
+    "closesAfterClearance": 6,
+    "singleSoundWithClosing": true
+  },
   "artEvidence": [
     "Docs/Screenshots/73-intro-drive-english.png",
     "Docs/Screenshots/78-intro-jack-alive.png",
-    "Docs/Screenshots/79-intro-back-seat-hunters.png"
+    "Docs/Screenshots/79-intro-back-seat-hunters.png",
+    "Docs/Screenshots/80-intro-left-window.png",
+    "Docs/Screenshots/81-intro-right-window.png",
+    "Docs/Screenshots/82-intro-steer-right.png",
+    "Docs/Screenshots/83-intro-steer-left.png",
+    "Docs/Screenshots/84-intro-driver-body.png",
+    "Docs/Screenshots/85-intro-wheel-hands.png",
+    "Docs/Screenshots/86-intro-wheel-hands-right.png",
+    "Docs/Screenshots/87-intro-wheel-hands-left.png",
+    "Docs/Screenshots/88-player-axe-grip.png",
+    "Docs/Screenshots/89-player-shotgun-grip.png",
+    "Docs/Screenshots/90-player-walking-shadow-left.png",
+    "Docs/Screenshots/91-player-walking-shadow-right.png",
+    "Docs/Screenshots/92-player-running-shadow.png",
+    "Docs/Screenshots/93-first-corpse-tyler.png",
+    "Docs/Screenshots/94-weighted-shotgun-look-down.png",
+    "Docs/Screenshots/95-weighted-shotgun-recoil.png",
+    "Docs/Screenshots/96-weighted-shotgun-reload.png",
+    "Docs/Screenshots/97-flashlight-off-no-player-glow.png",
+    "Docs/Screenshots/98-web-victim-jack.png",
+    "Docs/Screenshots/99-wreck-casualty-ethan-intestines.png"
   ]
 }

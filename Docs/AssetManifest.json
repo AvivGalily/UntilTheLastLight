@@ -2,6 +2,135 @@
   "seed": 1407,
   "assets": [
     {
+      "id": "arrival_ethan_01",
+      "source": "ArtSource/Blender/arrival_ethan_01.blend",
+      "export": "Assets/_Game/Art/Meshes/arrival_ethan_01.fbx",
+      "units": "metres",
+      "triangles": 30356,
+      "lodTriangles": {
+        "LOD0": 30356,
+        "LOD1": 12749,
+        "LOD2": 3946
+      },
+      "materials": [
+        "ArrivalSkin0",
+        "HumanBoots",
+        "HumanBrows",
+        "IntroEyes2",
+        "IntroHair2",
+        "IntroOutfit2"
+      ],
+      "textures": [
+        "Assets/_Game/Art/Textures/HumanBoots_BaseColor.png",
+        "Assets/_Game/Art/Textures/HumanBoots_Normal.png",
+        "Assets/_Game/Art/Textures/HumanBoots_Mask.png",
+        "Assets/_Game/Art/Textures/HumanBrows_BaseColor.png",
+        "Assets/_Game/Art/Textures/HumanBrows_Normal.png",
+        "Assets/_Game/Art/Textures/HumanBrows_Mask.png",
+        "Assets/_Game/Art/Textures/IntroEyes2_BaseColor.png",
+        "Assets/_Game/Art/Textures/IntroEyes2_Normal.png",
+        "Assets/_Game/Art/Textures/IntroEyes2_Mask.png",
+        "Assets/_Game/Art/Textures/IntroHair2_BaseColor.png",
+        "Assets/_Game/Art/Textures/IntroHair2_Normal.png",
+        "Assets/_Game/Art/Textures/IntroHair2_Mask.png",
+        "Assets/_Game/Art/Textures/IntroOutfit2_BaseColor.png",
+        "Assets/_Game/Art/Textures/IntroOutfit2_Normal.png",
+        "Assets/_Game/Art/Textures/IntroOutfit2_Mask.png"
+      ],
+      "collider": "separate simple Unity collider; decorative foliage has no collision",
+      "blendShapes": [],
+      "animations": [],
+      "bones": 0,
+      "license": "Retained CC0 MakeHuman passenger anatomy/clothes/hair and healthy skin derivative; exact living mesh reused in a fallen pose",
+      "status": "Exact Jack/Tyler/Ethan passenger face, hair, clothing and UVs, posed on the ground with three distance LODs and corpse/blood shading; cast provenance ArtSource/ArrivalCast.json"
+    },
+    {
+      "id": "arrival_jack_01",
+      "source": "ArtSource/Blender/arrival_jack_01.blend",
+      "export": "Assets/_Game/Art/Meshes/arrival_jack_01.fbx",
+      "units": "metres",
+      "triangles": 41068,
+      "lodTriangles": {
+        "LOD0": 41068,
+        "LOD1": 17248,
+        "LOD2": 5337
+      },
+      "materials": [
+        "ArrivalSkin1",
+        "HumanBoots",
+        "HumanBrows",
+        "IntroEyes0",
+        "IntroHair0",
+        "IntroOutfit1"
+      ],
+      "textures": [
+        "Assets/_Game/Art/Textures/HumanBoots_BaseColor.png",
+        "Assets/_Game/Art/Textures/HumanBoots_Normal.png",
+        "Assets/_Game/Art/Textures/HumanBoots_Mask.png",
+        "Assets/_Game/Art/Textures/HumanBrows_BaseColor.png",
+        "Assets/_Game/Art/Textures/HumanBrows_Normal.png",
+        "Assets/_Game/Art/Textures/HumanBrows_Mask.png",
+        "Assets/_Game/Art/Textures/IntroEyes0_BaseColor.png",
+        "Assets/_Game/Art/Textures/IntroEyes0_Normal.png",
+        "Assets/_Game/Art/Textures/IntroEyes0_Mask.png",
+        "Assets/_Game/Art/Textures/IntroHair0_BaseColor.png",
+        "Assets/_Game/Art/Textures/IntroHair0_Normal.png",
+        "Assets/_Game/Art/Textures/IntroHair0_Mask.png",
+        "Assets/_Game/Art/Textures/IntroOutfit1_BaseColor.png",
+        "Assets/_Game/Art/Textures/IntroOutfit1_Normal.png",
+        "Assets/_Game/Art/Textures/IntroOutfit1_Mask.png"
+      ],
+      "collider": "separate simple Unity collider; decorative foliage has no collision",
+      "blendShapes": [],
+      "animations": [],
+      "bones": 0,
+      "license": "Retained CC0 MakeHuman passenger anatomy/clothes/hair and healthy skin derivative; exact living mesh reused in a fallen pose",
+      "status": "Exact Jack/Tyler/Ethan passenger face, hair, clothing and UVs, posed on the ground with three distance LODs and corpse/blood shading; cast provenance ArtSource/ArrivalCast.json"
+    },
+    {
+      "id": "arrival_tyler_01",
+      "source": "ArtSource/Blender/arrival_tyler_01.blend",
+      "export": "Assets/_Game/Art/Meshes/arrival_tyler_01.fbx",
+      "units": "metres",
+      "triangles": 29286,
+      "lodTriangles": {
+        "LOD0": 29286,
+        "LOD1": 12299,
+        "LOD2": 3807
+      },
+      "materials": [
+        "ArrivalSkin0",
+        "HumanBoots",
+        "HumanBrows",
+        "IntroEyes1",
+        "IntroHair1",
+        "IntroOutfit0"
+      ],
+      "textures": [
+        "Assets/_Game/Art/Textures/HumanBoots_BaseColor.png",
+        "Assets/_Game/Art/Textures/HumanBoots_Normal.png",
+        "Assets/_Game/Art/Textures/HumanBoots_Mask.png",
+        "Assets/_Game/Art/Textures/HumanBrows_BaseColor.png",
+        "Assets/_Game/Art/Textures/HumanBrows_Normal.png",
+        "Assets/_Game/Art/Textures/HumanBrows_Mask.png",
+        "Assets/_Game/Art/Textures/IntroEyes1_BaseColor.png",
+        "Assets/_Game/Art/Textures/IntroEyes1_Normal.png",
+        "Assets/_Game/Art/Textures/IntroEyes1_Mask.png",
+        "Assets/_Game/Art/Textures/IntroHair1_BaseColor.png",
+        "Assets/_Game/Art/Textures/IntroHair1_Normal.png",
+        "Assets/_Game/Art/Textures/IntroHair1_Mask.png",
+        "Assets/_Game/Art/Textures/IntroOutfit0_BaseColor.png",
+        "Assets/_Game/Art/Textures/IntroOutfit0_Normal.png",
+        "Assets/_Game/Art/Textures/IntroOutfit0_Mask.png"
+      ],
+      "collider": "separate simple Unity collider; decorative foliage has no collision",
+      "blendShapes": [],
+      "animations": [],
+      "bones": 0,
+      "license": "Retained CC0 MakeHuman passenger anatomy/clothes/hair and healthy skin derivative; exact living mesh reused in a fallen pose",
+      "status": "Exact Jack/Tyler/Ethan passenger face, hair, clothing and UVs, posed on the ground with three distance LODs and corpse/blood shading; cast provenance ArtSource/ArrivalCast.json"
+    },
+    {
       "id": "birch_01",
       "source": "ArtSource/Blender/birch_01.blend",
       "export": "Assets/_Game/Art/Meshes/birch_01.fbx",
@@ -253,19 +382,19 @@
       "source": "ArtSource/Blender/eviscerated_casualty_01.blend",
       "export": "Assets/_Game/Art/Meshes/eviscerated_casualty_01.fbx",
       "units": "metres",
-      "triangles": 39744,
+      "triangles": 43642,
       "lodTriangles": {
-        "LOD0": 39744
+        "LOD0": 43642
       },
       "materials": [
+        "ArrivalSkin0",
         "CrawlerThroat",
         "HumanBoots",
         "HumanBrows",
-        "HumanEyes",
-        "HumanHair",
-        "HumanOutfit2",
-        "HumanSkin0",
-        "Viscera"
+        "IntestinalSerosa",
+        "IntroEyes2",
+        "IntroHair2",
+        "IntroOutfit2"
       ],
       "textures": [
         "Assets/_Game/Art/Textures/CrawlerThroat_BaseColor.png",
@@ -277,15 +406,16 @@
         "Assets/_Game/Art/Textures/HumanBrows_BaseColor.png",
         "Assets/_Game/Art/Textures/HumanBrows_Normal.png",
         "Assets/_Game/Art/Textures/HumanBrows_Mask.png",
-        "Assets/_Game/Art/Textures/HumanEyes_BaseColor.png",
-        "Assets/_Game/Art/Textures/HumanEyes_Normal.png",
-        "Assets/_Game/Art/Textures/HumanEyes_Mask.png",
-        "Assets/_Game/Art/Textures/HumanHair_BaseColor.png",
-        "Assets/_Game/Art/Textures/HumanHair_Normal.png",
-        "Assets/_Game/Art/Textures/HumanHair_Mask.png",
-        "Assets/_Game/Art/Textures/HumanOutfit2_BaseColor.png",
-        "Assets/_Game/Art/Textures/HumanOutfit2_Normal.png",
-        "Assets/_Game/Art/Textures/HumanOutfit2_Mask.png",
+        "Assets/_Game/Art/Textures/IntestinalSerosa_BaseColor.png",
+        "Assets/_Game/Art/Textures/IntroEyes2_BaseColor.png",
+        "Assets/_Game/Art/Textures/IntroEyes2_Normal.png",
+        "Assets/_Game/Art/Textures/IntroEyes2_Mask.png",
+        "Assets/_Game/Art/Textures/IntroHair2_BaseColor.png",
+        "Assets/_Game/Art/Textures/IntroHair2_Normal.png",
+        "Assets/_Game/Art/Textures/IntroHair2_Mask.png",
+        "Assets/_Game/Art/Textures/IntroOutfit2_BaseColor.png",
+        "Assets/_Game/Art/Textures/IntroOutfit2_Normal.png",
+        "Assets/_Game/Art/Textures/IntroOutfit2_Mask.png",
         "Assets/_Game/Art/Textures/HumanSkin0_BaseColor.png",
         "Assets/_Game/Art/Textures/HumanSkin0_Normal.png",
         "Assets/_Game/Art/Textures/HumanSkin0_Mask.png",
@@ -294,14 +424,20 @@
         "Assets/_Game/Art/Textures/CrawlerSkin_Mask.png",
         "Assets/_Game/Art/Textures/CrawlerGums_BaseColor.png",
         "Assets/_Game/Art/Textures/CrawlerGums_Normal.png",
-        "Assets/_Game/Art/Textures/CrawlerGums_Mask.png"
+        "Assets/_Game/Art/Textures/CrawlerGums_Mask.png",
+        "Assets/_Game/Art/Textures/HumanOutfit2_BaseColor.png",
+        "Assets/_Game/Art/Textures/HumanOutfit2_Normal.png",
+        "Assets/_Game/Art/Textures/HumanOutfit2_Mask.png",
+        "Assets/_Game/Art/Textures/HumanEyes_BaseColor.png",
+        "Assets/_Game/Art/Textures/HumanEyes_Normal.png",
+        "Assets/_Game/Art/Textures/HumanEyes_Mask.png"
       ],
       "collider": "separate simple Unity collider; decorative foliage has no collision",
       "blendShapes": [],
       "animations": [],
       "bones": 0,
-      "license": "CC0 MakeHuman/MPFB anatomy and Mindfront skin; original project adaptation, six-legged rig and exposed viscera",
-      "status": "Clothed CC0 human, opened abdominal surface and continuous coiled intestines, original UVs and wound materials"
+      "license": "Retained CC0 MakeHuman opening Ethan anatomy, clothing, hair and healthy skin derivative; original project exposed abdomen and generated intestinal surface artwork",
+      "status": "Exact opening Ethan face/hair/clothes and UVs; opened abdomen, continuous cylindrical-UV intestinal coils and ground spill; generated capillary-rich serosa albedo with wet material. ArtSource/EncounterCast.json and ArtSource/Textures/IntestinalSerosa_Imagegen.json."
     },
     {
       "id": "fallen_log_01",
@@ -768,19 +904,49 @@
       "status": "clothed adult survivor; weighted human skeleton; separate suspended struggle, overpowering and dying clips; Unity chest-contact feeding choreography"
     },
     {
+      "id": "intro_driver_01",
+      "source": "ArtSource/Blender/intro_driver_01.blend",
+      "export": "Assets/_Game/Art/Meshes/intro_driver_01.fbx",
+      "units": "metres",
+      "triangles": 64752,
+      "lodTriangles": {
+        "LOD0": 64752
+      },
+      "materials": [
+        "HumanBoots",
+        "IntroOutfit0",
+        "IntroSkin0"
+      ],
+      "textures": [
+        "Assets/_Game/Art/Textures/HumanBoots_BaseColor.png",
+        "Assets/_Game/Art/Textures/HumanBoots_Normal.png",
+        "Assets/_Game/Art/Textures/HumanBoots_Mask.png",
+        "Assets/_Game/Art/Textures/IntroOutfit0_BaseColor.png",
+        "Assets/_Game/Art/Textures/IntroOutfit0_Normal.png",
+        "Assets/_Game/Art/Textures/IntroOutfit0_Mask.png",
+        "Assets/_Game/Art/Textures/IntroSkin0_BaseColor.png"
+      ],
+      "collider": "separate simple Unity collider; decorative foliage has no collision",
+      "blendShapes": [],
+      "animations": [],
+      "bones": 163,
+      "license": "CC0 MakeHuman/MPFB anatomy, clothes and retained healthy IntroSkin0 derivative; project driver bind pose and skeletal wheel IK",
+      "status": "Full seated first-person torso, field jacket sleeves, trousers, articulated legs and boots; own head excluded; independent native left/right palms with mirrored wrist frames, inner-rim opposed thumbs and length-preserving finger curls; skeletal elbows/wrists follow the wheel without rigid-mesh forearm stretching. Anatomical pose receipt: ArtSource/IntroDriverPose.json."
+    },
+    {
       "id": "intro_ethan_01",
       "source": "ArtSource/Blender/intro_ethan_01.blend",
       "export": "Assets/_Game/Art/Meshes/intro_ethan_01.fbx",
       "units": "metres",
-      "triangles": 32984,
+      "triangles": 30356,
       "lodTriangles": {
-        "LOD0": 32984
+        "LOD0": 30356
       },
       "materials": [
         "HumanBoots",
         "HumanBrows",
-        "HumanHair",
         "IntroEyes2",
+        "IntroHair2",
         "IntroOutfit2",
         "IntroSkin0"
       ],
@@ -791,12 +957,12 @@
         "Assets/_Game/Art/Textures/HumanBrows_BaseColor.png",
         "Assets/_Game/Art/Textures/HumanBrows_Normal.png",
         "Assets/_Game/Art/Textures/HumanBrows_Mask.png",
-        "Assets/_Game/Art/Textures/HumanHair_BaseColor.png",
-        "Assets/_Game/Art/Textures/HumanHair_Normal.png",
-        "Assets/_Game/Art/Textures/HumanHair_Mask.png",
         "Assets/_Game/Art/Textures/IntroEyes2_BaseColor.png",
         "Assets/_Game/Art/Textures/IntroEyes2_Normal.png",
         "Assets/_Game/Art/Textures/IntroEyes2_Mask.png",
+        "Assets/_Game/Art/Textures/IntroHair2_BaseColor.png",
+        "Assets/_Game/Art/Textures/IntroHair2_Normal.png",
+        "Assets/_Game/Art/Textures/IntroHair2_Mask.png",
         "Assets/_Game/Art/Textures/IntroOutfit2_BaseColor.png",
         "Assets/_Game/Art/Textures/IntroOutfit2_Normal.png",
         "Assets/_Game/Art/Textures/IntroOutfit2_Mask.png",
@@ -807,22 +973,22 @@
       "animations": [],
       "bones": 163,
       "license": "CC0 MakeHuman/MPFB anatomy, clothes and Mindfront/Jartur69 skin; imagegen healthy skin derivative; project seated rest rig",
-      "status": "Living seated hunter with matching forest-corpse age/build/clothes: Jack=body02, Tyler=body01, Ethan=body03; clean skin, distinct iris maps, head/spine/arm acting and supplied English dialogue VO. Stylized opening acting, not motion capture."
+      "status": "Living seated hunter with matching forest-corpse age/build/clothes: Jack=body02, Tyler=body01, Ethan=body03; distinct CC0 short02/short03/short04 hair and authored nose/lip/jaw targets, clean skin/iris maps, head/spine/arm acting and supplied English dialogue VO."
     },
     {
       "id": "intro_jack_01",
       "source": "ArtSource/Blender/intro_jack_01.blend",
       "export": "Assets/_Game/Art/Meshes/intro_jack_01.fbx",
       "units": "metres",
-      "triangles": 41402,
+      "triangles": 41068,
       "lodTriangles": {
-        "LOD0": 41402
+        "LOD0": 41068
       },
       "materials": [
         "HumanBoots",
         "HumanBrows",
-        "HumanHair",
         "IntroEyes0",
+        "IntroHair0",
         "IntroOutfit1",
         "IntroSkin1"
       ],
@@ -833,12 +999,12 @@
         "Assets/_Game/Art/Textures/HumanBrows_BaseColor.png",
         "Assets/_Game/Art/Textures/HumanBrows_Normal.png",
         "Assets/_Game/Art/Textures/HumanBrows_Mask.png",
-        "Assets/_Game/Art/Textures/HumanHair_BaseColor.png",
-        "Assets/_Game/Art/Textures/HumanHair_Normal.png",
-        "Assets/_Game/Art/Textures/HumanHair_Mask.png",
         "Assets/_Game/Art/Textures/IntroEyes0_BaseColor.png",
         "Assets/_Game/Art/Textures/IntroEyes0_Normal.png",
         "Assets/_Game/Art/Textures/IntroEyes0_Mask.png",
+        "Assets/_Game/Art/Textures/IntroHair0_BaseColor.png",
+        "Assets/_Game/Art/Textures/IntroHair0_Normal.png",
+        "Assets/_Game/Art/Textures/IntroHair0_Mask.png",
         "Assets/_Game/Art/Textures/IntroOutfit1_BaseColor.png",
         "Assets/_Game/Art/Textures/IntroOutfit1_Normal.png",
         "Assets/_Game/Art/Textures/IntroOutfit1_Mask.png",
@@ -849,22 +1015,22 @@
       "animations": [],
       "bones": 163,
       "license": "CC0 MakeHuman/MPFB anatomy, clothes and Mindfront/Jartur69 skin; imagegen healthy skin derivative; project seated rest rig",
-      "status": "Living seated hunter with matching forest-corpse age/build/clothes: Jack=body02, Tyler=body01, Ethan=body03; clean skin, distinct iris maps, head/spine/arm acting and supplied English dialogue VO. Stylized opening acting, not motion capture."
+      "status": "Living seated hunter with matching forest-corpse age/build/clothes: Jack=body02, Tyler=body01, Ethan=body03; distinct CC0 short02/short03/short04 hair and authored nose/lip/jaw targets, clean skin/iris maps, head/spine/arm acting and supplied English dialogue VO."
     },
     {
       "id": "intro_tyler_01",
       "source": "ArtSource/Blender/intro_tyler_01.blend",
       "export": "Assets/_Game/Art/Meshes/intro_tyler_01.fbx",
       "units": "metres",
-      "triangles": 31042,
+      "triangles": 29286,
       "lodTriangles": {
-        "LOD0": 31042
+        "LOD0": 29286
       },
       "materials": [
         "HumanBoots",
         "HumanBrows",
-        "HumanHair",
         "IntroEyes1",
+        "IntroHair1",
         "IntroOutfit0",
         "IntroSkin0"
       ],
@@ -875,12 +1041,12 @@
         "Assets/_Game/Art/Textures/HumanBrows_BaseColor.png",
         "Assets/_Game/Art/Textures/HumanBrows_Normal.png",
         "Assets/_Game/Art/Textures/HumanBrows_Mask.png",
-        "Assets/_Game/Art/Textures/HumanHair_BaseColor.png",
-        "Assets/_Game/Art/Textures/HumanHair_Normal.png",
-        "Assets/_Game/Art/Textures/HumanHair_Mask.png",
         "Assets/_Game/Art/Textures/IntroEyes1_BaseColor.png",
         "Assets/_Game/Art/Textures/IntroEyes1_Normal.png",
         "Assets/_Game/Art/Textures/IntroEyes1_Mask.png",
+        "Assets/_Game/Art/Textures/IntroHair1_BaseColor.png",
+        "Assets/_Game/Art/Textures/IntroHair1_Normal.png",
+        "Assets/_Game/Art/Textures/IntroHair1_Mask.png",
         "Assets/_Game/Art/Textures/IntroOutfit0_BaseColor.png",
         "Assets/_Game/Art/Textures/IntroOutfit0_Normal.png",
         "Assets/_Game/Art/Textures/IntroOutfit0_Mask.png",
@@ -891,34 +1057,39 @@
       "animations": [],
       "bones": 163,
       "license": "CC0 MakeHuman/MPFB anatomy, clothes and Mindfront/Jartur69 skin; imagegen healthy skin derivative; project seated rest rig",
-      "status": "Living seated hunter with matching forest-corpse age/build/clothes: Jack=body02, Tyler=body01, Ethan=body03; clean skin, distinct iris maps, head/spine/arm acting and supplied English dialogue VO. Stylized opening acting, not motion capture."
+      "status": "Living seated hunter with matching forest-corpse age/build/clothes: Jack=body02, Tyler=body01, Ethan=body03; distinct CC0 short02/short03/short04 hair and authored nose/lip/jaw targets, clean skin/iris maps, head/spine/arm acting and supplied English dialogue VO."
     },
     {
       "id": "intro_vehicle_01",
       "source": "ArtSource/Blender/intro_vehicle_01.blend",
       "export": "Assets/_Game/Art/Meshes/intro_vehicle_01.fbx",
       "units": "metres",
-      "triangles": 16168,
+      "triangles": 20304,
       "lodTriangles": {
-        "LOD0": 16168
+        "LOD0": 20304
       },
       "materials": [
-        "Fabric",
         "Glass",
-        "PlayerSleeve",
+        "IntroDash",
+        "IntroDoor",
+        "IntroFloor",
+        "IntroSeat",
         "Steel"
       ],
       "textures": [
-        "Assets/_Game/Art/Textures/Steel_BaseColor.png",
-        "Assets/_Game/Art/Textures/Steel_Normal.png",
-        "Assets/_Game/Art/Textures/Steel_Mask.png"
+        "Assets/_Game/Art/Textures/BodyLeather_BaseColor.png",
+        "Assets/_Game/Art/Textures/BodyLeather_Normal.png",
+        "Assets/_Game/Art/Textures/BodyLeather_Mask.png",
+        "Assets/_Game/Art/Textures/BodyFabric_BaseColor.png",
+        "Assets/_Game/Art/Textures/BodyFabric_Normal.png",
+        "Assets/_Game/Art/Textures/BodyFabric_Mask.png"
       ],
       "collider": "separate simple Unity collider; decorative foliage has no collision",
       "blendShapes": [],
       "animations": [],
       "bones": 0,
       "license": "original procedural project asset",
-      "status": "Original procedural metre-scale 4x4 interior or separate steering rim; editable source. Functional art pass; production vehicle detail remains unfinished."
+      "status": "Original metre-scale 4x4 interior or separate steering rim; explicit UVs, retained project leather/fabric maps and procedural PBR grain/weave relief; distinct dashboard, door, seat, ribbed floor mat and wheel surfaces."
     },
     {
       "id": "intro_wheel_01",
@@ -930,20 +1101,23 @@
         "LOD0": 3440
       },
       "materials": [
-        "Fabric",
+        "IntroWheelLeather",
         "Steel"
       ],
       "textures": [
-        "Assets/_Game/Art/Textures/Steel_BaseColor.png",
-        "Assets/_Game/Art/Textures/Steel_Normal.png",
-        "Assets/_Game/Art/Textures/Steel_Mask.png"
+        "Assets/_Game/Art/Textures/BodyLeather_BaseColor.png",
+        "Assets/_Game/Art/Textures/BodyLeather_Normal.png",
+        "Assets/_Game/Art/Textures/BodyLeather_Mask.png",
+        "Assets/_Game/Art/Textures/BodyFabric_BaseColor.png",
+        "Assets/_Game/Art/Textures/BodyFabric_Normal.png",
+        "Assets/_Game/Art/Textures/BodyFabric_Mask.png"
       ],
       "collider": "separate simple Unity collider; decorative foliage has no collision",
       "blendShapes": [],
       "animations": [],
       "bones": 0,
       "license": "original procedural project asset",
-      "status": "Original procedural metre-scale 4x4 interior or separate steering rim; editable source. Functional art pass; production vehicle detail remains unfinished."
+      "status": "Original metre-scale 4x4 interior or separate steering rim; explicit UVs, retained project leather/fabric maps and procedural PBR grain/weave relief; distinct dashboard, door, seat, ribbed floor mat and wheel surfaces."
     },
     {
       "id": "moss_rock_01",
@@ -1081,9 +1255,9 @@
       "source": "ArtSource/Blender/player_axe_hand_01.blend",
       "export": "Assets/_Game/Art/Meshes/player_axe_hand_01.fbx",
       "units": "metres",
-      "triangles": 63632,
+      "triangles": 64824,
       "lodTriangles": {
-        "LOD0": 63632
+        "LOD0": 64824
       },
       "materials": [
         "PlayerSkin",
@@ -1100,9 +1274,9 @@
       "collider": "separate simple Unity collider; decorative foliage has no collision",
       "blendShapes": [],
       "animations": [],
-      "bones": 0,
+      "bones": 163,
       "license": "CC0 MakeHuman/MPFB anatomy, clothing and Mindfront skin; project pose and extraction",
-      "status": "Subdivided CC0 anatomical palm, thumb/nails and four curled fingers; separate shotgun index pose; retained human UV epidermis/normal maps; fitted original sleeve and rounded cuff with fabric weave; body-connected forearm retains authored smooth UV-seam normals"
+      "status": "Native weighted left flashlight/right axe/right shotgun upper arm, forearm, wrist and curled hand; fitted source sleeve; normalized arm-only weights and evaluated grip-frame bone export; runtime length-preserving two-bone IK without mesh shear. ArtSource/FirstPersonArms.json; reproduce with first_person_arms.py."
     },
     {
       "id": "player_body_01",
@@ -1143,21 +1317,29 @@
       ],
       "collider": "separate simple Unity collider; decorative foliage has no collision",
       "blendShapes": [
-        "Crouch"
+        "Crouch",
+        "Walk0",
+        "Walk1",
+        "Walk2",
+        "Walk3",
+        "Run0",
+        "Run1",
+        "Run2",
+        "Run3"
       ],
       "animations": [],
       "bones": 0,
       "license": "CC0 MakeHuman/MPFB anatomy, clothing and Mindfront skin; project pose and extraction",
-      "status": "Full clothed anatomical shadow body with grounded, bent-leg Crouch morph; Unity uniform capsule-height calibration"
+      "status": "Full clothed anatomical shadow body with grounded Crouch, four Walk and four Run leg/arm poses; displacement gait phase shared with footsteps; level capsule-height placement"
     },
     {
-      "id": "player_shotgun_hand_01",
-      "source": "ArtSource/Blender/player_shotgun_hand_01.blend",
-      "export": "Assets/_Game/Art/Meshes/player_shotgun_hand_01.fbx",
+      "id": "player_flashlight_hand_01",
+      "source": "ArtSource/Blender/player_flashlight_hand_01.blend",
+      "export": "Assets/_Game/Art/Meshes/player_flashlight_hand_01.fbx",
       "units": "metres",
-      "triangles": 63632,
+      "triangles": 64816,
       "lodTriangles": {
-        "LOD0": 63632
+        "LOD0": 64816
       },
       "materials": [
         "PlayerSkin",
@@ -1174,9 +1356,37 @@
       "collider": "separate simple Unity collider; decorative foliage has no collision",
       "blendShapes": [],
       "animations": [],
-      "bones": 0,
+      "bones": 163,
       "license": "CC0 MakeHuman/MPFB anatomy, clothing and Mindfront skin; project pose and extraction",
-      "status": "Subdivided CC0 anatomical palm, thumb/nails and four curled fingers; separate shotgun index pose; retained human UV epidermis/normal maps; fitted original sleeve and rounded cuff with fabric weave; body-connected forearm retains authored smooth UV-seam normals"
+      "status": "Native weighted left flashlight/right axe/right shotgun upper arm, forearm, wrist and curled hand; fitted source sleeve; normalized arm-only weights and evaluated grip-frame bone export; runtime length-preserving two-bone IK without mesh shear. ArtSource/FirstPersonArms.json; reproduce with first_person_arms.py."
+    },
+    {
+      "id": "player_shotgun_hand_01",
+      "source": "ArtSource/Blender/player_shotgun_hand_01.blend",
+      "export": "Assets/_Game/Art/Meshes/player_shotgun_hand_01.fbx",
+      "units": "metres",
+      "triangles": 64824,
+      "lodTriangles": {
+        "LOD0": 64824
+      },
+      "materials": [
+        "PlayerSkin",
+        "PlayerSleeve"
+      ],
+      "textures": [
+        "Assets/_Game/Art/Textures/HumanSkin0_BaseColor.png",
+        "Assets/_Game/Art/Textures/HumanSkin0_Normal.png",
+        "Assets/_Game/Art/Textures/HumanSkin0_Mask.png",
+        "Assets/_Game/Art/Textures/BodyFabric_BaseColor.png",
+        "Assets/_Game/Art/Textures/BodyFabric_Normal.png",
+        "Assets/_Game/Art/Textures/BodyFabric_Mask.png"
+      ],
+      "collider": "separate simple Unity collider; decorative foliage has no collision",
+      "blendShapes": [],
+      "animations": [],
+      "bones": 163,
+      "license": "CC0 MakeHuman/MPFB anatomy, clothing and Mindfront skin; project pose and extraction",
+      "status": "Native weighted left flashlight/right axe/right shotgun upper arm, forearm, wrist and curled hand; fitted source sleeve; normalized arm-only weights and evaluated grip-frame bone export; runtime length-preserving two-bone IK without mesh shear. ArtSource/FirstPersonArms.json; reproduce with first_person_arms.py."
     },
     {
       "id": "ranger_cabin_01",
@@ -1432,6 +1642,49 @@
       "bones": 28,
       "license": "Original project crawler and rig; original imagegen human epidermis and mouth albedos",
       "status": "Weighted 28-bone eight-limb crawler; retained skin atlas/clips/jaw morphs, 26 sharpened teeth with decayed enamel, wounded lips/gums and dark mucosa maps; explicit primary oral UVs"
+    },
+    {
+      "id": "web_jack_01",
+      "source": "ArtSource/Blender/web_jack_01.blend",
+      "export": "Assets/_Game/Art/Meshes/web_jack_01.fbx",
+      "units": "metres",
+      "triangles": 41068,
+      "lodTriangles": {
+        "LOD0": 41068
+      },
+      "materials": [
+        "ArrivalSkin1",
+        "HumanBoots",
+        "HumanBrows",
+        "IntroEyes0",
+        "IntroHair0",
+        "IntroOutfit1"
+      ],
+      "textures": [
+        "Assets/_Game/Art/Textures/HumanBoots_BaseColor.png",
+        "Assets/_Game/Art/Textures/HumanBoots_Normal.png",
+        "Assets/_Game/Art/Textures/HumanBoots_Mask.png",
+        "Assets/_Game/Art/Textures/HumanBrows_BaseColor.png",
+        "Assets/_Game/Art/Textures/HumanBrows_Normal.png",
+        "Assets/_Game/Art/Textures/HumanBrows_Mask.png",
+        "Assets/_Game/Art/Textures/IntroEyes0_BaseColor.png",
+        "Assets/_Game/Art/Textures/IntroEyes0_Normal.png",
+        "Assets/_Game/Art/Textures/IntroEyes0_Mask.png",
+        "Assets/_Game/Art/Textures/IntroHair0_BaseColor.png",
+        "Assets/_Game/Art/Textures/IntroHair0_Normal.png",
+        "Assets/_Game/Art/Textures/IntroHair0_Mask.png",
+        "Assets/_Game/Art/Textures/IntroOutfit1_BaseColor.png",
+        "Assets/_Game/Art/Textures/IntroOutfit1_Normal.png",
+        "Assets/_Game/Art/Textures/IntroOutfit1_Mask.png"
+      ],
+      "collider": "separate simple Unity collider; decorative foliage has no collision",
+      "blendShapes": [],
+      "animations": [
+        "Victim_Hanging"
+      ],
+      "bones": 163,
+      "license": "Retained CC0 MakeHuman opening Jack anatomy, clothing, hair and Jartur69 skin; project pose/retargeting and existing three encounter clips",
+      "status": "Exact opening Jack as the suspended victim; aligned standing rest rig with quaternion bone animation for Hanging/Overpowered/Dying; Unity bone-attached silk, wounds and physical falling/feeding choreography; ArtSource/EncounterCast.json"
     },
     {
       "id": "zombie_wolf_01",

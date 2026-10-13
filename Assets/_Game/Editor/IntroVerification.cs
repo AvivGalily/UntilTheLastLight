@@ -47,6 +47,16 @@ namespace Game.Editor
             while(game.intro.Active&&game.intro.Elapsed<destination)game.intro.Simulate(Mathf.Min(.25f,destination-game.intro.Elapsed),0,false);
             game.hud.Refresh();
         }
+        static void LookAt(float yaw,float pitch=0)
+        {
+            float gain=game.player.sensitivity*game.intro.config.headLookMultiplier;
+            game.intro.Simulate(.01f,0,false,new Vector2((yaw-game.intro.Gaze.x)/gain,(pitch-game.intro.Gaze.y)/gain*(game.player.invertY?1:-1)));
+        }
+        static void CaptureWheelGrips(string name)
+        {
+            float fov=game.player.view.fieldOfView;game.player.view.fieldOfView=55;
+            LookAt(0,25);Capture(name);game.player.view.fieldOfView=fov;LookAt(0);
+        }
         static void Capture(string name)
         {
             Directory.CreateDirectory("Docs/Screenshots");ShaderUtil.allowAsyncCompilation=false;
@@ -54,6 +64,7 @@ namespace Game.Editor
             var rt=new RenderTexture(1600,900,24,RenderTextureFormat.ARGB32,RenderTextureReadWrite.sRGB);rt.Create();camera.targetTexture=rt;
             canvas.renderMode=RenderMode.ScreenSpaceCamera;canvas.worldCamera=camera;canvas.planeDistance=.065f;Canvas.ForceUpdateCanvases();
             foreach(var arm in game.intro.vehicle.hands.arms)arm.Pose();
+            if(game.intro.vehicle.hands.driver)game.intro.vehicle.hands.driver.Pose();
             var mirror=game.intro.bridge.mirrorCamera;
             if(mirror&&mirror.enabled)RenderPipeline.SubmitRenderRequest(mirror,new UniversalRenderPipeline.SingleCameraRequest{destination=mirror.targetTexture});
             var request=new UniversalRenderPipeline.SingleCameraRequest{destination=rt};RenderPipeline.SubmitRenderRequest(camera,request);
@@ -83,13 +94,19 @@ namespace Game.Editor
                     Require(game.intro.dialogue.voices[1].isPlaying,"English voice fallback did not play with Hebrew subtitles");
                     game.intro.RefreshPresentation();Capture("72-intro-drive-hebrew");
                     game.Locale.SetHebrew(false);game.intro.RefreshPresentation();Capture("73-intro-drive-english");
+                    Require(game.intro.vehicle.hands.driver&&game.intro.vehicle.hands.driver.arms.Length==2,"seated driver body/arm rig missing");
+                    LookAt(0,60);Capture("84-intro-driver-body");
+                    CaptureWheelGrips("85-intro-wheel-hands");
                     Require(!game.ambience.insects.isPlaying&&game.ambience.insects.volume==0&&game.intro.audioDirector.vehicleAmbience.clip.name=="SFX_ForestVehicleAmbience","building crickets or previous opening bed audible during intro");
                     Require(game.intro.audioDirector.vehicleAmbience.loop&&game.intro.audioDirector.vehicleAmbience.isPlaying&&!game.intro.audioDirector.gate.loop&&!game.intro.audioDirector.threat.loop&&!game.intro.audioDirector.effects.loop,"supplied loop modes ignored");
                     InputSystem.QueueStateEvent(mouse,new MouseState{delta=new Vector2(720,0)});InputTick();
                     Require(game.intro.Gaze.x>50,"mouse does not look around the car");
-                    game.intro.Simulate(.01f,0,false,new Vector2((90-game.intro.Gaze.x)/game.player.sensitivity,0));Capture("78-intro-jack-alive");
-                    game.intro.Simulate(.01f,0,false,new Vector2(10000,0));Require(game.intro.Gaze.x==160,"head turn exceeds seat limits");Capture("79-intro-back-seat-hunters");
-                    game.intro.Simulate(.01f,0,false,-game.intro.Gaze/game.player.sensitivity);
+                    LookAt(90);Capture("78-intro-jack-alive");
+                    InputSystem.QueueStateEvent(mouse,new MouseState{delta=new Vector2(-1440,0)});InputTick();Require(game.intro.Gaze.x<0,"real mouse does not look left");
+                    LookAt(-90);Require(game.player.view.transform.localPosition.x<0,"left window view moved away from the window");Capture("80-intro-left-window");
+                    LookAt(65);Capture("81-intro-right-window");
+                    game.intro.Simulate(.01f,0,false,new Vector2(10000,0));Require(game.intro.Gaze.x==game.intro.config.lookYawLimit,"head turn exceeds seat limits");Capture("79-intro-back-seat-hunters");
+                    LookAt(0);Require(game.intro.controls.gameObject.activeSelf,"look/steer hint disappears before the first dialogue");
                     game.introSubtitles=false;game.intro.RefreshPresentation();Require(!game.intro.dialogue.subtitlePanel.activeSelf,"subtitle off preference ignored");game.introSubtitles=true;
                     float time=game.intro.Elapsed;game.intro.Simulate(2.1f,0,true);Require(game.intro.Active&&game.intro.Elapsed>time,"unseen opening could be skipped");
                     game.Pause();paused=game.intro.Elapsed;lastUpdate=EditorApplication.timeSinceStartup;stage=1;return;
@@ -103,14 +120,46 @@ namespace Game.Editor
                     var input=(InputActionAsset)typeof(GameSession).GetField("actions",BindingFlags.Instance|BindingFlags.NonPublic).GetValue(game);
                     Require(input.FindAction("Intro/Steer").ReadValue<float>()>.9f,"real D event not read by Intro action map");
                     for(int n=0;n<30;n++)game.intro.Simulate(1/30f,1,false);
-                    Require(game.intro.vehicle.Steering>0&&game.intro.vehicle.Offset>initial,"D does not steer");
+                    Require(game.intro.vehicle.Steering>0&&game.intro.vehicle.Offset>1.3f&&game.intro.vehicle.Offset>initial,"D does not use the widened steering range");
+                    game.intro.vehicle.Sample(game.intro.vehicle.Distance,out _,out var forward);
+                    Require(Quaternion.Angle(game.intro.vehicle.transform.rotation,forward)<.1f,"steering turned the vehicle away from the forward route");
+                    // Give skinning a real player frame after changing the pose.
+                    // Multiple render requests in one frame reuse skin matrices.
+                    lastUpdate=EditorApplication.timeSinceStartup;stage=2;return;
+                }
+                if(stage==2)
+                {
+                    if(EditorApplication.timeSinceStartup-lastUpdate<.1)return;
+                    Capture("82-intro-steer-right");
+                    CaptureWheelGrips("86-intro-wheel-hands-right");
+                    foreach(var arm in game.intro.vehicle.hands.driver.arms)
+                        Require(Vector3.Distance(arm.wrist.position,arm.grip.TransformPoint(arm.wristOffset))<.065f,"skeletal hand slipped off the wheel");
                     InputSystem.QueueStateEvent(keyboard,new KeyboardState());InputSystem.QueueStateEvent(pad,new GamepadState{leftStick=new Vector2(-1,0)});InputTick();
+                    var input=(InputActionAsset)typeof(GameSession).GetField("actions",BindingFlags.Instance|BindingFlags.NonPublic).GetValue(game);
                     Require(input.FindAction("Intro/Steer").ReadValue<float>()<-.9f,"real controller event not read by Intro action map");
                     for(int n=0;n<30;n++)game.intro.Simulate(1/30f,-1,false);
-                    Require(game.intro.vehicle.Steering<0,"controller left stick does not steer");
-                    InputSystem.QueueStateEvent(pad,new GamepadState());InputTick();Advance(60);game.Locale.SetHebrew(true);game.intro.RefreshPresentation();Capture("74-intro-gate");
+                    Require(game.intro.vehicle.Steering<0&&game.intro.vehicle.Offset<-.9f,"controller left stick does not steer left across the wider range");
+                    lastUpdate=EditorApplication.timeSinceStartup;stage=3;return;
+                }
+                if(stage==3)
+                {
+                    if(EditorApplication.timeSinceStartup-lastUpdate<.1)return;
+                    Capture("83-intro-steer-left");
+                    CaptureWheelGrips("87-intro-wheel-hands-left");
+                    InputSystem.QueueStateEvent(pad,new GamepadState());InputSystem.QueueStateEvent(keyboard,new KeyboardState(Key.W));InputTick();
+                    var input=(InputActionAsset)typeof(GameSession).GetField("actions",BindingFlags.Instance|BindingFlags.NonPublic).GetValue(game);
+                    Require(input.FindAction("Intro/Accelerate").IsPressed(),"W not read by opening accelerator");
+                    float beforeBoost=game.intro.Elapsed;
+                    for(int n=0;n<60;n++)game.intro.Simulate(1/30f,0,false,Vector2.zero,true);
+                    Require(game.intro.vehicle.Distance>game.intro.config.DistanceAt(game.intro.Elapsed)+1,"W did not advance driving motion");
+                    Require(Mathf.Abs(game.intro.Elapsed-beforeBoost-2)<.002f,"W changed dialogue/scene clock");
+                    InputSystem.QueueStateEvent(keyboard,new KeyboardState());InputTick();Advance(60);game.Locale.SetHebrew(true);game.intro.RefreshPresentation();Capture("74-intro-gate");
+                    Require(game.intro.GateCloseProgress==0,"gate closes before vehicle passes");
+                    for(int n=0;n<2;n++)Require(Mathf.Abs(Mathf.DeltaAngle(0,game.intro.gateLeaves[n].localEulerAngles.y))>89,"gate leaf blocks approach");
                     game.introSubtitles=false;Advance(65);Require(game.intro.dialogue.voices[1].isPlaying&&!game.intro.dialogue.subtitlePanel.activeSelf,"subtitles-off muted dialogue");game.introSubtitles=true;
+                    Require(!game.intro.audioDirector.GateStarted,"gate shut before the vehicle tail cleared");Advance(67.5f);
                     Require(game.intro.audioDirector.GateStarted&&game.intro.audioDirector.gate.isPlaying,"supplied gate cue did not play with closing leaves");
+                    Require(game.intro.vehicle.Distance>=game.intro.config.gateDistance+game.intro.config.gateClearance&&game.intro.GateCloseProgress>0,"gate clearance/closing guard missing");
                     Advance(80.1f);Require(game.intro.audioDirector.ThreatStarted&&game.intro.audioDirector.threat.isPlaying,"supplied approaching creature did not play before discovery");
                     Advance(85);Capture("75-intro-silence");Advance(87.1f);Require(game.intro.dialogue.voices[0].isPlaying,"Jack's final warning did not play");Require(game.intro.audioDirector.threat.volume<.3f,"threat not ducked underneath warning");
                     Advance(90.1f);Require(game.intro.dialogue.voices[1].isPlaying,"Tyler's final warning did not play");
@@ -129,7 +178,7 @@ namespace Game.Editor
                     game.Continue();Require(game.State.Running&&!game.intro.Active,"load after cancelling wake");
                     Require(!failed,"Unity logged errors");
                     Debug.Log("FOREST INTRO SMOKE PASS: complete 110s sequence, keyboard/gamepad, unseen/repeat/transition skip, pause, supplied English VO with Hebrew subtitles, subtitles-off keeps VO, complete final warnings before blast, supplied ambience/gate/creature/explosion cues, bilingual 16:9 captures, blackout, cabin inventory, checkpoint, Continue and cancellation. Isolated save: "+GameSession.VerificationSaveDirectory);
-                    End(0);stage=2;
+                    End(0);stage=4;
                 }
             }
             catch(Exception e){Debug.LogException(e);End(1);}

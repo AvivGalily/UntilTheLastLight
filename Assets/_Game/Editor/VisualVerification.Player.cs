@@ -56,7 +56,7 @@ namespace Game.Editor
             var presence=game.presence;
             Require(presence&&presence.shadowBody&&presence.axeGrip&&Array.TrueForAll(presence.bodyRenderers,r=>r.shadowCastingMode==ShadowCastingMode.ShadowsOnly),"human shadow body missing");
             Require(presence.axeGrip.IsChildOf(game.axe.heldModel),"grip does not follow the axe swing");
-            Require(presence.axeGrip.GetComponentInChildren<MeshFilter>().sharedMesh.vertexCount>300,"grip is not actual human anatomy");
+            Require(presence.axeGrip.GetComponentInChildren<SkinnedMeshRenderer>().sharedMesh.vertexCount>300,"grip is not weighted human anatomy");
             bool axe=game.Inventory.HasAxe;game.Inventory.Restore(game.Inventory.Batteries,game.Inventory.HasFuse,true);game.axe.Simulate(.01f,game);
             UIShot(game,"39-human-axe-grip",true);
             NortonArtShot(game,"54-body-connected-axe",true);

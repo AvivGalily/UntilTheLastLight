@@ -1,0 +1,19 @@
+{
+  "tyler": {
+    "role": "first map-bearing corpse",
+    "source": "intro_tyler_01.blend",
+    "asset": "arrival_tyler_01"
+  },
+  "jack": {
+    "role": "web victim",
+    "source": "intro_jack_01.blend",
+    "asset": "web_jack_01",
+    "animations": "retained Victim_Hanging/Overpowered/Dying on aligned rest bones"
+  },
+  "ethan": {
+    "role": "burning-car casualty",
+    "source": "intro_ethan_01.blend",
+    "asset": "eviscerated_casualty_01",
+    "intestinesTexture": "IntestinalSerosa_BaseColor.png"
+  }
+}

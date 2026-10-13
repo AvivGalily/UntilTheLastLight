@@ -26,13 +26,14 @@ namespace Game.Editor
             foley.footsteps=PlayerVoice(game.player.transform,"Boots on the ground");
             foley.calmBreath=PlayerVoice(game.player.transform,"Quiet breathing",Clip("player_breath_calm"),true);
             foley.hardBreath=PlayerVoice(game.player.transform,"Exertion breathing",Clip("player_breath_hard"),true);
+            foley.calmBreath.volume=foley.hardBreath.volume=0;
             foley.injury=PlayerVoice(game.player.transform,"Human injury voice");foley.injury.ignoreListenerPause=true;
             foley.scream=Clip("player_scream");foley.hurt=Clip("player_hurt");
             foley.forestSteps=new[]{Clip("step_forest_1"),Clip("step_forest_2"),Clip("step_forest_3"),Clip("step_forest_4")};
             foley.woodSteps=new[]{Clip("step_wood_1"),Clip("step_wood_2"),Clip("step_wood_3")};
             game.axe=game.player.gameObject.AddComponent<AxeCombat>();
             // Blender +X cutting edge imports as -X: yaw 90 points it along camera +Z.
-            game.axe.heldModel=ForestArt.Model("field_axe_01",new Vector3(.30f,-.46f,.56f),Quaternion.Euler(-10,90,8),game.player.hand,.62f).transform;
+            game.axe.heldModel=ForestArt.Model("field_axe_01",new Vector3(.30f,-.34f,.56f),Quaternion.Euler(-10,90,8),game.player.hand,.62f).transform;
             game.axe.audioSource=PlayerVoice(game.player.transform,"Axe movement and impact");game.axe.swingClip=Clip("axe_swing");game.axe.hitClip=Clip("axe_impact");
             game.axe.heldModel.gameObject.SetActive(false);
             WirePlayerPresentation(game);

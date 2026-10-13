@@ -97,7 +97,7 @@
   ],
   "timing": {
     "vehicle": "drive to blackout; fades at forest silence",
-    "gate": "gateCrossed+1, aligned to closing leaves",
+    "gate": "after scheduled crossing and actual vehicle-tail clearance; once with closing leaves",
     "threat": "discovery-0.25, just before Ethan hears it; moves from rear-left to vehicle at threat beat",
     "blast": "blast; complete 6-second tail through blackout"
   },

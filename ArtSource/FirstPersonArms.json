@@ -1,0 +1,37 @@
+{
+  "arms": [
+    {
+      "asset": "player_axe_hand_01",
+      "side": "R",
+      "gripRadius": 0.027,
+      "upper": "upperarm01.R",
+      "lower": "lowerarm01.R",
+      "wrist": "wrist.R",
+      "geometry": "native CC0 skin and fitted clothing; normalized arm-only bone weights",
+      "source": "hanging_survivor_01.blend",
+      "runtime": "length-preserving shoulder/elbow/wrist IK; no vertex shear"
+    },
+    {
+      "asset": "player_shotgun_hand_01",
+      "side": "R",
+      "gripRadius": 0.03,
+      "upper": "upperarm01.R",
+      "lower": "lowerarm01.R",
+      "wrist": "wrist.R",
+      "geometry": "native CC0 skin and fitted clothing; normalized arm-only bone weights",
+      "source": "hanging_survivor_01.blend",
+      "runtime": "length-preserving shoulder/elbow/wrist IK; no vertex shear"
+    },
+    {
+      "asset": "player_flashlight_hand_01",
+      "side": "L",
+      "gripRadius": 0.04,
+      "upper": "upperarm01.L",
+      "lower": "lowerarm01.L",
+      "wrist": "wrist.L",
+      "geometry": "native CC0 skin and fitted clothing; normalized arm-only bone weights",
+      "source": "hanging_survivor_01.blend",
+      "runtime": "length-preserving shoulder/elbow/wrist IK; no vertex shear"
+    }
+  ]
+}

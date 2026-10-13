@@ -9,7 +9,7 @@ for lang,lines,extras in [
  ('English',en,{'intro_jack':'Jack','intro_tyler':'Tyler','intro_ethan':'Ethan','intro_steer':'A / D or ← / → — Steer  |  Controller: left stick','intro_skip':'Hold SPACE / controller A for 2 seconds to skip','intro_paused':'Drive paused. A checkpoint is saved after waking in the cabin.','intro_subtitles':'Opening subtitles: {0}','intro_flash':'Opening flash: {0}'})]:
     path=ROOT/'Assets/_Game/Data'/f'{lang}.json'
     table=json.loads(path.read_text(encoding='utf-8-sig'));values={e['id']:e['value'] for e in table['entries']}
-    extras['intro_steer']='A / D — Steer  |  Mouse — Look around  |  Controller: both sticks' if lang=='English' else 'A / D — היגוי  |  עכבר — מבט סביב  |  בקר: שני צירים'
+    extras['intro_steer']='Mouse — Look  |  A/D / arrows — Steer  |  W — Accelerate  |  Controller: sticks + RT' if lang=='English' else 'עכבר — מבט  |  A/D / חצים — היגוי  |  W — האצה  |  בקר: צירים + RT'
     values.update({f'intro_L{n+1:02}':text for n,text in enumerate(lines)});values.update(extras)
     table['entries']=[{'id':key,'value':value} for key,value in values.items()]
     path.write_text(json.dumps(table,ensure_ascii=False,indent=2)+'\n',encoding='utf-8')

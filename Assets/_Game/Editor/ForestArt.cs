@@ -22,7 +22,7 @@ namespace Game.Editor
                 string assetPath=AssetDatabase.GUIDToAssetPath(path);
                 var importer=(TextureImporter)AssetImporter.GetAtPath(assetPath);
                 bool normal=assetPath.Contains("_Normal"), mask=assetPath.Contains("_Mask");
-                bool foliage=assetPath.EndsWith("Needles_BaseColor.png")||assetPath.EndsWith("PH_FirTwig_BaseColor.png")||assetPath.EndsWith("Broadleaf_BaseColor.png")||assetPath.EndsWith("HumanHair_BaseColor.png")||assetPath.EndsWith("HumanBrows_BaseColor.png");
+                bool foliage=assetPath.EndsWith("Needles_BaseColor.png")||assetPath.EndsWith("PH_FirTwig_BaseColor.png")||assetPath.EndsWith("Broadleaf_BaseColor.png")||assetPath.EndsWith("HumanHair_BaseColor.png")||assetPath.EndsWith("HumanBrows_BaseColor.png")||assetPath.Contains("IntroHair");
                 bool wolf=assetPath.Contains("WolfSkin_")||assetPath.Contains("WolfBone_");
                 bool oral=assetPath.Contains("CrawlerTeeth_")||assetPath.Contains("CrawlerGums_")||assetPath.Contains("CrawlerThroat_");
                 bool skin=assetPath.Contains("CrawlerSkin_")||assetPath.Contains("CrawlerMouth_")||assetPath.Contains("HumanSkin")||wolf||oral;
@@ -146,7 +146,7 @@ namespace Game.Editor
             palette["Teeth"].color=new Color(.55f,.52f,.44f);
             NortonMaterials();
             PlayerMaterials();
-            foreach(string key in new[]{"IntroSkin0","IntroSkin1","IntroOutfit0","IntroOutfit1","IntroOutfit2","IntroEyes0","IntroEyes1","IntroEyes2"})
+            foreach(string key in new[]{"IntroSkin0","IntroSkin1","IntroOutfit0","IntroOutfit1","IntroOutfit2","IntroEyes0","IntroEyes1","IntroEyes2","IntroHair0","IntroHair1","IntroHair2"})
             {
                 var surface=Pbr(key,key);surface.shader=Shader.Find("Universal Render Pipeline/Lit");
                 surface.SetColor("_BaseColor",Color.white);surface.SetFloat("_Metallic",0);
@@ -162,8 +162,36 @@ namespace Game.Editor
                     surface.SetOverrideTag("RenderType","TransparentCutout");surface.renderQueue=2450;
                     surface.DisableKeyword("_METALLICSPECGLOSSMAP");surface.DisableKeyword("_OCCLUSIONMAP");
                 }
+                if(key.StartsWith("IntroHair"))
+                {
+                    int identity=key[key.Length-1]-'0';
+                    surface.SetColor("_BaseColor",identity==0?new Color(.58f,.60f,.56f):identity==1?new Color(.75f,.60f,.46f):new Color(.24f,.25f,.27f));
+                    surface.SetFloat("_AlphaClip",1);surface.SetFloat("_Cutoff",.3f);surface.SetFloat("_Cull",0);surface.EnableKeyword("_ALPHATEST_ON");
+                    surface.SetOverrideTag("RenderType","TransparentCutout");surface.renderQueue=2450;
+                }
                 EditorUtility.SetDirty(surface);
             }
+            for(int n=0;n<2;n++)
+            {
+                string key="ArrivalSkin"+n,path=ProjectSetup.Root+"/Materials/"+key+".mat";
+                var skin=AssetDatabase.LoadAssetAtPath<Material>(path);
+                if(!skin){skin=new Material(palette["HumanSkin"+n]);AssetDatabase.CreateAsset(skin,path);}
+                skin.SetTexture("_BaseMap",palette["IntroSkin"+n].GetTexture("_BaseMap"));
+                skin.SetColor("_BaseColor",new Color(.80f,.83f,.82f));skin.SetFloat("_CadaverDecay",.25f);
+                palette[key]=skin;EditorUtility.SetDirty(skin);
+            }
+            var originalLeather=palette["BodyLeather"];var originalFabric=palette["BodyFabric"];
+            string[] interiorKeys={"IntroDash","IntroDoor","IntroSeat","IntroFloor","IntroWheelLeather"};
+            foreach(var key in interiorKeys)
+            {
+                bool fabric=key=="IntroSeat"||key=="IntroFloor";
+                var surface=Pbr(fabric?"BodyFabric":"BodyLeather",key,fabric?new Vector2(4,4):new Vector2(2,2));palette[key]=surface;
+                surface.shader=Shader.Find("Last Light/Intro interior");surface.SetFloat("_Metallic",0);surface.SetFloat("_Smoothness",key=="IntroWheelLeather"?.24f:.12f);surface.SetFloat("_BumpScale",.8f);
+                surface.SetFloat("_Pattern",fabric?1:0);surface.SetFloat("_GrainScale",fabric?65:140);surface.SetFloat("_GrainDepth",fabric?.09f:.18f);
+                surface.SetColor("_BaseColor",key=="IntroSeat"?new Color(.46f,.50f,.41f):key=="IntroDoor"?new Color(.38f,.40f,.34f):new Color(.20f,.22f,.20f));
+                EditorUtility.SetDirty(surface);
+            }
+            palette["BodyLeather"]=originalLeather;palette["BodyFabric"]=originalFabric;
         }
         static void PlayerMaterials()
         {
@@ -180,6 +208,9 @@ namespace Game.Editor
         }
         static void NortonMaterials()
         {
+            string organPath=ProjectSetup.Root+"/Materials/IntestinalSerosa.mat";var organ=AssetDatabase.LoadAssetAtPath<Material>(organPath);
+            if(!organ){organ=new Material(Shader.Find("Universal Render Pipeline/Lit"));AssetDatabase.CreateAsset(organ,organPath);}
+            organ.SetTexture("_BaseMap",AssetDatabase.LoadAssetAtPath<Texture2D>(TextureRoot+"IntestinalSerosa_BaseColor.png"));organ.SetColor("_BaseColor",Color.white);organ.SetFloat("_Smoothness",.72f);organ.SetFloat("_Metallic",0);palette["IntestinalSerosa"]=organ;EditorUtility.SetDirty(organ);
             string[] keys={"CadaverSkin","CadaverLimb","CadaverEyes","Viscera","BurnedSteel","BurnedRubber","BurnedGlass","ShotgunSteel","ShotgunWood"};
             string[] sources={"HumanSkin0","CrawlerSkin","HumanEyes","CrawlerGums","Steel","Steel","Steel","Steel","Timber"};
             Color[] colors={new Color(.76f,.80f,.72f),new Color(.60f,.61f,.51f),new Color(.65f,.65f,.58f),new Color(.76f,.42f,.47f),new Color(.10f,.095f,.08f),new Color(.026f,.024f,.021f),new Color(.07f,.09f,.08f),new Color(.20f,.22f,.23f),new Color(.38f,.24f,.12f)};

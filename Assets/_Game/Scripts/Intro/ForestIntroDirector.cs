@@ -23,19 +23,22 @@ namespace Game
         public event Action GameplayReady;
         GameSession game;
         bool cabinEntered;
+        float gateClosingAt=-1;
+        public float GateCloseProgress {get;private set;}
         Vector2 gaze;
         public Vector2 Gaze=>gaze;
         public const string SeenKey="LastLight.ForestIntroSeen";
         public void Begin(GameSession session)
         {
             if(Active)return;
-            game=session;Elapsed=SkipProgress=0;cabinEntered=false;gaze=Vector2.zero;
+            game=session;Elapsed=SkipProgress=0;cabinEntered=false;gaze=Vector2.zero;gateClosingAt=-1;GateCloseProgress=0;
             CanSkip=PlayerPrefs.GetInt(SeenKey,0)!=0;Active=true;
             vehicle.ResetDrive();bridge.Attach(game,vehicle.driverEye);overlay.SetActive(true);
             dialogue.ResetDialogue();audioDirector.ResetAudio();game.State.Set(ScreenMode.Intro);
             vehicle.Simulate(.016f,0,0,config);RefreshPresentation();
+            PoseGate();
         }
-        public void Simulate(float dt,float steering,bool holdSkip,Vector2 look=default)
+        public void Simulate(float dt,float steering,bool holdSkip,Vector2 look=default,bool accelerate=false)
         {
             if(!Active||game.State.Mode!=ScreenMode.Intro||dt<=0)return;
             SkipProgress=CanSkip&&holdSkip?SkipProgress+dt:0;
@@ -43,25 +46,31 @@ namespace Game
             Elapsed=Mathf.Min(config.duration,Elapsed+dt);
             if(Elapsed<config.blackout)
             {
-                vehicle.Simulate(dt,Elapsed,steering,config);
+                vehicle.Simulate(dt,Elapsed,steering,config,accelerate);
                 var eyes=game.player.view.transform;
-                gaze.x=Mathf.Clamp(gaze.x+look.x*game.player.sensitivity,-160,160);
-                gaze.y=Mathf.Clamp(gaze.y+look.y*game.player.sensitivity*(game.player.invertY?1:-1),-35,35);
-                float lean=Mathf.SmoothStep(0,1,Mathf.InverseLerp(45,110,Mathf.Abs(gaze.x)));
-                eyes.localPosition=new Vector3(.32f*lean,.07f*lean,.02f*lean);
+                float lookGain=game.player.sensitivity*config.headLookMultiplier;
+                gaze.x=Mathf.Clamp(gaze.x+look.x*lookGain,-config.lookYawLimit,config.lookYawLimit);
+                gaze.y=Mathf.Clamp(gaze.y+look.y*lookGain*(game.player.invertY?1:-1),-config.lookPitchLimit,config.lookPitchLimit);
+                eyes.localPosition=config.HeadOffset(gaze.x);
                 float shake=game.player.headBob?Mathf.Sin(Elapsed*13)*.22f:0;
                 if(Elapsed>=config.blast-.25f&&game.player.headBob)shake+=Mathf.Sin(Elapsed*64)*2;
-                eyes.localRotation=Quaternion.Euler(gaze.y+shake,gaze.x+vehicle.Steering*config.headTilt,-vehicle.Steering*.65f);
+                eyes.localRotation=Quaternion.Euler(config.seatedViewPitch+gaze.y+shake,gaze.x+vehicle.Steering*config.headTilt,-vehicle.Steering*.65f);
                 RenderSettings.fogDensity=Mathf.Lerp(.022f,.033f,Mathf.InverseLerp(config.gateApproach,config.silence,Elapsed));
             }
             if(Elapsed>=config.cabinWake)
             {
                 cabinEntered=true;bridge.Cabin(Mathf.InverseLerp(config.cabinWake+2,config.duration-1,Elapsed));
             }
-            float close=Mathf.SmoothStep(0,1,Mathf.InverseLerp(config.gateCrossed+1,config.gateCrossed+2,Elapsed));
-            for(int n=0;n<gateLeaves.Length;n++)gateLeaves[n].localRotation=Quaternion.Euler(0,(n==0?-1:1)*Mathf.Lerp(82,0,close),0);
+            if(gateClosingAt<0&&Elapsed>=config.gateCrossed+1&&vehicle.Distance>=config.gateDistance+config.gateClearance)
+            {gateClosingAt=Elapsed;audioDirector.PlayGate();}
+            GateCloseProgress=gateClosingAt<0?0:Mathf.SmoothStep(0,1,(Elapsed-gateClosingAt)/config.gateCloseDuration);
+            PoseGate();
             audioDirector.Simulate(Elapsed,config,vehicle.transform);RefreshPresentation();audioDirector.MixDialogue(dt,dialogue.Speaking);
             if(Elapsed>=config.duration)Finish();
+        }
+        void PoseGate()
+        {
+            for(int n=0;n<gateLeaves.Length;n++)gateLeaves[n].localRotation=Quaternion.Euler(0,(n==0?-1:1)*Mathf.Lerp(config.gateOpenAngle,0,GateCloseProgress),0);
         }
         public void RefreshPresentation()
         {
@@ -70,7 +79,7 @@ namespace Game
             float black=Elapsed<config.fadeIn?1-Mathf.Clamp01(Elapsed/config.fadeIn):Elapsed>=config.blackout&&!cabinEntered?1:cabinEntered?1-Mathf.Clamp01((Elapsed-config.cabinWake)/config.cabinFade):0;
             bool flash=Elapsed>=config.blast&&Elapsed<config.blackout&&!game.reducedIntroFlash;
             fade.color=flash?new Color(.72f,.78f,.77f,.18f):new Color(0,0,0,black);
-            controls.gameObject.SetActive(Elapsed<5);game.Locale.Apply(controls,game.Text("intro_steer"));
+            controls.gameObject.SetActive(Elapsed<config.controlsHintDuration);game.Locale.Apply(controls,game.Text("intro_steer"));
             skip.gameObject.SetActive(CanSkip&&Elapsed<config.blackout);
             game.Locale.Apply(skip,game.Text("intro_skip")+(SkipProgress>0?$"  {Mathf.Clamp01(SkipProgress/config.skipHold)*100:0}%":""));
             dialogue.Simulate(Elapsed,config,game.Locale,visible&&Elapsed<config.blackout&&game.introSubtitles);

@@ -275,6 +275,7 @@ namespace Game
             Display.Tick();
             if(intro&&intro.Active)
             {
+                foley?.StopMovementAudio();
                 if(Pressed("Back"))
                 {
                     if(State.Mode==ScreenMode.Intro)Pause();
@@ -284,13 +285,14 @@ namespace Game
                 float steer=inputs.TryGetValue("Steer",out var steerAction)?steerAction.ReadValue<float>():0;
                 Vector2 openingLook=inputs.TryGetValue("LookAround",out var lookAction)?lookAction.ReadValue<Vector2>():Vector2.zero;
                 if(inputs.TryGetValue("LookStick",out var stickAction))openingLook+=stickAction.ReadValue<Vector2>()*(900*Time.deltaTime);
-                intro.Simulate(Time.deltaTime,steer,Held("SkipIntro"),openingLook);intro.RefreshPresentation();hud.Refresh();return;
+                intro.Simulate(Time.deltaTime,steer,Held("SkipIntro"),openingLook,Held("Accelerate"));intro.RefreshPresentation();hud.Refresh();return;
             }
             if(State.Mode==ScreenMode.Dying){deathSequence.Simulate(Time.deltaTime);hud.Refresh();return;}
             if(Pressed("Inventory")&&started&&!Condition.Dead)
             {
                 if(State.Running)State.Set(ScreenMode.Inventory);
                 else if(State.Mode==ScreenMode.Inventory)Resume();
+                foley?.StopMovementAudio();
                 hud.Refresh();return;
             }
             if (Pressed("Back"))
@@ -298,10 +300,10 @@ namespace Game
                 if (State.Running) Pause();
                 else if (State.Mode != ScreenMode.Title && State.Mode != ScreenMode.Dead && State.Mode != ScreenMode.Complete) Resume();
             }
-            if (!State.Running) { hud.Refresh(); return; }
+            if (!State.Running) { foley?.StopMovementAudio();hud.Refresh(); return; }
             if (Pressed("Journal")) State.Set(ScreenMode.Journal);
             else if (Pressed("Map")) OpenMap();
-            if (!State.Running) { hud.Refresh(); return; }
+            if (!State.Running) { foley?.StopMovementAudio();hud.Refresh(); return; }
             // One ordered simulation coordinator. Light snapshot follows movement; AI follows light.
             float dt = Time.deltaTime;
             ActiveSeconds += dt; messageTimer -= dt; if (messageTimer <= 0) Message = "";

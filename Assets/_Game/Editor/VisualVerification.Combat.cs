@@ -67,12 +67,31 @@ namespace Game.Editor
             game.player.Teleport(clearing,0);
             for(int i=0;i<30;i++){game.player.Simulate(game.tuning.player,Vector2.up,Vector2.zero,false,false,.05f);game.foley.Simulate(.05f,game);}
             Require(game.foley.StepsPlayed>=3,"walking footsteps missing");
+            Require(!game.foley.calmBreath.isPlaying&&!game.foley.hardBreath.isPlaying,"walking player breathes at full stamina");
             int walking=game.foley.StepsPlayed;
             for(int i=0;i<25;i++){game.player.Simulate(game.tuning.player,Vector2.up,Vector2.zero,true,false,.05f);game.foley.Simulate(.05f,game);}
-            Require(game.foley.StepsPlayed>walking&&game.foley.Effort>.5f&&game.foley.hardBreath.volume>.1f,"running/exertion audio missing");
+            Require(game.foley.StepsPlayed>walking&&game.foley.Effort>.5f&&game.foley.hardBreath.isPlaying&&game.foley.hardBreath.volume>0&&game.foley.hardBreath.volume<=.05f&&!game.foley.calmBreath.isPlaying,"quiet running/exertion audio missing");
             int running=game.foley.StepsPlayed;
             for(int i=0;i<20;i++){game.player.Simulate(game.tuning.player,Vector2.zero,Vector2.zero,false,false,.05f);game.foley.Simulate(.05f,game);}
             Require(game.foley.StepsPlayed==running,"idle player emits steps");
+            Require(!game.foley.footsteps.isPlaying&&!game.foley.footsteps.loop&&game.foley.footsteps.clip==null,"idle footsteps retain a playing clip or loop");
+            Require(game.foley.calmBreath.isPlaying&&game.foley.calmBreath.volume>0&&game.foley.calmBreath.volume<=.018f&&!game.foley.hardBreath.isPlaying,"stationary recovery must use quiet calm breathing");
+            game.player.Simulate(game.tuning.player,Vector2.up,Vector2.zero,false,false,.05f);game.foley.Simulate(.05f,game);
+            Require(game.player.Stamina<1&&!game.foley.calmBreath.isPlaying&&!game.foley.hardBreath.isPlaying,"walking while winded leaves breathing playing");
+            for(int n=0;n<160&&game.player.Stamina<1;n++){game.player.Simulate(game.tuning.player,Vector2.zero,Vector2.zero,false,false,.05f);game.foley.Simulate(.05f,game);}
+            Require(game.player.Stamina==1&&!game.foley.calmBreath.isPlaying&&!game.foley.hardBreath.isPlaying,"full stamina leaves breathing playing");
+            Debug.Log("PLAYER BREATHING SMOKE PASS: heavy sprint source capped at .05; calm stationary recovery capped at .018; silent walking even while winded and silent at 100% breath.");
+            int CountSteps(bool sprint)
+            {
+                game.player.Teleport(clearing,0);game.foley.ResetSequence(game.tuning.seed);
+                for(int n=0;n<60;n++){game.player.Simulate(game.tuning.player,Vector2.up,Vector2.zero,sprint,false,.05f);game.foley.Simulate(.05f,game);game.presence.Simulate(.05f,game.player);}
+                return game.foley.StepsPlayed;
+            }
+            int walkCount=CountSteps(false),runCount=CountSteps(true);
+            Require(runCount>walkCount*1.2f,"running footsteps are not clearly faster than walking over equal time");
+            game.player.Simulate(game.tuning.player,Vector2.zero,Vector2.zero,false,false,.02f);game.foley.Simulate(.02f,game);
+            Require(!game.foley.footsteps.isPlaying,"last footstep tail continues after releasing movement");
+            Debug.Log("PLAYER FOOTFALL CADENCE PASS: "+walkCount+" walk / "+runCount+" run steps over 3 seconds; immediate idle silence, non-looping single footfalls and shared displacement gait.");
             // A real moving monster emits clicks; its subsequent shelter stop does not.
             game.player.Teleport(clearing,0);game.monster.BeginEncounter(clearing+Vector3.forward*6,clearing);
             for(int i=0;i<23;i++)game.monster.Tick(.1f,game);

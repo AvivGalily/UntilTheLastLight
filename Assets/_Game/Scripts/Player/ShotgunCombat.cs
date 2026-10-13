@@ -43,7 +43,7 @@ namespace Game
         public void Simulate(float dt,GameSession game)
         {
             bool selected=game.Inventory.ShotgunEquipped;heldModel.gameObject.SetActive(selected);
-            if(game.presence&&game.presence.gripLight)game.presence.gripLight.enabled=selected||game.Inventory.AxeEquipped;
+            if(game.presence)game.presence.RefreshEquipment(selected||game.Inventory.AxeEquipped);
             if(dt<=0||!game.State.Running)return;cooldown-=dt;recoil=Mathf.MoveTowards(recoil,0,dt*5);flash-=dt;muzzleLight.enabled=selected&&flash>0;
             muzzleSmoke.Simulate(dt,true,false,false);muzzleSmoke.Pause();
             if(ReloadRemaining>0)

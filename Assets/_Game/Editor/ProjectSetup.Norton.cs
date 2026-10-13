@@ -26,8 +26,9 @@ namespace Game.Editor
         {
             var gun=game.player.gameObject.AddComponent<ShotgunCombat>();game.shotgun=gun;
             gun.heldModel=ForestArt.Model("norton_shotgun_01",new Vector3(.26f,-.18f,.48f),Quaternion.Euler(-2,-3,0),game.player.hand,.68f).transform;
-            var triggerHand=ForestArt.Model("player_shotgun_hand_01",new Vector3(.015f,-.025f,-.045f),Quaternion.Euler(0,180,10),gun.heldModel,1.2f);
+            var triggerHand=ForestArt.Model("player_shotgun_hand_01",new Vector3(0,-.014f,-.09f),Quaternion.identity,gun.heldModel,1/.68f);
             AttachBodyArm(triggerHand.transform,game.player.view,false);
+            triggerHand.GetComponent<FirstPersonArm>().forearmAxis=Vector3.right;
             gun.voice=PlayerVoice(game.player.transform,"Shotgun report and reload");gun.fireClip=Clip("shotgun_fire");gun.reloadClip=Clip("shotgun_reload");gun.emptyClip=Clip("shotgun_empty");
             var flash=new GameObject("Shotgun muzzle flash",typeof(Light));flash.transform.SetParent(gun.heldModel,false);flash.transform.localPosition=new Vector3(0,0,.86f);
             gun.muzzleLight=flash.GetComponent<Light>();gun.muzzleLight.type=LightType.Point;gun.muzzleLight.range=6;gun.muzzleLight.intensity=5;gun.muzzleLight.color=new Color(1,.54f,.12f);gun.muzzleLight.enabled=false;

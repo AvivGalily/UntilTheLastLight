@@ -33,7 +33,7 @@ def join_meshes(name):
     bpy.context.view_layer.objects.active=objects[0];bpy.ops.object.join();bpy.context.object.name=name
 def vehicle():
     bpy.ops.object.select_all(action='SELECT');bpy.ops.object.delete(use_global=False)
-    steel=mat('Steel',(.2,.25,.22));rubber=mat('Fabric',(.05,.07,.06));fabric=mat('PlayerSleeve',(.15,.19,.14));glass=mat('Glass',(.08,.14,.15))
+    steel=mat('Steel',(.2,.25,.22));rubber=mat('IntroDash',(.05,.07,.06));fabric=mat('IntroSeat',(.15,.19,.14));glass=mat('Glass',(.08,.14,.15));door=mat('IntroDoor',(.12,.14,.12));floor=mat('IntroFloor',(.05,.055,.05))
     box('Chassis',(0,.35,0),(1.95,.3,4.3),steel)
     box('Hood',(0,1.05,1.75),(1.86,.18,1.15),steel)
     box('Roof',(0,2.06,-.12),(1.96,.10,2.65),steel)
@@ -44,7 +44,7 @@ def vehicle():
     cylinder('Gear lever',(.06,1.0,.49),.013,.22,steel)
     box('Gear knob',(.06,1.12,.49),(.075,.05,.075),rubber)
     for x in [-.88,.88]:
-        box('Door panel',(x,.92,-.22),(.10,.75,2.55),steel)
+        box('Door panel',(x,.92,-.22),(.10,.75,2.55),door)
         box('Armrest',(x*.96,1.08,.03),(.12,.10,.64),fabric)
         box('Pull handle',(x*.95,1.30,.33),(.06,.06,.20),steel)
         for z in [-1.32,-.40,.98]:
@@ -76,10 +76,13 @@ def vehicle():
     for x in [-.17,.0,.17]:cylinder('Dash switch',(x,.98,.61),.024,.035,steel,(math.pi/2,0,0))
     box('Rear equipment bag',(0,.57,-1.13),(.42,.26,.34),fabric,.07)
     box('Bag strap',(0,.71,-1.13),(.05,.025,.36),steel)
+    for x in [-.44,.44]:
+        box('Textured rubber floor mat',(x,.50,.55),(.66,.025,1.0),floor,.018)
+        for rib in range(10):box('Floor mat ribs',(x-.27+rib*.06,.519,.55),(.012,.008,.88),rubber,.003)
     # Gauges and lettering are separate Unity elements in the editable prefab.
     join_meshes('HunterVehicle');save('intro_vehicle_01')
     bpy.ops.object.select_all(action='SELECT');bpy.ops.object.delete(use_global=False)
-    rim=mat('Fabric',(.04,.055,.047));metal=mat('Steel',(.22,.25,.24))
+    rim=mat('IntroWheelLeather',(.04,.055,.047));metal=mat('Steel',(.22,.25,.24))
     bpy.ops.mesh.primitive_torus_add(major_segments=96,minor_segments=14,major_radius=.235,minor_radius=.015)
     o=bpy.context.object;o.name='Continuous stitched steering rim';o.rotation_euler.x=math.pi/2;o.data.materials.append(rim)
     for f in o.data.polygons:f.use_smooth=True
@@ -103,6 +106,15 @@ def passenger(identity):
     macro=TargetService.get_default_macro_info_dict()
     macro.update(gender=1,age=[.55,.78,.43,.62][body_index],muscle=[.48,.33,.65,.42][body_index],weight=[.48,.44,.58,.4][body_index])
     human=HumanService.create_human(macro_detail_dict=macro)
+    # Preserve the cast's age/build while giving each living face its own
+    # restrained anatomical nose, lips and jaw contours.
+    profiles=[{'nose-volume-incr':.22,'nose-greek-incr':.18,'mouth-upperlip-volume-incr':.12},
+              {'nose-width1-decr':.22,'mouth-scale-horiz-incr':.18,'chin-width-decr':.12},
+              {'nose-width1-incr':.20,'nose-scale-depth-incr':.16,'mouth-scale-horiz-decr':.14,'chin-width-incr':.16}]
+    targets=next((H.VENDOR/'mpfb-2.0.17').glob('*/src/mpfb/data/targets'))
+    for name,weight in profiles[identity].items():
+        path=next(targets.rglob(name+'.target.gz'))
+        TargetService.load_target(human,str(path),weight=weight,name='Opening '+name)
     skin_key='IntroSkin'+str(body_index%2)
     skin=bpy.data.materials.get(skin_key) or bpy.data.materials.new(skin_key);skin.use_nodes=True
     bs=skin.node_tree.nodes.get('Principled BSDF');bs.inputs['Roughness'].default_value=.60
@@ -121,7 +133,8 @@ def passenger(identity):
     outfit=['male_casualsuit05','male_casualsuit01','male_worksuit01'][body_index]
     asset('IntroOutfit'+str(body_index),f'clothes/{outfit}/{outfit}.mhclo')
     asset('HumanBoots','clothes/shoes04/shoes04.mhclo')
-    asset('HumanHair','hair/short01/short01.mhclo','Hair')
+    hair=['short02','short03','short04'][identity]
+    asset('IntroHair'+str(identity),f'hair/{hair}/{hair}.mhclo','Hair')
     asset('IntroEyes'+str(identity),'eyes/high-poly/high-poly.mhclo','Eyes',H.SYSTEM/'eyes/materials'/['brown.mhmat','bluegreen.mhmat','grey.mhmat'][identity])
     asset('HumanBrows','eyebrows/eyebrow001/eyebrow001.mhclo','Eyebrows')
     # Resolve fitted clothes/helpers into the actual weighted anatomy first.
@@ -158,7 +171,8 @@ def passenger(identity):
     print('LIVING SEATED HUNTER',identity,'matches forest_body_0'+str(body_index+1),flush=True)
 
 if __name__=='__main__':
-    parser=argparse.ArgumentParser();parser.add_argument('--passengers-only',action='store_true')
+    parser=argparse.ArgumentParser();parser.add_argument('--passengers-only',action='store_true');parser.add_argument('--vehicle-only',action='store_true')
     args=parser.parse_args(sys.argv[sys.argv.index('--')+1:] if '--' in sys.argv else [])
     if not args.passengers_only:vehicle()
-    for i in range(3):passenger(i)
+    if not args.vehicle_only:
+        for i in range(3):passenger(i)
