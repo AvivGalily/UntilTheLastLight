@@ -1,0 +1,519 @@
+{
+  "date": "2026-10-13",
+  "movedFiles": 91,
+  "preservedScriptGuids": 62,
+  "extractedUnchangedTypes": [
+    "PlayerCondition",
+    "PlayerTuning",
+    "FlashlightTuning",
+    "MonsterTuning",
+    "SaveData",
+    "ItemRecord",
+    "MonsterAttack",
+    "HebrewText"
+  ],
+  "removedFiles": 741,
+  "reclaimedBytes": 596878562,
+  "reclaimedMiB": 569.23,
+  "versionedSourceReclaimedMiB": 43.84,
+  "policy": "Unity transitive dependency audit plus source/authoring review; explicit reviewed deletion paths; Resources, licenses, used source archives, current build and user probes retained",
+  "unchangedSerializedAssets": [
+    "ForestGame.unity",
+    "MechanicsTest.unity",
+    "Player.prefab",
+    "EditorBuildSettings.asset"
+  ],
+  "validation": {
+    "pythonSyntax": "passed",
+    "powerShellSyntax": "passed",
+    "duplicateGuids": 0,
+    "missingMeta": 0,
+    "missingCodeAndToolPaths": 0,
+    "editTestsPassed": 107,
+    "playTestsPassed": 17,
+    "runtimeSmoke": "passed",
+    "introSmoke": "passed",
+    "buildBytes": 607313454,
+    "nativeStartupErrors": 0,
+    "nativeDisplay": "passed"
+  },
+  "auditCommands": [
+    "python Tools/Maintenance/audit_project.py",
+    "Unity: Last Light/Maintenance/Audit asset usage"
+  ],
+  "moves": [
+    {
+      "from": "Assets/_Game/Scripts/Player/PlayerMotor.cs",
+      "to": "Assets/_Game/Scripts/Player/Movement/PlayerMotor.cs",
+      "sha256": "000e583cb0eaef4c72a665bece883aa9f358dd64bf32188b585d545fde589a14"
+    },
+    {
+      "from": "Assets/_Game/Scripts/Player/PlayerFoley.cs",
+      "to": "Assets/_Game/Scripts/Player/Audio/PlayerFoley.cs",
+      "sha256": "5f93043bb67073241dadbd52eb35e85ae99a669ab67917966a7a6ba00ae5e926"
+    },
+    {
+      "from": "Assets/_Game/Scripts/Player/AxeCombat.cs",
+      "to": "Assets/_Game/Scripts/Player/Combat/AxeCombat.cs",
+      "sha256": "f8d99edb152f3a4c99185593a45f9dba177fa417f7b02435cc9565f5b2acbb19"
+    },
+    {
+      "from": "Assets/_Game/Scripts/Player/ShotgunCombat.cs",
+      "to": "Assets/_Game/Scripts/Player/Combat/ShotgunCombat.cs",
+      "sha256": "57b3c3b486fde6085deb4a4562bbfbd3c0cb1e006505515f09182b7b31495a3e"
+    },
+    {
+      "from": "Assets/_Game/Scripts/Player/FirstPersonArm.cs",
+      "to": "Assets/_Game/Scripts/Player/Presentation/FirstPersonArm.cs",
+      "sha256": "bd6690d7705a619e8a589c952cfbaaf2e0596537c454ff4ec7ef168822f01f24"
+    },
+    {
+      "from": "Assets/_Game/Scripts/Player/PlayerPresence.cs",
+      "to": "Assets/_Game/Scripts/Player/Presentation/PlayerPresence.cs",
+      "sha256": "19278ecd5380e67f6f0573b0fb00d48bdc8c488b16f283f08191f68b8e08c29d"
+    },
+    {
+      "from": "Assets/_Game/Scripts/Player/PlayerDeathSequence.cs",
+      "to": "Assets/_Game/Scripts/Player/Presentation/PlayerDeathSequence.cs",
+      "sha256": "b3628b41196face4064fe864b4beb2799e24cf6a16cd358b8bc2960e55306afc"
+    },
+    {
+      "from": "Assets/_Game/Scripts/Player/DamageFeedback.cs",
+      "to": "Assets/_Game/Scripts/Player/Presentation/DamageFeedback.cs",
+      "sha256": "20fab47280ed8660710f63d777cb95edddc0034e08174c255c004d5094440483"
+    },
+    {
+      "from": "Assets/_Game/Scripts/Monster/MonsterBrain.cs",
+      "to": "Assets/_Game/Scripts/Enemies/Walker/MonsterBrain.cs",
+      "sha256": "20ca62f9c149995bb2aaa650859bf202482db36854bc70c63cdeee8f19b93c0c"
+    },
+    {
+      "from": "Assets/_Game/Scripts/Monster/MonsterSenses.cs",
+      "to": "Assets/_Game/Scripts/Enemies/Walker/MonsterSenses.cs",
+      "sha256": "63f87e8a62de5417892ffcd9a44ff6b9575cda0f079c8956e7055bec08138e80"
+    },
+    {
+      "from": "Assets/_Game/Scripts/Monster/MonsterPathPlanner.cs",
+      "to": "Assets/_Game/Scripts/Enemies/Walker/MonsterPathPlanner.cs",
+      "sha256": "3b89f251deb63347fcaef01023423a6bf7352643114386194b1453555b403cbc"
+    },
+    {
+      "from": "Assets/_Game/Scripts/Monster/MonsterPresentation.cs",
+      "to": "Assets/_Game/Scripts/Enemies/Walker/MonsterPresentation.cs",
+      "sha256": "86ee2cc57b0e0c7fa0b31ff104964a3d8dc938a1931bf729f085846f0643c4fe"
+    },
+    {
+      "from": "Assets/_Game/Scripts/Monster/MonsterEncounters.cs",
+      "to": "Assets/_Game/Scripts/Enemies/Walker/MonsterEncounters.cs",
+      "sha256": "9fac1efa56483c06f7e2ad78ed0abcea222087b7aacc3ae2ce9e2896020e02b9"
+    },
+    {
+      "from": "Assets/_Game/Scripts/Monster/ZombieWolf.cs",
+      "to": "Assets/_Game/Scripts/Enemies/Wolves/ZombieWolf.cs",
+      "sha256": "4b43f5cdf4ac48825160a44c28a4dba3dafebd2a13a9d7de04e5db6f2e05efa2"
+    },
+    {
+      "from": "Assets/_Game/Scripts/Monster/CinderHead.cs",
+      "to": "Assets/_Game/Scripts/Enemies/CinderHeads/CinderHead.cs",
+      "sha256": "26286882902975c5779b350450b7250c271306515745a48270a92c3849c3d63e"
+    },
+    {
+      "from": "Assets/_Game/Scripts/Monster/SpatFireball.cs",
+      "to": "Assets/_Game/Scripts/Enemies/CinderHeads/SpatFireball.cs",
+      "sha256": "40b2f3f9bffe692e89a3ba68c7193e97938f70fcb7c90d13ea956e1d9cb4eebc"
+    },
+    {
+      "from": "Assets/_Game/Scripts/World/ForestEncounter.cs",
+      "to": "Assets/_Game/Scripts/World/Encounters/ForestEncounter.cs",
+      "sha256": "a81662193cbeba8c26eba010698d5e4ad70f39a4af091ea6f53333a0e98e46fa"
+    },
+    {
+      "from": "Assets/_Game/Scripts/World/VictimWeb.cs",
+      "to": "Assets/_Game/Scripts/World/Encounters/VictimWeb.cs",
+      "sha256": "a48a563a6e1cf1bb338eb15a7ed7d5e291bff1e0a6ecb5f10f83fbce708f6965"
+    },
+    {
+      "from": "Assets/_Game/Scripts/World/NortonEncounter.cs",
+      "to": "Assets/_Game/Scripts/World/Encounters/NortonEncounter.cs",
+      "sha256": "5631ceb3ba81c883ef1f94f7fbb5d583830f75cfcc1e937d51b40e4fdce8b677"
+    },
+    {
+      "from": "Assets/_Game/Scripts/World/HunterIdentity.cs",
+      "to": "Assets/_Game/Scripts/World/Encounters/HunterIdentity.cs",
+      "sha256": "af03728e18c81ae510c29fbebd4bd6528536e0f82dca07176237348b28e3ad87"
+    },
+    {
+      "from": "Assets/_Game/Scripts/World/ForestLayout.cs",
+      "to": "Assets/_Game/Scripts/World/Environment/ForestLayout.cs",
+      "sha256": "ccccf57109383b9ec656864bbfce49b9c21deca8ca1db4aef37b19e5fc6b3c8e"
+    },
+    {
+      "from": "Assets/_Game/Scripts/World/HeroTree.cs",
+      "to": "Assets/_Game/Scripts/World/Environment/HeroTree.cs",
+      "sha256": "4a34a2d17099ad27b6d3f1fff9da836a9990d25425cbe22fbf672c53ae40a545"
+    },
+    {
+      "from": "Assets/_Game/Scripts/World/CrowFlight.cs",
+      "to": "Assets/_Game/Scripts/World/Environment/CrowFlight.cs",
+      "sha256": "20452b0265b7ac4a88001f63edfd2826ada9d16a1ee489283ec85b5bf40c106b"
+    },
+    {
+      "from": "Assets/_Game/Scripts/World/ForestWildlife.cs",
+      "to": "Assets/_Game/Scripts/World/Environment/ForestWildlife.cs",
+      "sha256": "65cd726cd7bdc52edf4b879c54c70361951a68ddca9056cdbaea56da5c1dab79"
+    },
+    {
+      "from": "Assets/_Game/Scripts/World/ForestAtmosphere.cs",
+      "to": "Assets/_Game/Scripts/World/Atmosphere/ForestAtmosphere.cs",
+      "sha256": "577c488d65942dab1ffece0fc058e846b85fb5777eeb1be48f39a8fccfc311e4"
+    },
+    {
+      "from": "Assets/_Game/Scripts/World/ForestAmbience.cs",
+      "to": "Assets/_Game/Scripts/World/Atmosphere/ForestAmbience.cs",
+      "sha256": "8b18843bc1185c19835cc93e8097c4faa72e4344e8e09f8ccd5f9377ac1066ae"
+    },
+    {
+      "from": "Assets/_Game/Scripts/World/HorrorAudio.cs",
+      "to": "Assets/_Game/Scripts/World/Atmosphere/HorrorAudio.cs",
+      "sha256": "d0609aab4113cd83aef410a3076b5bc2887727bafae6718b2dc5f4327c42c956"
+    },
+    {
+      "from": "Assets/_Game/Scripts/World/DreadController.cs",
+      "to": "Assets/_Game/Scripts/World/Atmosphere/DreadController.cs",
+      "sha256": "52be40f65e5f52903d44a3bdcd90d2513e88fac238bcbc7bb3d5abf533c8ad5d"
+    },
+    {
+      "from": "Assets/_Game/Scripts/World/WorldItem.cs",
+      "to": "Assets/_Game/Scripts/World/Interactions/WorldItem.cs",
+      "sha256": "38dd6f07135e50fb810c0560ef3d0f9c885d9e93ee731c3c065d5399380c6515"
+    },
+    {
+      "from": "Assets/_Game/Scripts/World/BloodySurface.cs",
+      "to": "Assets/_Game/Scripts/World/Presentation/BloodySurface.cs",
+      "sha256": "71d4f360f7b4999e3d01c9030960b7e3e5342842398619457c2fc5ff95f17fa3"
+    },
+    {
+      "from": "Assets/_Game/Scripts/Core/GameTuning.cs",
+      "to": "Assets/_Game/Scripts/Core/Configuration/GameTuning.cs",
+      "sha256": "bceff853dad2c632f1d4a099da3bb5d1c9de0d408964e17aeb380da682c43567"
+    },
+    {
+      "from": "Assets/_Game/Scripts/UI/Localization.cs",
+      "to": "Assets/_Game/Scripts/UI/Localization/Localization.cs",
+      "sha256": "14bb54265ffa2f037ed4e3501ee521dc1cdfc46d9905f33da1b6ed26ec2bb932"
+    },
+    {
+      "from": "Assets/_Game/Scripts/UI/LocalizedSign.cs",
+      "to": "Assets/_Game/Scripts/UI/Localization/LocalizedSign.cs",
+      "sha256": "c615a6152dba9fd76ea58f22c1f17d6863a6c3d76d078d75e0d88338624460bf"
+    },
+    {
+      "from": "Assets/_Game/Scripts/UI/DisplaySettings.cs",
+      "to": "Assets/_Game/Scripts/UI/Display/DisplaySettings.cs",
+      "sha256": "5f5dd4d6da4cfd6c6cb4292ecba33847261262a69e856157f2d4aca97c4d9318"
+    },
+    {
+      "from": "Assets/_Game/Scripts/UI/StandaloneDisplayCheck.cs",
+      "to": "Assets/_Game/Scripts/UI/Display/StandaloneDisplayCheck.cs",
+      "sha256": "5dcd193f1d5b7138447053f8844ce401bd36b271d8730d2c5d9a02d675ecafcf"
+    },
+    {
+      "from": "Assets/_Game/Editor/CreatureVerification.cs",
+      "to": "Assets/_Game/Editor/Verification/CreatureVerification.cs",
+      "sha256": "48305a9b4ff65e4c5e8f12c3372c2b62e368c9c6220747d96988063490b4798a"
+    },
+    {
+      "from": "Assets/_Game/Editor/ForestAmbienceSetup.cs",
+      "to": "Assets/_Game/Editor/Audio/ForestAmbienceSetup.cs",
+      "sha256": "7f43d587d8841d9e5bebb3be701cbf8b376147bc0d85bd752ff43b5f4163069e"
+    },
+    {
+      "from": "Assets/_Game/Editor/ForestArt.cs",
+      "to": "Assets/_Game/Editor/Art/ForestArt.cs",
+      "sha256": "5a7a4e4fea5c350199a3fd950b8385e74bd619a87a855245cf8e688e71c8797e"
+    },
+    {
+      "from": "Assets/_Game/Editor/IntroAudioSetup.cs",
+      "to": "Assets/_Game/Editor/Audio/IntroAudioSetup.cs",
+      "sha256": "515c67f00fd4f9dc4fe28186d553937ac4fc501eae3ec90e6785188fe9ef0f93"
+    },
+    {
+      "from": "Assets/_Game/Editor/IntroVerification.cs",
+      "to": "Assets/_Game/Editor/Verification/IntroVerification.cs",
+      "sha256": "92496fa5a773d51777b756548e0700240f3be3751e015b577bb0caf5c4d08223"
+    },
+    {
+      "from": "Assets/_Game/Editor/IntroVoiceSetup.cs",
+      "to": "Assets/_Game/Editor/Audio/IntroVoiceSetup.cs",
+      "sha256": "017552973df9d493b717afc5bfd3887a780800e1dbf41981046082c45c1cc352"
+    },
+    {
+      "from": "Assets/_Game/Editor/PlayerRefinementsVerification.cs",
+      "to": "Assets/_Game/Editor/Verification/PlayerRefinementsVerification.cs",
+      "sha256": "b0dd85049932731316f42444cf4d0d22a100ca378ad66f04d695bc861fbd3892"
+    },
+    {
+      "from": "Assets/_Game/Editor/ProjectMaintenance.cs",
+      "to": "Assets/_Game/Editor/Maintenance/ProjectMaintenance.cs",
+      "sha256": "e6b823e241666f0d6c9e1195234e44c6ab872ff8bc49154fa7debb9e5c6f8de3"
+    },
+    {
+      "from": "Assets/_Game/Editor/ProjectSetup.Combat.cs",
+      "to": "Assets/_Game/Editor/Generation/ProjectSetup.Combat.cs",
+      "sha256": "ca1ca10d4b11d08123d536b694a34b36a0dafad70d132e398d8fb0ff58d96791"
+    },
+    {
+      "from": "Assets/_Game/Editor/ProjectSetup.cs",
+      "to": "Assets/_Game/Editor/Generation/ProjectSetup.cs",
+      "sha256": "afff40bd2fd92826fa4c9d7fe1d22c34726b83fc16ad19a9d90fdb5dff7d732b"
+    },
+    {
+      "from": "Assets/_Game/Editor/ProjectSetup.Expansion.cs",
+      "to": "Assets/_Game/Editor/Generation/ProjectSetup.Expansion.cs",
+      "sha256": "fafff8dd66fe14728ca2c84955a7acd4daf62ac787d5b6dd1d6b01bb02c82924"
+    },
+    {
+      "from": "Assets/_Game/Editor/ProjectSetup.Intro.cs",
+      "to": "Assets/_Game/Editor/Generation/ProjectSetup.Intro.cs",
+      "sha256": "7ba977f124ca4a6eca921c04803dc3c5d35c548cc3c68f6836d96c1e1c81c0ff"
+    },
+    {
+      "from": "Assets/_Game/Editor/ProjectSetup.LivingForest.cs",
+      "to": "Assets/_Game/Editor/Generation/ProjectSetup.LivingForest.cs",
+      "sha256": "d05de77c127c8edaeb9e8bc8618ba6c85833bf569a260693a4cc6c6ac7c3d32d"
+    },
+    {
+      "from": "Assets/_Game/Editor/ProjectSetup.Norton.cs",
+      "to": "Assets/_Game/Editor/Generation/ProjectSetup.Norton.cs",
+      "sha256": "61ef46d094e903f929b304355c3893116d8eed2ed913b4b36acf8aa7aa34f8ae"
+    },
+    {
+      "from": "Assets/_Game/Editor/ProjectSetup.PlayerPresentation.cs",
+      "to": "Assets/_Game/Editor/Generation/ProjectSetup.PlayerPresentation.cs",
+      "sha256": "2e8e996939178bd08e046b12a42518cfc990d5b53e30620bb2a53d218a7a6d92"
+    },
+    {
+      "from": "Assets/_Game/Editor/ProjectSetup.PlayerRefinements.cs",
+      "to": "Assets/_Game/Editor/Generation/ProjectSetup.PlayerRefinements.cs",
+      "sha256": "d1a6026658adbc4a3e10afda2b27b8809dc753b42deac52a68eb129d8b3dc8dd"
+    },
+    {
+      "from": "Assets/_Game/Editor/ProjectSetup.Signs.cs",
+      "to": "Assets/_Game/Editor/Generation/ProjectSetup.Signs.cs",
+      "sha256": "8b30ce0e3b1848ab22cf97e33e9a102cd5a67725ec750b59c93f3a4bb2c63444"
+    },
+    {
+      "from": "Assets/_Game/Editor/ProjectSetup.Web.cs",
+      "to": "Assets/_Game/Editor/Generation/ProjectSetup.Web.cs",
+      "sha256": "91263ec5d01722155857321e194329699f62b73c71773c08b42cdb635c86f098"
+    },
+    {
+      "from": "Assets/_Game/Editor/ProjectValidator.cs",
+      "to": "Assets/_Game/Editor/Validation/ProjectValidator.cs",
+      "sha256": "ce61f1a0dff1c3c1e10bf500ad8254fd1227f1255bc2c39f97e38b159dde4368"
+    },
+    {
+      "from": "Assets/_Game/Editor/VisualVerification.Combat.cs",
+      "to": "Assets/_Game/Editor/Verification/VisualVerification.Combat.cs",
+      "sha256": "da22cca26cfd9566f104f06dd9fa27441e82d92e4a701956b5de60ec846d3c04"
+    },
+    {
+      "from": "Assets/_Game/Editor/VisualVerification.cs",
+      "to": "Assets/_Game/Editor/Verification/VisualVerification.cs",
+      "sha256": "7ca61d2bc47d03df1d03a1c931f09ced04ae36e46e1bc4a1857cc99a8fe98039"
+    },
+    {
+      "from": "Assets/_Game/Editor/VisualVerification.Display.cs",
+      "to": "Assets/_Game/Editor/Verification/VisualVerification.Display.cs",
+      "sha256": "8b3ac4c04f902f962b35d848d4eac97cfe49c401680c42e70987adbe22d5c6e0"
+    },
+    {
+      "from": "Assets/_Game/Editor/VisualVerification.Encounters.cs",
+      "to": "Assets/_Game/Editor/Verification/VisualVerification.Encounters.cs",
+      "sha256": "6f1d1af980726f592e17f8961881301414406371cad07396eee9ab693f451158"
+    },
+    {
+      "from": "Assets/_Game/Editor/VisualVerification.Equipment.cs",
+      "to": "Assets/_Game/Editor/Verification/VisualVerification.Equipment.cs",
+      "sha256": "587cce8385cb71f30a09e2ac865f3eb236fed9c3784ae121df346da99086afcc"
+    },
+    {
+      "from": "Assets/_Game/Editor/VisualVerification.LivingForest.cs",
+      "to": "Assets/_Game/Editor/Verification/VisualVerification.LivingForest.cs",
+      "sha256": "f9f6e6cb6371b3bfe7c5e6bdbd930a5f1f65a9c7dbbb69e8b17a86e40d9e9a09"
+    },
+    {
+      "from": "Assets/_Game/Editor/VisualVerification.Norton.cs",
+      "to": "Assets/_Game/Editor/Verification/VisualVerification.Norton.cs",
+      "sha256": "7b2a3000ba45537ec2c2dc1463d54b414f308932320a664f5bf1ad85dcec4a7d"
+    },
+    {
+      "from": "Assets/_Game/Editor/VisualVerification.Player.cs",
+      "to": "Assets/_Game/Editor/Verification/VisualVerification.Player.cs",
+      "sha256": "4e5ee446de4a2e5fa2e277ee3768d92d423c39ecfcc23df24b94a10225b8b9ce"
+    },
+    {
+      "from": "Assets/_Game/Editor/VisualVerification.Signs.cs",
+      "to": "Assets/_Game/Editor/Verification/VisualVerification.Signs.cs",
+      "sha256": "34a00d30bb2c7ead248aa37b6981d97f780a2370a13c91f017a7121b559db4bf"
+    },
+    {
+      "from": "Tools/generate_audio.py",
+      "to": "Tools/Audio/generate_audio.py",
+      "sha256": "1b14e412a34d9c36fc2a540254dd300d81fe5948698dbbed578de86b69e6acf5"
+    },
+    {
+      "from": "Tools/generate_combat_audio.py",
+      "to": "Tools/Audio/generate_combat_audio.py",
+      "sha256": "9aa2f7aaa9deef0df874d19c30ff435828562fb77aee9d47656cadd50767b4bc"
+    },
+    {
+      "from": "Tools/generate_death_audio.py",
+      "to": "Tools/Audio/generate_death_audio.py",
+      "sha256": "605821383a02473348798f67f3e426c9b68f37e65c5fd8c2b8717ff136ebafbe"
+    },
+    {
+      "from": "Tools/generate_encounter_audio.py",
+      "to": "Tools/Audio/generate_encounter_audio.py",
+      "sha256": "c8c137602a68dfe8789d7fa723fa57091f45b972acd4c5c7aaf8ec3cf711e468"
+    },
+    {
+      "from": "Tools/generate_enemy_audio.py",
+      "to": "Tools/Audio/generate_enemy_audio.py",
+      "sha256": "3bef7987ad75f29315abf8e9496ddd08e755371d3366e3d3cb2e2cb5269d823c"
+    },
+    {
+      "from": "Tools/generate_intro_audio.py",
+      "to": "Tools/Audio/generate_intro_audio.py",
+      "sha256": "51f327b3df87668dd4e2270cc368893fa5b8ca10d9ff8da44dd753025237c126"
+    },
+    {
+      "from": "Tools/generate_intro_voices.py",
+      "to": "Tools/Audio/generate_intro_voices.py",
+      "sha256": "c84d1791b97170d78db20c9156024ca6cf9e583f833b79f001f6c30378e4761f"
+    },
+    {
+      "from": "Tools/generate_night_audio.py",
+      "to": "Tools/Audio/generate_night_audio.py",
+      "sha256": "cb7ee183df7d893b4b3e29bb3d3357d48aac91c7e93cbc85c0a38c6af5ec8f26"
+    },
+    {
+      "from": "Tools/generate_norton_audio.py",
+      "to": "Tools/Audio/generate_norton_audio.py",
+      "sha256": "327a670fd36815a0dfdda4edc6c7fa5474695a98a33c7dd17865775d0c269d26"
+    },
+    {
+      "from": "Tools/generate_wolf_audio.py",
+      "to": "Tools/Audio/generate_wolf_audio.py",
+      "sha256": "908d6869370ceb2651d58ac999afc155d0ecdee1476912b3ba8fde83cca350b6"
+    },
+    {
+      "from": "Tools/import_intro_audio.py",
+      "to": "Tools/Audio/import_intro_audio.py",
+      "sha256": "9c696492233ea67a90b733d3396bda4101e5a4f04585ba9a6a0dd28fb7d5abd3"
+    },
+    {
+      "from": "Tools/intro_voice_requirements.txt",
+      "to": "Tools/Audio/intro_voice_requirements.txt",
+      "sha256": "ef617b29fc486a5ce4cd13dc99b7e263a73c02a706e407f224d9a0e1c14a983f"
+    },
+    {
+      "from": "Tools/generate_encounter_voice.ps1",
+      "to": "Tools/Audio/generate_encounter_voice.ps1",
+      "sha256": "160bb3803485c886322fb91c56133808a5c2d5d929f743f3067793e74406a583"
+    },
+    {
+      "from": "Tools/generate_strings.py",
+      "to": "Tools/Localization/generate_strings.py",
+      "sha256": "d340aea69f3576f26e4dc4523a7678f3366b702d75ec9d00d28a99947f45fe86"
+    },
+    {
+      "from": "Tools/update_combat_localization.py",
+      "to": "Tools/Localization/update_combat_localization.py",
+      "sha256": "9d4b4661a71bcb07f72520e94f3aa80335fa2194220670950a1598f874cc3762"
+    },
+    {
+      "from": "Tools/update_encounter_localization.py",
+      "to": "Tools/Localization/update_encounter_localization.py",
+      "sha256": "ab2e2857981c456264ad48d77033a1b68263ae838f14a9c4f1ef1ef2cf2ee34a"
+    },
+    {
+      "from": "Tools/update_intro_localization.py",
+      "to": "Tools/Localization/update_intro_localization.py",
+      "sha256": "9f3b31520399cfddef805f0ab8d6bda6fe3aa8515e108a72c691c11427c2604e"
+    },
+    {
+      "from": "Tools/update_norton_text.py",
+      "to": "Tools/Localization/update_norton_text.py",
+      "sha256": "1418657aee3380d22b2de5711b13ab57ac625e9e84c04b7c13d8456620c6ad33"
+    },
+    {
+      "from": "Tools/download_forest_assets.py",
+      "to": "Tools/Assets/download_forest_assets.py",
+      "sha256": "f882191ba988aeb509ffbf9477ea7deb8866d1902337dbde79ee8c31df956b31"
+    },
+    {
+      "from": "Tools/fetch_character_sources.py",
+      "to": "Tools/Assets/fetch_character_sources.py",
+      "sha256": "d75a9df84647d325624beae0badc7e3f2b4b059e5ad4b37d89d53fc7fb2d8991"
+    },
+    {
+      "from": "Tools/prepare_cabin_sign.py",
+      "to": "Tools/Assets/prepare_cabin_sign.py",
+      "sha256": "991c95cdc9a37d5398527d0da44479f335130e0fd8e384f2d2c227eb56192e70"
+    },
+    {
+      "from": "Tools/prepare_crawler_mouth.py",
+      "to": "Tools/Assets/prepare_crawler_mouth.py",
+      "sha256": "3249cde824eef6f7fce3842fc8b6910d9afc4a1a67b2d56145bf15c867bae3a2"
+    },
+    {
+      "from": "Tools/prepare_tmp_resources.py",
+      "to": "Tools/Assets/prepare_tmp_resources.py",
+      "sha256": "106b7f1b45ea5b7964a42020894f71cf04c41c2a257c1d94cd018e9b45f5f8b9"
+    },
+    {
+      "from": "Tools/research_forest_sources.py",
+      "to": "Tools/Assets/research_forest_sources.py",
+      "sha256": "1cdf54215dc0bac56772f4e5d158c5439bed6e69157f102fceef5f0ef966b9f8"
+    },
+    {
+      "from": "Tools/compile_preflight.py",
+      "to": "Tools/Diagnostics/compile_preflight.py",
+      "sha256": "918142ded08ef1e44e0d4bf4570dfdd3002f99b5c7803e86474cff7cf22753d5"
+    },
+    {
+      "from": "Tools/create_creature_preview.py",
+      "to": "Tools/Diagnostics/create_creature_preview.py",
+      "sha256": "4b923285ba52780db26f3d84e235357214b661e7267c460585aaa579e81be122"
+    },
+    {
+      "from": "Tools/research_character_assets.py",
+      "to": "Tools/Research/research_character_assets.py",
+      "sha256": "ad673d87ad841dbee575bd35da7dad63e897facf5996758d286205b2de6a2885"
+    },
+    {
+      "from": "Tools/update_forest_gdd.py",
+      "to": "Tools/Documentation/update_forest_gdd.py",
+      "sha256": "f884522af4ccf1f6590ce79ec0a4ba7757a09d86cac85ef13b8e6a659cda85a5"
+    }
+  ],
+  "removedFilesByReason": {
+    "Automatic Blender backup; authoritative .blend retained; exporter selects only *.blend.": {
+      "files": 27,
+      "bytes": 37859622
+    },
+    "Regenerable Python bytecode; Python source retained.": {
+      "files": 12,
+      "bytes": 303215
+    },
+    "Obsolete cabin-only cast mesh; Unity dependency audit shows no consumer; current Jack/Ethan encounters retained; producer now generates Tyler only.": {
+      "files": 6,
+      "bytes": 7809126
+    },
+    "Temporary working backup; current source assets, documented evidence and latest build retained; no tool reads this backup folder.": {
+      "files": 696,
+      "bytes": 550906599
+    }
+  }
+}
