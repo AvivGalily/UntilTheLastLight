@@ -18,6 +18,11 @@ rig.animation_data.action=bpy.data.actions['Aquatic_Idle']
 bpy.context.scene.frame_set(8)
 deps=bpy.context.evaluated_depsgraph_get()
 measurements=[]
+for x,y in ((0,1.3),(.12,1.45)):
+    hit,location,normal,index,obj,matrix=bpy.context.scene.ray_cast(deps,C((x,y,.99)),C((0,0,-1)))
+    assert hit,'The creature body is missing after CSG'
+    evaluated=obj.evaluated_get(deps)
+    assert evaluated.data.materials[evaluated.data.polygons[index].material_index].name=='AbyssSkin','Torso surface missing after CSG'
 for x in (0,.08):
     for y in (1.87,1.89):
         hit,location,normal,index,obj,matrix=bpy.context.scene.ray_cast(deps,C((x,y,.99)),C((0,0,-1)))

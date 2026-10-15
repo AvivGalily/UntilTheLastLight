@@ -1477,9 +1477,9 @@
       "source": "ArtSource/Blender/research_abomination_01.blend",
       "export": "Assets/_Game/Art/Meshes/research_abomination_01.fbx",
       "units": "metres",
-      "triangles": 127315,
+      "triangles": 124980,
       "lodTriangles": {
-        "LOD0": 127315
+        "LOD0": 124980
       },
       "materials": [
         "AbyssGums",

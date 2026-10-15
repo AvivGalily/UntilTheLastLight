@@ -34,7 +34,31 @@ def loft(F, name, sections, material, sides=48):
             a = k*sides+j; b = k*sides+(j+1)%sides
             faces.append((a, b, b+sides, a+sides))
     faces.extend([tuple(range(sides-1,-1,-1)), tuple((len(sections)-1)*sides+j for j in range(sides))])
-    return mesh(F, name, vertices, faces, material)
+    obj=mesh(F, name, vertices, faces, material)
+    # Twisted loft quads must be resolved before the boolean solver sees them.
+    bpy.context.view_layer.objects.active=obj
+    triangulate=obj.modifiers.new('Explicit loft topology','TRIANGULATE')
+    bpy.ops.object.modifier_apply(modifier=triangulate.name)
+    return obj
+
+
+def subtract(skin,cutter,label):
+    # Exact CSG can silently return an empty mesh at a near-coplanar contact.
+    # Preserve the body and retry the floating-point solver in that case.
+    original=skin.data.copy();count=len(original.vertices)
+    solvers=bpy.types.BooleanModifier.bl_rna.properties['solver'].enum_items.keys()
+    try:
+        for solver in ('EXACT','FLOAT' if 'FLOAT' in solvers else 'FAST'):
+            bpy.context.view_layer.objects.active=skin
+            cut=skin.modifiers.new(label,'BOOLEAN');cut.operation='DIFFERENCE';cut.solver=solver;cut.object=cutter
+            bpy.ops.object.modifier_apply(modifier=cut.name)
+            if len(skin.data.vertices)>=count*.75:
+                return
+            broken=skin.data;skin.data=original.copy();bpy.data.meshes.remove(broken)
+            print('R09 boolean retry:',label,solver,flush=True)
+        raise RuntimeError('Oral/gill subtraction removed the creature body: '+label)
+    finally:
+        bpy.data.meshes.remove(original)
 
 
 def membrane(obj, thickness=.0015):
@@ -58,14 +82,11 @@ def upper_face(F):
 def carve(F, skin):
     # Remove actual flesh behind the lips, including the old rounded chin.
     cutter = loft(F, 'Temporary oral recess', [
-        (-.008,.046,1.887,1.794), (.055,.104,1.908,1.784),
-        (.115,.142,1.912,1.782), (.210,.132,1.909,1.785),
+        (-.008,.046,1.871,1.794), (.055,.104,1.873,1.784),
+        (.115,.142,1.879,1.782), (.210,.132,1.897,1.785),
         (.330,.120,1.909,1.789), (.420,.110,1.909,1.789),
     ], 'AbyssThroat')
-    bpy.context.view_layer.objects.active = skin
-    cut = skin.modifiers.new('Open oral cavity behind the dental arch', 'BOOLEAN')
-    cut.operation = 'DIFFERENCE'; cut.solver = 'EXACT'; cut.object = cutter
-    bpy.ops.object.modifier_apply(modifier=cut.name)
+    subtract(skin,cutter,'Open oral cavity behind the dental arch')
     F.PARTS.remove(cutter); bpy.data.objects.remove(cutter, do_unlink=True)
 
 
@@ -78,18 +99,6 @@ def arch(a, lower=False):
 
 
 def finish(F, tube):
-    # The upper lip continues into the maxilla and cheeks instead of hanging
-    # as a separate ring in front of an overlarge boolean opening.
-    vertices=[];faces=[]
-    for i in range(65):
-        a=(i/64-.5)*math.pi;x,y,z=arch(a);c=math.cos(a)
-        for j in range(9):
-            v=j/8;ease=v*v*(3-2*v)
-            vertices.append((x*(1+.06*ease),y+.001+(.012+.05*(1-c))*v,z+.002-.020*ease))
-            if i and j:
-                n=i*9+j;faces.append((n-10,n-9,n,n-1))
-    vestibule=mesh(F,'Upper continuous labial vestibule',vertices,faces,'AbyssSkin')
-    membrane(vestibule,.003)
     # Open U-shaped mandibular bone, with a thin ventral keel and broad rami.
     # Its cross-section is flattened and tapers into the jaw joint at the ears.
     vertices=[]; faces=[]; steps=64; sides=20

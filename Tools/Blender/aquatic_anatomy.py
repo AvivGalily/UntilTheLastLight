@@ -73,15 +73,11 @@ def build(F, fuse):
     # of the skin reads as a second exposed eyeball rather than an eye socket.
     for side in (-1,1):
         cutter=S('Temporary orbital cutter', (side*.125,1.997,.159), (.025,.021,.022), 'AbyssThroat', 40, 28)
-        bpy.context.view_layer.objects.active=skin
-        cut=skin.modifiers.new('Recessed eye socket','BOOLEAN');cut.operation='DIFFERENCE';cut.solver='EXACT';cut.object=cutter
-        bpy.ops.object.modifier_apply(modifier=cut.name)
+        aquatic_mouth.subtract(skin,cutter,'Recessed eye socket')
         F.PARTS.remove(cutter);bpy.data.objects.remove(cutter,do_unlink=True)
         for row in range(3):
             cutter=S('Temporary gill recess', (side*.115,1.70+row*.052,.018), (.019,.007,.083), 'AbyssThroat', 32, 16)
-            bpy.context.view_layer.objects.active=skin
-            cut=skin.modifiers.new('Recessed organic gill slit','BOOLEAN');cut.operation='DIFFERENCE';cut.solver='EXACT';cut.object=cutter
-            bpy.ops.object.modifier_apply(modifier=cut.name)
+            aquatic_mouth.subtract(skin,cutter,'Recessed organic gill slit')
             F.PARTS.remove(cutter);bpy.data.objects.remove(cutter,do_unlink=True)
     skin.data.calc_loop_triangles()
     if len(skin.data.loop_triangles)>78000:
@@ -94,6 +90,10 @@ def build(F, fuse):
         p=vert.co
         wave=math.sin(p.x*19+p.z*7)*math.sin(p.y*23-p.z*13)
         vert.co += vert.normal * (.0015*wave)
+    # Boolean-created palate/under-jaw faces need UVs as well. Keeping only the
+    # pre-cut UV layer leaves conspicuous flat-colour patches on those faces.
+    bpy.ops.object.select_all(action='DESELECT');skin.select_set(True);bpy.context.view_layer.objects.active=skin
+    bpy.ops.object.mode_set(mode='EDIT');bpy.ops.mesh.select_all(action='SELECT');bpy.ops.uv.cube_project(cube_size=1);bpy.ops.object.mode_set(mode='OBJECT')
     aquatic_mouth.finish(F,tube)
     for side in (-1,1):
         S('Recessed amber eye', (side*.125,1.997,.148), (.019,.018,.018), 'LabIris', 32, 20)
