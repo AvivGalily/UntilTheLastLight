@@ -1,4 +1,12 @@
+**2026-10-15 overhand equipment revision:** The left hand closes over the flashlight; the right hand grips the axe/upper shotgun stock with an opposed thumb and closed fingers. The elbow plane and distributed forearm twist keep the wrist continuous during swings, look-down, recoil and reload. Updated gameplay captures: 88-96; grip inspection: 104-108. Focused reproduction: Unity `-Task EquipmentGrips`, then `-Task PlayerSmoke`.
+
+**2026-10-15 research revision:** The station now has a four-view Walker anatomy poster, broken laboratory glass, microscope/sample instruments and a blue cylindrical life-support tank containing a suspended reptilian humanoid. Hold the beam on the Walker continuously for 4?7 seconds; it keeps approaching at 3.5m/s. Staying closer than 1.5m for three seconds is fatal even while walking. Entering within 5m of the burning car starts its head encounter after ten active seconds, regardless of the letter. Menus pause these timers. See the current research section in NortonEncounter.md; older release notes below describe historical behavior.
+
 # Until the Last Light — playable forest prototype
+
+The C# folders follow the game systems: `Core/Configuration`, `Player/Movement`, `Player/Health`, `Player/Audio`, `Player/Combat`, `Player/Presentation`, enemy-specific folders under `Enemies`, and encounter/environment/atmosphere/interaction folders under `World`. Localization and display helpers have their own UI folders. Tuning, save data, player condition, attack timing and Hebrew formatting are separate types/files; namespaces, existing script GUIDs and serialized game data are preserved. Editor code is grouped into `Generation`, `Art`, `Audio`, `Validation`, `Verification` and `Maintenance`. Authoring/verification tool groups and audit commands are described in [Toolchain.md](../Tools/Toolchain.md).
+
+The 2026-10-13 cleanup removed automatic Blender backups, regenerable tool bytecode, unreferenced working backups and the obsolete cabin-only Jack/Ethan mesh derivatives. Their current web/wreck encounter prefabs and exact opening sources remain. Roughly 569 MiB were reclaimed in the working folder, including about 44 MiB of versioned source files; Git history, Unity's cache and the current Windows build were retained.
 
 צעדי ההליכה נשמעים רק בתנועה על הקרקע ונעצרים מיד כשעוצרים; בריצה הקצב מהיר יותר. הצל מניע רגליים וזרועות בהליכה ובריצה. הידיים אוחזות בפנס ובנשק באמצעות שלד מפרקים, ללא מתיחת המודל. הפנס הכבוי אינו משאיר תאורת עזר על השחקן. Tyler הוא הגופה הראשונה עם המפה, Jack תלוי בקורי העכביש ו־Ethan נמצא עם מעיים חשופים ליד הרכב הבוער. לשלושתם אותם פנים, שיער ובגדים מהפתיחה; למעיים נוסף מרקם מפורט עם כלי דם וברק לח.
 
@@ -10,7 +18,7 @@
 
 **עברית — 0.13.0:** הגלגלת מחליפה בין גרזן לרובה ציד שנאספו. TAB פותח וסוגר את התיק, ובו כפתור לבחירת כל נשק. תדירות היצור שיורק אש הוחזרה: עד שניים פעילים ומרווחים של 42–60 שניות. נוספו ארבעה זאבים, וביער תשעה בסך הכול. הידיים שופרו עם אצבעות חלקות יותר, אחיזת הדק נפרדת, עור חי ושרוולים עם חפתים וקפלים.
 
-In **0.13.0**, use **1** for the axe and **2** for the shotgun; both the number row and numpad work. A selection made during an axe swing or reload waits until that action finishes. **R or B** changes the flashlight battery with either weapon, including during a shotgun reload; **T** reloads the shotgun. The flashlight stays in the left hand and the shotgun in the right. Find the burning car beside the **research station**, with the wounded human casualty, shotgun and letter to Mr. Norton. Closing the letter introduces a dead human head crawling on six articulated legs. These creatures pursue you in the forest and in lit buildings; the flashlight does not repel them. An aimed shotgun blast or two axe hits kill one. A first fireball causes a burn that heals after ten seconds of active play; a second fireball during recovery is fatal. The HUD displays the recovery timer. The player's shadow matches the standing/crouching body, and the personal flashlight does not cast that body into its beam. Anatomical equipment arms continue into the body below the view.
+In **0.13.0**, use **1** for the axe and **2** for the shotgun; both the number row and numpad work. A selection made during an axe swing or reload waits until that action finishes. **R or B** changes the flashlight battery with either weapon, including during a shotgun reload; **T** reloads the shotgun. The flashlight stays in the left hand and the shotgun in the right. Find the burning car beside the **research station**, with the wounded human casualty, shotgun and letter to Mr. Norton. Ten active seconds after entering within five metres of the car, a dead human head crawling on six articulated legs appears, even without reading the letter. These creatures pursue you in the forest and in lit buildings; the flashlight does not repel them. An aimed shotgun blast or two axe hits kill one. A first fireball causes a burn that heals after ten seconds of active play; a second fireball during recovery is fatal. The HUD displays the recovery timer. The player's shadow matches the standing/crouching body, and the personal flashlight does not cast that body into its beam. Anatomical equipment arms continue into the body below the view.
 
 **עברית — אחיזה בנשק:** כשבוחרים ברובה הציד, הפנס נשאר ביד שמאל והרובה מוחזק ביד ימין. שתי הידיים נראות גם בזמן ירי וטעינה.
 
@@ -61,12 +69,12 @@ Source models are in `ArtSource/Blender`. Unity imports the explicit FBX exports
 Run PowerShell from the project folder with the Unity editor closed:
 
 ```powershell
-python .\Tools\fetch_character_sources.py
+python .\Tools\Assets\fetch_character_sources.py
 .\Tools\Invoke-Blender.ps1
-python .\Tools\generate_strings.py
-python .\Tools\generate_audio.py
-python .\Tools\generate_night_audio.py
-python .\Tools\generate_combat_audio.py
+python .\Tools\Localization\generate_strings.py
+python .\Tools\Audio\generate_audio.py
+python .\Tools\Audio\generate_night_audio.py
+python .\Tools\Audio\generate_combat_audio.py
 .\Tools\Invoke-Unity.ps1 -Task Generate
 .\Tools\Invoke-Unity.ps1 -Task Capture
 .\Tools\Invoke-Unity.ps1 -Task CreatureCapture
@@ -110,4 +118,4 @@ Version 0.7.1 gives the wolf's exposed skull and jaw a detailed aged-bone surfac
 
 Version 0.8.0 adds approaching wolf barks that become louder and quicker nearby, plus a return roar and guttural Walker voices. The Walker follows your current position outside shelter, can disappear out of sight for a few seconds and return from a distant reachable point. Menus freeze the sequence. The existing safe houses, flashlight repulsion and close-range danger still apply.
 
-The opening uses all twelve supplied English recordings and the supplied vehicle/gate/creature/explosion effects. Final warnings finish before the blast. Crickets remain very quiet near gameplay buildings and silent during the opening. **Mouse / right stick** looks around and down at the seated driver's clothed torso/legs. Actual skeletal hands, fingers and sleeves follow the wheel. **A/D, arrows / left stick** steer within ±1.6m while continuing forward. **W / right trigger** accelerates driving motion while dialogue and events keep their original timing. The gate entrance is clear and its leaves close only after the vehicle has passed. Passengers have distinct hair, nose/lip/jaw contours and matching cast builds/clothes. Dashboard, doors, seats, floor mats and wheel have lit grain/weave surfaces. Start a new game to watch it. Reinstall supplied audio with `python Tools/import_intro_audio.py --source ArtSource/Audio/Runway` and `-Task IntroAudio`; use `-Task Ambience` for building crickets. See `ForestOpening.md`.
+The opening uses all twelve supplied English recordings and the supplied vehicle/gate/creature/explosion effects. Final warnings finish before the blast. Crickets remain very quiet near gameplay buildings and silent during the opening. **Mouse / right stick** looks around and down at the seated driver's clothed torso/legs. Actual skeletal hands, fingers and sleeves follow the wheel. **A/D, arrows / left stick** steer within ±1.6m while continuing forward. **W / right trigger** accelerates driving motion while dialogue and events keep their original timing. The gate entrance is clear and its leaves close only after the vehicle has passed. Passengers have distinct hair, nose/lip/jaw contours and matching cast builds/clothes. Dashboard, doors, seats, floor mats and wheel have lit grain/weave surfaces. Start a new game to watch it. Reinstall supplied audio with `python Tools/Audio/import_intro_audio.py --source ArtSource/Audio/Runway` and `-Task IntroAudio`; use `-Task Ambience` for building crickets. See `ForestOpening.md`.

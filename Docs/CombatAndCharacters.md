@@ -24,7 +24,7 @@ Save schema 3 adds the axe and dead-wolf IDs. Versions 1/2 migrate without grant
 
 ## Reproduce
 
-With Unity closed, download sources using `python Tools/fetch_character_sources.py`. Run Blender in background with `--disable-autoexec --python Tools/Blender/licensed_humans.py`, then `--python Tools/Blender/combat_assets.py`. Run `python Tools/generate_combat_audio.py` and `python Tools/update_combat_localization.py`. Then run `Tools/Invoke-Unity.ps1` tasks Generate, Capture, Smoke, EditTests, PlayTests and Build in sequence.
+With Unity closed, download sources using `python Tools/Assets/fetch_character_sources.py`. Run Blender in background with `--disable-autoexec --python Tools/Blender/licensed_humans.py`, then `--python Tools/Blender/combat_assets.py`. Run `python Tools/Audio/generate_combat_audio.py` and `python Tools/Localization/update_combat_localization.py`. Then run `Tools/Invoke-Unity.ps1` tasks Generate, Capture, Smoke, EditTests, PlayTests and Build in sequence.
 
 Vendor inputs are retained/downloadable. Credits/licenses are in [ThirdPartyNotices.md](ThirdPartyNotices.md). Blender studio previews are under `Screenshots/Combat`; forest/body captures are actual Unity URP renders. The complete campaign and final cinematics remain outside this slice.
 

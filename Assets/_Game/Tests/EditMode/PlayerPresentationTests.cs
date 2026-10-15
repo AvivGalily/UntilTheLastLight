@@ -65,6 +65,26 @@ namespace Game.Tests
                 }
             }finally{UnityEngine.Object.DestroyImmediate(go);}
         }
+        [Test] public void EquipmentGripsRestAboveTheHandleWithoutReversedWrists()
+        {
+            var go=Player();try
+            {
+                var presence=go.GetComponent<PlayerPresence>();var gun=go.GetComponent<ShotgunCombat>();
+                foreach(var arm in go.GetComponent<PlayerMotor>().hand.GetComponentsInChildren<FirstPersonArm>(true))
+                {
+                    arm.Pose();string side=arm.bodyAnchor.x<0?"L":"R";
+                    var bones=arm.GetComponentsInChildren<Transform>();
+                    Vector3 knuckles=Enumerable.Range(2,4).Select(i=>bones.First(t=>t.name=="finger"+i+"-1."+side).position).Aggregate(Vector3.zero,(a,b)=>a+b)/4;
+                    Assert.That(Vector3.Angle(knuckles-arm.wrist.position,arm.transform.TransformDirection(arm.handForward)),Is.LessThan(1),"elbow solver must use this hand, not other retained source-rig bones");
+                    var palm=arm.transform.InverseTransformPoint(knuckles);var wrist=arm.transform.InverseTransformPoint(arm.wrist.position);
+                    if(side=="L")
+                    {Assert.That(palm.y,Is.GreaterThan(.025f),"flashlight palm must sit above the barrel");Assert.That(wrist.x,Is.LessThan(-.06f),"left wrist must remain outside the handle");}
+                    else
+                    {Assert.That(wrist.y,Is.GreaterThan(palm.y+.005f),"weapon hand must enter the grip from above");Assert.That(wrist.z,Is.LessThan(palm.z-.06f),"weapon wrist must stay behind its knuckles");}
+                    Assert.That(Vector3.Angle(arm.wrist.position-arm.lower.position,arm.transform.TransformDirection(arm.handForward)),Is.LessThan(75),"forearm must not fold backwards at the wrist");
+                }
+            }finally{UnityEngine.Object.DestroyImmediate(go);}
+        }
         [Test] public void ShotgunHasOneRightGripAndSeparateLeftFlashlight()
         {
             var go=Player();try

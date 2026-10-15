@@ -32,11 +32,10 @@ namespace Game.Tests
         {var f=new FlashlightModel(new FlashlightTuning());f.Restore(0,true);f.EmergencyFill();f.EmergencyFill();Assert.That(f.Charge,Is.EqualTo(35));f.Restore(70,true);f.EmergencyFill();Assert.That(f.Charge,Is.EqualTo(70));}
         [Test] public void A10_PartialStackLeavesRemainder()
         {var inventory=new InventoryService();inventory.AddBatteries(3);int pile=3;pile-=inventory.AddBatteries(pile);Assert.That(pile,Is.EqualTo(2));Assert.That(inventory.Batteries,Is.EqualTo(6));Assert.Zero(inventory.AddBatteries(pile));}
-        [Test] public void WarningAndWindupCannotCollapseOnLongFrame()
+        [Test] public void ContinuousContactKillsAtThreeSecondsWithoutAnExtraWarningDelay()
         {
-            var a=new MonsterAttack();var t=new MonsterTuning();Assert.False(a.Tick(10,true,true,true,t));Assert.False(a.WindingUp);
-            Assert.False(a.Tick(.01f,true,true,true,t));Assert.True(a.WindingUp);
-            Assert.True(a.Tick(5,true,true,true,t));Assert.False(a.Tick(5,true,true,true,t));
+            var a=new MonsterAttack();var t=new MonsterTuning();Assert.False(a.Tick(2.99f,true,true,true,t));Assert.True(a.WindingUp);
+            Assert.True(a.Tick(.011f,true,true,true,t));Assert.False(a.Tick(5,true,true,true,t));
         }
         [Test] public void A06_IlluminationCancelsWindupBeforeHit()
         {var a=new MonsterAttack();var t=new MonsterTuning();a.Tick(2,true,true,true,t);a.Tick(.1f,true,true,true,t);a.Tick(.6f,true,true,true,t);Assert.True(a.WindingUp);Assert.False(a.Tick(1,true,false,true,t));Assert.False(a.WindingUp);}
@@ -45,12 +44,16 @@ namespace Game.Tests
         [Test] public void WoundDoesNotReduceMovementAndRecoversInShelter()
         {var condition=new PlayerCondition();var t=new PlayerTuning();Assert.True(condition.Hit(t));Assert.True(condition.Wounded);Assert.False(condition.Hit(t));condition.Tick(15,true,t);Assert.False(condition.Wounded);Assert.False(condition.Dead);}
         [Test] public void A12_ZeroTimeFreezesBatteryAndWindup()
-        {var f=new FlashlightModel(new FlashlightTuning());var a=new MonsterAttack();var t=new MonsterTuning();a.Tick(2,true,true,true,t);a.Tick(.1f,true,true,true,t);for(int i=0;i<600;i++){f.Tick(0,true);a.Tick(0,true,true,true,t);}Assert.That(f.Charge,Is.EqualTo(100));Assert.Zero(a.WindupElapsed);}
+        {var f=new FlashlightModel(new FlashlightTuning());var a=new MonsterAttack();var t=new MonsterTuning();a.Tick(2,true,true,true,t);a.Tick(.1f,true,true,true,t);float elapsed=a.WindupElapsed;for(int i=0;i<600;i++){f.Tick(0,true);a.Tick(0,true,true,true,t);}Assert.That(f.Charge,Is.EqualTo(100));Assert.That(a.WindupElapsed,Is.EqualTo(elapsed));}
+        [Test] public void LeavingContactRangeResetsTheEntireThreeSeconds()
+        {var a=new MonsterAttack();var t=new MonsterTuning();Assert.False(a.Tick(2.9f,true,true,true,t));Assert.False(a.Tick(.01f,true,true,false,t));Assert.Zero(a.WindupElapsed);Assert.False(a.Tick(2.9f,true,true,true,t));Assert.True(a.Tick(.11f,true,true,true,t));}
+        [Test] public void LethalWalkerContactBypassesTemporaryBiteInvulnerability()
+        {var condition=new PlayerCondition();condition.Restore(false);Assert.True(condition.Hit(new PlayerTuning(),true));Assert.True(condition.Dead);}
         static SaveData Snapshot()=>new SaveData{checkpoint="Ranger cabin",charge=23,batteries=5,documents=new[]{"note_guard_rules"},pickups=new[]{new ItemRecord{id="cabin_batteries",remaining=1}}};
         [Test] public void SaveRoundTripPreservesPartialPickups()
         {var data=Snapshot();var copy=JsonUtility.FromJson<SaveData>(JsonUtility.ToJson(data));SaveService.Validate(copy);Assert.That(copy.pickups[0].remaining,Is.EqualTo(1));Assert.That(copy.charge,Is.EqualTo(23));}
         [Test] public void SaveRejectsImpossibleQuestState()
-        {var data=Snapshot();data.completed=true;Assert.Throws<InvalidDataException>(()=>SaveService.Validate(data));data.powerOn=true;SaveService.Validate(data);data.fuse=true;Assert.Throws<InvalidDataException>(()=>SaveService.Validate(data));}
+        {var data=Snapshot();data.completed=true;Assert.Throws<InvalidDataException>(()=>SaveService.Validate(data));data.powerOn=true;Assert.Throws<InvalidDataException>(()=>SaveService.Validate(data));data.gateKey=data.gateUnlocked=true;data.research.phase=5;data.research.health=0;SaveService.Validate(data);data.fuse=true;Assert.Throws<InvalidDataException>(()=>SaveService.Validate(data));}
         [TestCase("שלום 35% עולם","םלוע 35% םולש")]
         [TestCase("לחץ E לפתיחה","החיתפל E ץחל")]
         [TestCase("מסמך (12)","(12) ךמסמ")]
@@ -60,7 +63,7 @@ namespace Game.Tests
         [Test] public void LegacySaveMigratesWithoutGrantingMap()
         {
             string dir=Path.Combine(Path.GetTempPath(),"LastLightLegacy-"+Guid.NewGuid());string path=Path.Combine(dir,"save.json");
-            try{Directory.CreateDirectory(dir);var data=Snapshot();data.schemaVersion=1;File.WriteAllText(path,JsonUtility.ToJson(data));var loaded=new SaveService(path).Load(out _);Assert.That(loaded.schemaVersion,Is.EqualTo(5));Assert.False(loaded.mapAcquired);Assert.False(loaded.axe);Assert.IsEmpty(loaded.deadWolves);Assert.That(loaded.charge,Is.EqualTo(23));}
+            try{Directory.CreateDirectory(dir);var data=Snapshot();data.schemaVersion=1;File.WriteAllText(path,JsonUtility.ToJson(data));var loaded=new SaveService(path).Load(out _);Assert.That(loaded.schemaVersion,Is.EqualTo(6));Assert.False(loaded.mapAcquired);Assert.False(loaded.axe);Assert.IsEmpty(loaded.deadWolves);Assert.That(loaded.charge,Is.EqualTo(23));}
             finally{if(Directory.Exists(dir))Directory.Delete(dir,true);}
         }
         [Test] public void MapAndRecoveredDocumentsSurviveSaveLoad()

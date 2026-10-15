@@ -1,0 +1,26 @@
+{
+  "purpose": "Visual study only. Reference photographs are outside Assets and are not included in the game. Existing CC0 character geometry is posed independently; no source photo is used as a game texture.",
+  "references": [
+    {
+      "subject": "handheld flashlight",
+      "page": "https://www.bravoconcealment.com/blogs/training/top-five-torches-to-light-up-the-night",
+      "image": "https://cdn.shopify.com/s/files/1/0165/8068/files/Many_people_find_a_slightly_longer_light_like_the_Nightstick_Tac_Pro_2AA_easier_to_handle..jpg?v=1684448060",
+      "local": "flashlight.jpg",
+      "observed": "Four bent fingers surround the barrel; thumb opposes them near the tail; wrist continues into the palm. Adapted to the requested overhand left-hand presentation."
+    },
+    {
+      "subject": "shotgun stock hand",
+      "page": "https://fieldsports-journal.com/game-shooting/gun-fitting-with-simon-ward/",
+      "image": "https://fieldsports-journal.com/app/uploads/sites/3/2025/01/gunfitting_with_simon_ward_2.jpg",
+      "local": "shotgun.jpg",
+      "observed": "Thumb saddles the upper stock neck, palm lies beside the stock, three fingers close below and the index has a distinct trigger pose; wrist enters from behind."
+    },
+    {
+      "subject": "axe handle hand",
+      "page": "https://www.helkonorthamerica.com/photos",
+      "image": "https://images.squarespace-cdn.com/content/v1/689ce44ad655442c2770769b/d70fd7dc-c331-4396-ac05-2d2063eca597/3%2BSM.jpg?format=1500w",
+      "local": "axe.jpg",
+      "observed": "Closed power grip, visible back of hand and knuckles, opposed thumb, and continuous wrist/forearm. Adapted to the upright carried axe."
+    }
+  ]
+}

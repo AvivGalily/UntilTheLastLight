@@ -100,7 +100,7 @@ namespace Game
             overlay.GetComponent<Image>().color=new Color(.018f,.03f,.034f,game.State.Mode==ScreenMode.Dead?.73f:.95f);
             if(playing)
             {
-                Put(objective,T("reserve")+"\n"+T(game.Flashlight.Faulted?(game.forestEncounter&&game.forestEncounter.Escaping?"objective_escape":"objective_repair"):game.PowerOn?"objective_gate":game.Inventory.HasFuse?"objective_return":"objective_fuse"));
+                Put(objective,T("reserve")+"\n"+T(game.Objective));
                 Put(resources,(game.Flashlight.Active||game.Flashlight.SwapRemaining>0?T("resources",game.Flashlight.Charge,game.Inventory.Batteries):T("light_off",game.Inventory.Batteries))+(game.player.Stamina<.99f?"\n"+T("breath",game.player.Stamina*100):"")+(game.Condition.FireRecoveryRemaining>0?"\n"+T("fire_recovery",game.Condition.FireRecoveryRemaining):game.Condition.Wounded?"\n"+T("wounded"):"")+(game.Inventory.AxeEquipped?"\n"+T("axe_control"):"")+(game.Inventory.HasShotgun?"\n"+T(game.Inventory.ShotgunEquipped?"shotgun_hud":"shotgun_stowed",game.Inventory.LoadedShells,game.Inventory.SpareShells)+(game.shotgun.ReloadRemaining>0?"\n"+T("shotgun_reloading",game.shotgun.ReloadRemaining):""):""));
                 Put(prompt,game.Flashlight.SwapRemaining>0?T("swapping",game.Flashlight.SwapRemaining):game.InteractionPrompt+(game.HoldProgress>0?$"\n{game.HoldProgress*100:0}%":""));Put(message,game.Message);Put(warning,"");
                 if(game.visualWarnings&&game.monster.HasSpawned&&game.monster.Distance<8&&!game.IsSafe)
@@ -130,7 +130,7 @@ namespace Game
                     for(int i=0;i<5&&i+journalPage*5<found.Count;i++){string id=found[i+journalPage*5];Choice(i,T(id+"_title"),()=>game.ReadNote(id));}
                     if(found.Count>5)Choice(5,T("next_page"),()=>journalPage=journalPage==0?1:0);
                     Choice(6,T("hint"),()=>{hint=true;Invalidate();});Choice(7,T("resume"),Close);
-                    if(hint)Put(body,T(game.PowerOn?"hint_gate":game.Inventory.HasFuse?"hint_return":"hint_fuse"));break;
+                    if(hint)Put(body,T(game.GateOpen?"hint_gate":game.PowerOn?game.Inventory.HasGateKey?"hint_gate_unlock":"hint_research_key":game.Inventory.HasFuse?"hint_return":"hint_fuse"));break;
                 case ScreenMode.Map:
                     Put(heading,T("map_title"));body.gameObject.SetActive(false);mapRoot.SetActive(true);for(int i=0;i<mapLabels.Length;i++)Put(mapLabels[i],T(mapKeys[i]));Choice(0,T("close_map"),Close);Choice(1,T("journal"),()=>game.State.Set(ScreenMode.Journal));break;
                 case ScreenMode.Settings:
@@ -152,6 +152,7 @@ namespace Game
         string WeaponName(HeldWeapon weapon)=>T(weapon==HeldWeapon.Axe?"weapon_axe":"weapon_shotgun");
         string WeaponChoice(HeldWeapon weapon)=>T(game.Inventory.OwnsWeapon(weapon)?game.RequestedWeapon==weapon?"weapon_selected":"weapon_equip":"weapon_missing",WeaponName(weapon));
         string InventoryText()=>T("inventory_body",game.Flashlight.Charge,game.Inventory.Batteries,T(game.Inventory.HasFuse?"carried":game.PowerOn?"installed":"not_found"),T(game.HasMap?"carried":"not_found"),game.CheckpointLabel)
+            +"\n"+T("inventory_gate_key",T(game.Inventory.HasGateKey?"carried":"not_found"))
             +"\n\n"+T("weapon_pack",game.Inventory.OwnsWeapon(game.RequestedWeapon)?WeaponName(game.RequestedWeapon):T("not_found"))
             +(game.Inventory.HasShotgun?"\n"+T("shotgun_hud",game.Inventory.LoadedShells,game.Inventory.SpareShells):"");
     }

@@ -8,3 +8,7 @@ UserSettings/
 *.sln
 .vs/
 *.tmp
+__pycache__/
+*.py[cod]
+*.blend1
+*.blend2

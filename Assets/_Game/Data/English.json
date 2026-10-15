@@ -10,7 +10,7 @@
     },
     {
       "id": "intro",
-      "value": "Light drives it back while it is still distant.\nIf it reaches you, RUN.\n\nFollow the ranger’s trail. Keep a way back.\nListen before you look."
+      "value": "Keep the light on it for 4-7 continuous seconds. It keeps coming until then.\nIf it reaches you, RUN.\n\nFollow the ranger’s trail. Keep a way back.\nListen before you look."
     },
     {
       "id": "demo_footer",
@@ -186,7 +186,7 @@
     },
     {
       "id": "dead_body",
-      "value": "The Walker kills at close range. Your beam cannot repel it within 2.8 metres.\n\nThe axe can kill undead wolves in two strikes. A second wolf bite is fatal.\n\nOnly marked amber shelters offer safety."
+      "value": "The Walker kills after 3 continuous seconds closer than 1.5 metres, even while you walk. Run to break contact.\n\nKeep the beam on it for 4-7 continuous seconds to drive it back. It keeps approaching during that time.\n\nThe axe kills undead wolves in two strikes. Only marked amber shelters offer safety."
     },
     {
       "id": "complete_title",
@@ -350,7 +350,7 @@
     },
     {
       "id": "power_restored",
-      "value": "Power restored. The north gate is open."
+      "value": "Circuit powered. The cabin gate key lock is separate."
     },
     {
       "id": "install_fuse",
@@ -406,7 +406,7 @@
     },
     {
       "id": "circuit_alive",
-      "value": "The circuit is alive. Follow the lamps to the north gate."
+      "value": "Power restored. Recover the research key and turn the lock beside this panel."
     },
     {
       "id": "restore_first",
@@ -450,7 +450,7 @@
     },
     {
       "id": "note_guard_rules",
-      "value": "Keep your distance. The beam repels the Walker only beyond 2.8 metres. When it is already beside you, run. Its attack is fatal.\n\nDry clicks are its footsteps: when they stop, it may be standing nearby. It returns from the trees.\n\nThe surveyor left an axe beside the first body. Use it against the diseased wolves: two strikes, with room to swing.\n\nMarked amber shelters are safe. The research station’s weak bulb is not."
+      "value": "Keep your distance. Hold the beam on the Walker for 4-7 uninterrupted seconds. It continues approaching until the light drives it away. Losing the beam resets the exposure. Inside 1.5 metres, run: the beam cannot repel it.\n\nIf it stays closer than 1.5 metres for 3 continuous seconds, you die, even while walking. It moves faster than a walk but slower than a sprint.\n\nDry clicks are its footsteps. The surveyor left an axe beside the first body; two strikes kill a diseased wolf.\n\nMarked amber shelters are safe. The research station’s bulbs and blue containment light are not."
     },
     {
       "id": "note_guard_rules_title",
@@ -490,7 +490,7 @@
     },
     {
       "id": "note_research",
-      "value": "STATION 03 — Emergency circuit failing.\n\nThree rooms: records west, bunks southeast, observation northeast. The central corridor remains passable.\n\nThe ceiling bulb is too weak to repel the creature. It crossed beneath it without hesitation. Never lower the hand beam in this building.\n\nThe amber lantern on the eastern trail still holds."
+      "value": "STATION 03 / R-09\n\nThe archive holds eyes, embryos and animal heads in preservative. R-09 remains in the blue tank. The gate key hangs from the chain around its neck. Do not reach for it while the specimen is alive.\n\nThe red release control starts a five-second siren and drain. The doors then open. It does not fear the hand light. Four firearm hits or axe strikes stop it. Two strikes from it within five seconds are fatal. After death, recover the flashing key from the neck chain.\n\nRestore the fuse circuit, then turn the recovered key in the separate lock beside the starting cabin panel. The weak station bulbs offer no shelter."
     },
     {
       "id": "note_research_title",
@@ -739,6 +739,102 @@
     {
       "id": "intro_flash",
       "value": "Opening flash: {0}"
+    },
+    {
+      "id": "release_specimen",
+      "value": "E — release R-09"
+    },
+    {
+      "id": "release_activated",
+      "value": "Containment release already activated"
+    },
+    {
+      "id": "containment_warning",
+      "value": "CONTAINMENT RELEASE: draining. Stand clear."
+    },
+    {
+      "id": "search_specimen",
+      "value": "E — take the key from the neck chain"
+    },
+    {
+      "id": "specimen_searched",
+      "value": "The key has been recovered"
+    },
+    {
+      "id": "specimen_down",
+      "value": "R-09 is dead. The key on its neck chain is flashing. Take it."
+    },
+    {
+      "id": "gate_key_acquired",
+      "value": "Gate key recovered. Return to the cabin and turn the lock beside the fuse panel."
+    },
+    {
+      "id": "gate_locked",
+      "value": "The gate has power, but the cabin key lock is still engaged."
+    },
+    {
+      "id": "gate_unlocked",
+      "value": "Gate key lock released"
+    },
+    {
+      "id": "lock_needs_power",
+      "value": "Install the fuse in the adjacent panel first."
+    },
+    {
+      "id": "turn_gate_key",
+      "value": "E — turn the gate key"
+    },
+    {
+      "id": "lock_needs_key",
+      "value": "Gate key missing. Search the research station."
+    },
+    {
+      "id": "gate_lock_opened",
+      "value": "Lock turned. The powered north gate is opening."
+    },
+    {
+      "id": "aquatic_hit",
+      "value": "R-09 struck you. Another strike within five seconds will kill you."
+    },
+    {
+      "id": "specimen_death",
+      "value": "The released specimen killed you."
+    },
+    {
+      "id": "objective_research_key",
+      "value": "Recover the gate key from the creature's neck chain."
+    },
+    {
+      "id": "objective_gate_unlock",
+      "value": "Turn the gate key beside the cabin fuse panel."
+    },
+    {
+      "id": "inventory_gate_key",
+      "value": "Gate key: {0}"
+    },
+    {
+      "id": "hint_research_key",
+      "value": "The gate key hangs from the specimen's neck chain. Release it with the red control. Four shotgun hits or axe strikes kill it; two of its strikes within five seconds kill you. Once it dies, collect the flashing key."
+    },
+    {
+      "id": "hint_gate_unlock",
+      "value": "The key lock is beside the fuse panel in the starting cabin. With power restored, turn the key there, then follow the lamps to the gate."
+    },
+    {
+      "id": "checkpoint_release",
+      "value": "Research containment released"
+    },
+    {
+      "id": "checkpoint_specimen_dead",
+      "value": "Research specimen neutralized"
+    },
+    {
+      "id": "checkpoint_specimen_key",
+      "value": "Gate key recovered"
+    },
+    {
+      "id": "checkpoint_gate_unlocked",
+      "value": "Cabin gate lock released"
     }
   ]
 }

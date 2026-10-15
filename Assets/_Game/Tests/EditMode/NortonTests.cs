@@ -32,7 +32,7 @@ namespace Game.Tests
         [Test] public void VersionFourMigrationRetainsForestProgressWithoutInventingNewQuest()
         {
             string directory=Path.Combine(Path.GetTempPath(),"norton-migration-"+Guid.NewGuid());Directory.CreateDirectory(directory);
-            try{var s=new SaveData{schemaVersion=4,checkpoint="Ranger cabin",charge=60,axe=true,mapAcquired=true,forestEncounterSeen=true,documents=new[]{"note_cartographer"},pickups=new ItemRecord[0]};string path=Path.Combine(directory,"save.json");File.WriteAllText(path,JsonUtility.ToJson(s));var loaded=new SaveService(path).Load(out _);Assert.That(loaded.schemaVersion,Is.EqualTo(5));Assert.True(loaded.axe&&loaded.mapAcquired&&loaded.forestEncounterSeen);Assert.False(loaded.shotgun||loaded.headUnlocked);}
+            try{var s=new SaveData{schemaVersion=4,checkpoint="Ranger cabin",charge=60,axe=true,mapAcquired=true,forestEncounterSeen=true,documents=new[]{"note_cartographer"},pickups=new ItemRecord[0]};string path=Path.Combine(directory,"save.json");File.WriteAllText(path,JsonUtility.ToJson(s));var loaded=new SaveService(path).Load(out _);Assert.That(loaded.schemaVersion,Is.EqualTo(6));Assert.True(loaded.axe&&loaded.mapAcquired&&loaded.forestEncounterSeen);Assert.False(loaded.shotgun||loaded.headUnlocked);}
             finally{Directory.Delete(directory,true);}
         }
         [Test] public void NewWeaponAndBurnStateRoundTrip()

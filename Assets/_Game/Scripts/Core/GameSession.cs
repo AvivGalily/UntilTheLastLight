@@ -24,6 +24,7 @@ namespace Game
         public Transform cabinSpawn;
         public Transform[] monsterSpawns;
         public Transform gateLeaf;
+        public Transform cabinKeySwitch;
         public TextAsset strings;
         public TextAsset hebrewStrings;
         public HorrorAudio horrorAudio;
@@ -39,6 +40,7 @@ namespace Game
         public PlayerPresence presence;
         public PlayerDeathSequence deathSequence;
         public NortonEncounter norton;
+        public ResearchSpecimen researchSpecimen;
         public ShotgunCombat shotgun;
         public ZombieWolf[] wolves=new ZombieWolf[0];
         public ForestIntroDirector intro;
@@ -57,6 +59,9 @@ namespace Game
         public DreadController Dread { get; private set; }
         public SaveService Save { get; private set; }
         public bool PowerOn { get; private set; }
+        public bool GateUnlocked {get;private set;}
+        public bool GateOpen=>PowerOn&&GateUnlocked;
+        public string Objective=>Flashlight.Faulted?(forestEncounter&&forestEncounter.Escaping?"objective_escape":"objective_repair"):GateOpen?"objective_gate":!PowerOn?Inventory.HasFuse?"objective_return":"objective_fuse":!Inventory.HasGateKey?"objective_research_key":"objective_gate_unlock";
         public bool Completed { get; set; }
         public bool ThreatEnabled => mechanicsTest || (started&&!Completed&&!(intro&&intro.Active));
         public bool IsSafe => Protection.InShelter(player.view.transform.position);
@@ -140,8 +145,10 @@ namespace Game
             encounters?.ResetSequence(tuning.seed);foley?.ResetSequence(tuning.seed);damage?.ResetFeedback();axe?.ResetCombat();
             foreach(var wolf in wolves)wolf.ResetWolf(false);
             norton?.ResetEncounter();shotgun?.ResetCombat();
+            researchSpecimen?.Restore();
             ActiveSeconds = 0; Documents.Clear(); Documents.Add("note_guard_rules"); OpenDocument = "note_guard_rules";
-            Completed = false; SetPower(false); Dread.Reset();
+            Completed = false;GateUnlocked=false;SetPower(false);Dread.Reset();
+            if(cabinKeySwitch)cabinKeySwitch.localRotation=Quaternion.identity;
             monster.RestoreTutorial(false);
             foreach (var item in items) { item.remaining = initialItems[item.persistentId]; item.gameObject.SetActive(true); }
             player.Teleport(cabinSpawn.position, cabinSpawn.eulerAngles.y);
@@ -178,7 +185,17 @@ namespace Game
         {
             PowerOn = on;
             foreach (var light in circuitLights) light.SetPowered(on);
-            if (gateLeaf) gateLeaf.localPosition = gateClosed + (on ? Vector3.right * 5 : Vector3.zero);
+            if (gateLeaf) gateLeaf.localPosition = gateClosed + (GateOpen ? Vector3.right * 5 : Vector3.zero);
+        }
+        public bool TryUnlockGate()
+        {
+            if(!State.Running||GateUnlocked||!PowerOn||!Inventory.HasGateKey)return false;
+            GateUnlocked=true;SaveCheckpoint("checkpoint_gate_unlocked");Notify(Text("gate_lock_opened"),8);return true;
+        }
+        void GatePresentation(float dt)
+        {
+            if(cabinKeySwitch)cabinKeySwitch.localRotation=Quaternion.RotateTowards(cabinKeySwitch.localRotation,Quaternion.Euler(0,0,GateUnlocked?-90:0),dt*120);
+            if(gateLeaf)gateLeaf.localPosition=Vector3.MoveTowards(gateLeaf.localPosition,gateClosed+(GateOpen?Vector3.right*5:Vector3.zero),dt*1.8f);
         }
         public void ReadNote(string id)
         { Documents.Add(id); OpenDocument = id; State.Set(ScreenMode.Journal);if(id==NortonEncounter.Letter&&norton&&!norton.Unlocked){norton.ReadLetter();SaveCheckpoint("checkpoint_norton");} }
@@ -206,6 +223,14 @@ namespace Game
             else Notify(Text(fire?"fire_hit":"struck"),7);
             return true;
         }
+        public bool ReceiveAquaticAttack()
+        {
+            if(!State.Running||IsSafe||!Condition.HitAquatic())return false;
+            damage?.Trigger();foley?.Hit(Condition.Dead);
+            if(Condition.Dead){researchSpecimen?.SetPaused(true);State.Set(ScreenMode.Dead);Notify(Text("specimen_death"));}
+            else Notify(Text("aquatic_hit"),5);
+            return true;
+        }
         public void SwapFromInventory()
         { Notify(Text(Flashlight.Faulted?"repair_house_only":Flashlight.BeginSwap(Inventory, true) ? "fresh" : "no_spares")); }
         public void SaveCheckpoint(string name)
@@ -220,6 +245,7 @@ namespace Game
                 introCompleted=IntroCompleted,
                 flashlightOn = Flashlight.SwitchedOn, batteries = Inventory.Batteries, fuse = Inventory.HasFuse,
                 powerOn = PowerOn, wounded = Condition.PhysicalWound, completed = Completed,fireRecovery=Condition.FireRecoveryRemaining,
+                aquaticRecovery=Condition.AquaticRecoveryRemaining,gateKey=Inventory.HasGateKey,gateUnlocked=GateUnlocked,research=researchSpecimen?researchSpecimen.Capture():new ResearchSave(),
                 shotgun=Inventory.HasShotgun,loadedShells=Inventory.LoadedShells,spareShells=Inventory.SpareShells,weapon=(int)Inventory.Weapon,
                 headUnlocked=norton&&norton.Unlocked,headIntroduced=norton&&norton.Introduced,
                 mapAcquired = HasMap,axe=Inventory.HasAxe,
@@ -245,7 +271,10 @@ namespace Game
                 deathSequence?.ResetSequence();presence?.ResetPresence();
                 Inventory.Restore(data.batteries, data.fuse,data.axe); Flashlight.Restore(data.charge, data.flashlightOn);
                 Inventory.RestoreWeapon(data.shotgun,data.loadedShells,data.spareShells,(HeldWeapon)data.weapon);
-                Condition.Restore(data.wounded,data.fireRecovery); SetPower(data.powerOn); Completed = data.completed;
+                Inventory.HasGateKey=data.gateKey;GateUnlocked=data.gateUnlocked;
+                Condition.Restore(data.wounded,data.fireRecovery,data.aquaticRecovery); SetPower(data.powerOn); Completed = data.completed;
+                if(cabinKeySwitch)cabinKeySwitch.localRotation=Quaternion.Euler(0,0,GateUnlocked?-90:0);
+                researchSpecimen?.Restore(data.research,data.gateKey);
                 norton?.ResetEncounter(data.headUnlocked,data.headIntroduced);shotgun?.ResetCombat();
                 HasMap=data.mapAcquired;horrorAudio?.ResetSequence(tuning.seed);ambience?.ResetSequence(tuning.seed);
                 encounters?.ResetSequence(tuning.seed);foley?.ResetSequence(tuning.seed);damage?.ResetFeedback();axe?.ResetCombat();
@@ -271,6 +300,7 @@ namespace Game
         void Update()
         {
             if (State == null) return;
+            researchSpecimen?.SetPaused(!State.Running);
             if(Pressed("Fullscreen"))ToggleFullscreen();
             Display.Tick();
             if(intro&&intro.Active)
@@ -306,6 +336,7 @@ namespace Game
             if (!State.Running) { foley?.StopMovementAudio();hud.Refresh(); return; }
             // One ordered simulation coordinator. Light snapshot follows movement; AI follows light.
             float dt = Time.deltaTime;
+            GatePresentation(dt);
             ActiveSeconds += dt; messageTimer -= dt; if (messageTimer <= 0) Message = "";
             player.Simulate(tuning.player, inputs["Move"].ReadValue<Vector2>(), inputs["Look"].ReadValue<Vector2>(), Held("Sprint"), Held("Crouch"), dt);
             presence?.Simulate(dt,player);
@@ -338,7 +369,7 @@ namespace Game
             Dread.Tick(dt, this);
             if(!forestEncounter||!forestEncounter.Choreographing)creature?.Simulate(dt,monster);
             if(!forestEncounter||(!forestEncounter.Choreographing&&forestEncounter.Phase!=ForestEncounterPhase.Refuge))horrorAudio?.Simulate(dt,this);
-            ambience?.Simulate(dt,this);atmosphere?.Simulate(dt,this);
+            ambience?.Simulate(dt,this);atmosphere?.Simulate(dt,this);researchSpecimen?.Simulate(dt,this);
             if (Condition.Dead) { State.Set(ScreenMode.Dead); Notify(Text("last_light")); }
             hud.Refresh();
         }

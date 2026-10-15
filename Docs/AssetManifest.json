@@ -2,92 +2,6 @@
   "seed": 1407,
   "assets": [
     {
-      "id": "arrival_ethan_01",
-      "source": "ArtSource/Blender/arrival_ethan_01.blend",
-      "export": "Assets/_Game/Art/Meshes/arrival_ethan_01.fbx",
-      "units": "metres",
-      "triangles": 30356,
-      "lodTriangles": {
-        "LOD0": 30356,
-        "LOD1": 12749,
-        "LOD2": 3946
-      },
-      "materials": [
-        "ArrivalSkin0",
-        "HumanBoots",
-        "HumanBrows",
-        "IntroEyes2",
-        "IntroHair2",
-        "IntroOutfit2"
-      ],
-      "textures": [
-        "Assets/_Game/Art/Textures/HumanBoots_BaseColor.png",
-        "Assets/_Game/Art/Textures/HumanBoots_Normal.png",
-        "Assets/_Game/Art/Textures/HumanBoots_Mask.png",
-        "Assets/_Game/Art/Textures/HumanBrows_BaseColor.png",
-        "Assets/_Game/Art/Textures/HumanBrows_Normal.png",
-        "Assets/_Game/Art/Textures/HumanBrows_Mask.png",
-        "Assets/_Game/Art/Textures/IntroEyes2_BaseColor.png",
-        "Assets/_Game/Art/Textures/IntroEyes2_Normal.png",
-        "Assets/_Game/Art/Textures/IntroEyes2_Mask.png",
-        "Assets/_Game/Art/Textures/IntroHair2_BaseColor.png",
-        "Assets/_Game/Art/Textures/IntroHair2_Normal.png",
-        "Assets/_Game/Art/Textures/IntroHair2_Mask.png",
-        "Assets/_Game/Art/Textures/IntroOutfit2_BaseColor.png",
-        "Assets/_Game/Art/Textures/IntroOutfit2_Normal.png",
-        "Assets/_Game/Art/Textures/IntroOutfit2_Mask.png"
-      ],
-      "collider": "separate simple Unity collider; decorative foliage has no collision",
-      "blendShapes": [],
-      "animations": [],
-      "bones": 0,
-      "license": "Retained CC0 MakeHuman passenger anatomy/clothes/hair and healthy skin derivative; exact living mesh reused in a fallen pose",
-      "status": "Exact Jack/Tyler/Ethan passenger face, hair, clothing and UVs, posed on the ground with three distance LODs and corpse/blood shading; cast provenance ArtSource/ArrivalCast.json"
-    },
-    {
-      "id": "arrival_jack_01",
-      "source": "ArtSource/Blender/arrival_jack_01.blend",
-      "export": "Assets/_Game/Art/Meshes/arrival_jack_01.fbx",
-      "units": "metres",
-      "triangles": 41068,
-      "lodTriangles": {
-        "LOD0": 41068,
-        "LOD1": 17248,
-        "LOD2": 5337
-      },
-      "materials": [
-        "ArrivalSkin1",
-        "HumanBoots",
-        "HumanBrows",
-        "IntroEyes0",
-        "IntroHair0",
-        "IntroOutfit1"
-      ],
-      "textures": [
-        "Assets/_Game/Art/Textures/HumanBoots_BaseColor.png",
-        "Assets/_Game/Art/Textures/HumanBoots_Normal.png",
-        "Assets/_Game/Art/Textures/HumanBoots_Mask.png",
-        "Assets/_Game/Art/Textures/HumanBrows_BaseColor.png",
-        "Assets/_Game/Art/Textures/HumanBrows_Normal.png",
-        "Assets/_Game/Art/Textures/HumanBrows_Mask.png",
-        "Assets/_Game/Art/Textures/IntroEyes0_BaseColor.png",
-        "Assets/_Game/Art/Textures/IntroEyes0_Normal.png",
-        "Assets/_Game/Art/Textures/IntroEyes0_Mask.png",
-        "Assets/_Game/Art/Textures/IntroHair0_BaseColor.png",
-        "Assets/_Game/Art/Textures/IntroHair0_Normal.png",
-        "Assets/_Game/Art/Textures/IntroHair0_Mask.png",
-        "Assets/_Game/Art/Textures/IntroOutfit1_BaseColor.png",
-        "Assets/_Game/Art/Textures/IntroOutfit1_Normal.png",
-        "Assets/_Game/Art/Textures/IntroOutfit1_Mask.png"
-      ],
-      "collider": "separate simple Unity collider; decorative foliage has no collision",
-      "blendShapes": [],
-      "animations": [],
-      "bones": 0,
-      "license": "Retained CC0 MakeHuman passenger anatomy/clothes/hair and healthy skin derivative; exact living mesh reused in a fallen pose",
-      "status": "Exact Jack/Tyler/Ethan passenger face, hair, clothing and UVs, posed on the ground with three distance LODs and corpse/blood shading; cast provenance ArtSource/ArrivalCast.json"
-    },
-    {
       "id": "arrival_tyler_01",
       "source": "ArtSource/Blender/arrival_tyler_01.blend",
       "export": "Assets/_Game/Art/Meshes/arrival_tyler_01.fbx",
@@ -1120,6 +1034,138 @@
       "status": "Original metre-scale 4x4 interior or separate steering rim; explicit UVs, retained project leather/fabric maps and procedural PBR grain/weave relief; distinct dashboard, door, seat, ribbed floor mat and wheel surfaces."
     },
     {
+      "id": "lab_deer_head_01",
+      "source": "ArtSource/Blender/lab_deer_head_01.blend",
+      "export": "Assets/_Game/Art/Meshes/lab_deer_head_01.fbx",
+      "units": "metres",
+      "triangles": 20453,
+      "lodTriangles": {
+        "LOD0": 20453
+      },
+      "materials": [
+        "AbyssTeeth",
+        "LabPreservedFur",
+        "LabPreservedTissue",
+        "WolfBone",
+        "WolfEyes",
+        "WolfSocket",
+        "WolfTissue"
+      ],
+      "textures": [
+        "Assets/_Game/Art/Textures/WolfSkin_BaseColor.png",
+        "Assets/_Game/Art/Textures/WolfSkin_Normal.png",
+        "Assets/_Game/Art/Textures/WolfSkin_Mask.png",
+        "Assets/_Game/Art/Textures/WolfBone_BaseColor.png",
+        "Assets/_Game/Art/Textures/WolfBone_Normal.png",
+        "Assets/_Game/Art/Textures/WolfBone_Mask.png",
+        "Assets/_Game/Art/Textures/LabPreservedTissue_BaseColor.png",
+        "Assets/_Game/Art/Textures/LabPreservedTissue_Normal.png",
+        "Assets/_Game/Art/Textures/LabPreservedTissue_Mask.png",
+        "Assets/_Game/Art/Textures/CrawlerTeeth_BaseColor.png",
+        "Assets/_Game/Art/Textures/CrawlerTeeth_Normal.png",
+        "Assets/_Game/Art/Textures/CrawlerTeeth_Mask.png"
+      ],
+      "collider": "separate simple Unity collider; decorative foliage has no collision",
+      "blendShapes": [],
+      "animations": [],
+      "bones": 0,
+      "license": "CC0 NewDLC wolf anatomy and retained fur/skull maps; project head extraction, preserved neck tissue and fictional antlered variant",
+      "status": "Static anatomical wet specimens; retained original animal UVs and licensed fur/bone maps; generated preserved-tissue derivative"
+    },
+    {
+      "id": "lab_embryo_01",
+      "source": "ArtSource/Blender/lab_embryo_01.blend",
+      "export": "Assets/_Game/Art/Meshes/lab_embryo_01.fbx",
+      "units": "metres",
+      "triangles": 39504,
+      "lodTriangles": {
+        "LOD0": 39504
+      },
+      "materials": [
+        "LabAnimalHide",
+        "LabPreservedTissue"
+      ],
+      "textures": [
+        "Assets/_Game/Art/Textures/LabPreservedTissue_BaseColor.png",
+        "Assets/_Game/Art/Textures/LabPreservedTissue_Normal.png",
+        "Assets/_Game/Art/Textures/LabPreservedTissue_Mask.png"
+      ],
+      "collider": "separate simple Unity collider; decorative foliage has no collision",
+      "blendShapes": [],
+      "animations": [],
+      "bones": 0,
+      "license": "original procedural project asset",
+      "status": "original art pass"
+    },
+    {
+      "id": "lab_eye_01",
+      "source": "ArtSource/Blender/lab_eye_01.blend",
+      "export": "Assets/_Game/Art/Meshes/lab_eye_01.fbx",
+      "units": "metres",
+      "triangles": 4316,
+      "lodTriangles": {
+        "LOD0": 4316
+      },
+      "materials": [
+        "LabIris",
+        "LabPreservedTissue",
+        "LabPupil",
+        "LabSclera"
+      ],
+      "textures": [
+        "Assets/_Game/Art/Textures/LabIris_BaseColor.png",
+        "Assets/_Game/Art/Textures/LabIris_Normal.png",
+        "Assets/_Game/Art/Textures/LabIris_Mask.png",
+        "Assets/_Game/Art/Textures/LabPreservedTissue_BaseColor.png",
+        "Assets/_Game/Art/Textures/LabPreservedTissue_Normal.png",
+        "Assets/_Game/Art/Textures/LabPreservedTissue_Mask.png"
+      ],
+      "collider": "separate simple Unity collider; decorative foliage has no collision",
+      "blendShapes": [],
+      "animations": [],
+      "bones": 0,
+      "license": "original procedural project asset",
+      "status": "original art pass"
+    },
+    {
+      "id": "lab_wolf_head_01",
+      "source": "ArtSource/Blender/lab_wolf_head_01.blend",
+      "export": "Assets/_Game/Art/Meshes/lab_wolf_head_01.fbx",
+      "units": "metres",
+      "triangles": 20165,
+      "lodTriangles": {
+        "LOD0": 20165
+      },
+      "materials": [
+        "LabPreservedFur",
+        "LabPreservedTissue",
+        "WolfBone",
+        "WolfEyes",
+        "WolfSocket",
+        "WolfTissue"
+      ],
+      "textures": [
+        "Assets/_Game/Art/Textures/WolfSkin_BaseColor.png",
+        "Assets/_Game/Art/Textures/WolfSkin_Normal.png",
+        "Assets/_Game/Art/Textures/WolfSkin_Mask.png",
+        "Assets/_Game/Art/Textures/WolfBone_BaseColor.png",
+        "Assets/_Game/Art/Textures/WolfBone_Normal.png",
+        "Assets/_Game/Art/Textures/WolfBone_Mask.png",
+        "Assets/_Game/Art/Textures/LabPreservedTissue_BaseColor.png",
+        "Assets/_Game/Art/Textures/LabPreservedTissue_Normal.png",
+        "Assets/_Game/Art/Textures/LabPreservedTissue_Mask.png",
+        "Assets/_Game/Art/Textures/CrawlerTeeth_BaseColor.png",
+        "Assets/_Game/Art/Textures/CrawlerTeeth_Normal.png",
+        "Assets/_Game/Art/Textures/CrawlerTeeth_Mask.png"
+      ],
+      "collider": "separate simple Unity collider; decorative foliage has no collision",
+      "blendShapes": [],
+      "animations": [],
+      "bones": 0,
+      "license": "CC0 NewDLC wolf anatomy and retained fur/skull maps; project head extraction, preserved neck tissue and fictional antlered variant",
+      "status": "Static anatomical wet specimens; retained original animal UVs and licensed fur/bone maps; generated preserved-tissue derivative"
+    },
+    {
       "id": "moss_rock_01",
       "source": "ArtSource/Blender/moss_rock_01.blend",
       "export": "Assets/_Game/Art/Meshes/moss_rock_01.fbx",
@@ -1276,7 +1322,7 @@
       "animations": [],
       "bones": 163,
       "license": "CC0 MakeHuman/MPFB anatomy, clothing and Mindfront skin; project pose and extraction",
-      "status": "Native weighted left flashlight/right axe/right shotgun upper arm, forearm, wrist and curled hand; fitted source sleeve; normalized arm-only weights and evaluated grip-frame bone export; runtime length-preserving two-bone IK without mesh shear. ArtSource/FirstPersonArms.json; reproduce with first_person_arms.py."
+      "status": "Reference-studied native overhand left flashlight and upper right axe/stock grips; opposed thumb and separate trigger finger; normalized arm-only weights and evaluated grip-frame bone export; palm-directed shoulder/elbow/wrist IK without mesh shear. ArtSource/FirstPersonArms.json and ArtSource/References/EquipmentGrips/sources.json; reproduce with first_person_arms.py."
     },
     {
       "id": "player_body_01",
@@ -1358,7 +1404,7 @@
       "animations": [],
       "bones": 163,
       "license": "CC0 MakeHuman/MPFB anatomy, clothing and Mindfront skin; project pose and extraction",
-      "status": "Native weighted left flashlight/right axe/right shotgun upper arm, forearm, wrist and curled hand; fitted source sleeve; normalized arm-only weights and evaluated grip-frame bone export; runtime length-preserving two-bone IK without mesh shear. ArtSource/FirstPersonArms.json; reproduce with first_person_arms.py."
+      "status": "Reference-studied native overhand left flashlight and upper right axe/stock grips; opposed thumb and separate trigger finger; normalized arm-only weights and evaluated grip-frame bone export; palm-directed shoulder/elbow/wrist IK without mesh shear. ArtSource/FirstPersonArms.json and ArtSource/References/EquipmentGrips/sources.json; reproduce with first_person_arms.py."
     },
     {
       "id": "player_shotgun_hand_01",
@@ -1386,7 +1432,7 @@
       "animations": [],
       "bones": 163,
       "license": "CC0 MakeHuman/MPFB anatomy, clothing and Mindfront skin; project pose and extraction",
-      "status": "Native weighted left flashlight/right axe/right shotgun upper arm, forearm, wrist and curled hand; fitted source sleeve; normalized arm-only weights and evaluated grip-frame bone export; runtime length-preserving two-bone IK without mesh shear. ArtSource/FirstPersonArms.json; reproduce with first_person_arms.py."
+      "status": "Reference-studied native overhand left flashlight and upper right axe/stock grips; opposed thumb and separate trigger finger; normalized arm-only weights and evaluated grip-frame bone export; palm-directed shoulder/elbow/wrist IK without mesh shear. ArtSource/FirstPersonArms.json and ArtSource/References/EquipmentGrips/sources.json; reproduce with first_person_arms.py."
     },
     {
       "id": "ranger_cabin_01",
@@ -1418,6 +1464,83 @@
         "Assets/_Game/Art/Textures/Timber_BaseColor.png",
         "Assets/_Game/Art/Textures/Timber_Normal.png",
         "Assets/_Game/Art/Textures/Timber_Mask.png"
+      ],
+      "collider": "separate simple Unity collider; decorative foliage has no collision",
+      "blendShapes": [],
+      "animations": [],
+      "bones": 0,
+      "license": "original procedural project asset",
+      "status": "original art pass"
+    },
+    {
+      "id": "research_abomination_01",
+      "source": "ArtSource/Blender/research_abomination_01.blend",
+      "export": "Assets/_Game/Art/Meshes/research_abomination_01.fbx",
+      "units": "metres",
+      "triangles": 127315,
+      "lodTriangles": {
+        "LOD0": 127315
+      },
+      "materials": [
+        "AbyssGums",
+        "AbyssRidge",
+        "AbyssSkin",
+        "AbyssTeeth",
+        "AbyssThroat",
+        "LabIris",
+        "LabPupil"
+      ],
+      "textures": [
+        "Assets/_Game/Art/Textures/LabAbyssDermisV2_BaseColor.png",
+        "Assets/_Game/Art/Textures/LabAbyssDermisV2_Normal.png",
+        "Assets/_Game/Art/Textures/LabAbyssDermisV2_Mask.png",
+        "Assets/_Game/Art/Textures/LabIris_BaseColor.png",
+        "Assets/_Game/Art/Textures/LabIris_Normal.png",
+        "Assets/_Game/Art/Textures/LabIris_Mask.png",
+        "Assets/_Game/Art/Textures/CrawlerTeeth_BaseColor.png",
+        "Assets/_Game/Art/Textures/CrawlerTeeth_Normal.png",
+        "Assets/_Game/Art/Textures/CrawlerTeeth_Mask.png",
+        "Assets/_Game/Art/Textures/CrawlerGums_BaseColor.png",
+        "Assets/_Game/Art/Textures/CrawlerGums_Normal.png",
+        "Assets/_Game/Art/Textures/CrawlerGums_Mask.png",
+        "Assets/_Game/Art/Textures/CrawlerThroat_BaseColor.png",
+        "Assets/_Game/Art/Textures/CrawlerThroat_Normal.png",
+        "Assets/_Game/Art/Textures/CrawlerThroat_Mask.png"
+      ],
+      "collider": "separate simple Unity collider; decorative foliage has no collision",
+      "blendShapes": [],
+      "animations": [
+        "Aquatic_Attack",
+        "Aquatic_Death",
+        "Aquatic_Escape",
+        "Aquatic_Hit",
+        "Aquatic_Idle",
+        "Aquatic_Run"
+      ],
+      "bones": 20,
+      "license": "Original continuous organic anatomy and 20-bone rig; built-in imagegen dermis V2 and retained project oral maps",
+      "status": "R-09 V2: fused musculature, eye sockets, tapered bony maxilla and open mandibular arch, thin labial borders, rooted irregular teeth, concave oral lining with head/jaw blend and grooved tongue, recessed gill slits and dorsal membrane; six skeletal clips including continuous attack-jaw recovery and planted-ankle IK gait with tail/leg weights separated; runtime displacement sets gait phase, tank-owned hoses detach, neck-bone chain and death-pulsed collectible key"
+    },
+    {
+      "id": "research_specimen_01",
+      "source": "ArtSource/Blender/research_specimen_01.blend",
+      "export": "Assets/_Game/Art/Meshes/research_specimen_01.fbx",
+      "units": "metres",
+      "triangles": 93440,
+      "lodTriangles": {
+        "LOD0": 93440
+      },
+      "materials": [
+        "SpecimenBelly",
+        "SpecimenEye",
+        "SpecimenPupil",
+        "SpecimenSkin",
+        "SpecimenSpine"
+      ],
+      "textures": [
+        "Assets/_Game/Art/Textures/SpecimenSkin_BaseColor.png",
+        "Assets/_Game/Art/Textures/SpecimenSkin_Normal.png",
+        "Assets/_Game/Art/Textures/SpecimenSkin_Mask.png"
       ],
       "collider": "separate simple Unity collider; decorative foliage has no collision",
       "blendShapes": [],

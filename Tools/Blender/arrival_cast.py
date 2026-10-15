@@ -1,4 +1,4 @@
-"""Reuse the exact seated passenger meshes, faces, UVs and hair as fallen hunters."""
+"""Reuse seated Tyler as the first corpse. Jack/Ethan are built by encounter_cast."""
 import bpy,sys,math,json
 from pathlib import Path
 from mathutils import Matrix
@@ -6,7 +6,7 @@ sys.path.insert(0,str(Path(__file__).parent))
 import licensed_humans as H
 
 receipts=[]
-for identity,name in enumerate(('jack','tyler','ethan')):
+for identity,name in ((1,'tyler'),):
     source='intro_'+name+'_01'
     bpy.ops.wm.open_mainfile(filepath=str(H.SOURCE/(source+'.blend')),load_ui=False,use_scripts=False)
     rig=next(o for o in bpy.context.scene.objects if o.type=='ARMATURE');rig.animation_data_clear()

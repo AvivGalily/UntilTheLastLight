@@ -1,0 +1,39 @@
+{
+  "date": "2026-10-15",
+  "mode": "built-in image_gen",
+  "transparent_background": false,
+  "references": [],
+  "note": "Original generated colour sources are retained unchanged in Assets. These are generated artwork, not scans. Data maps, optical films, scales and labels are deterministic project-authored derivatives or assets.",
+  "prompts": [
+    {
+      "asset": "Assets/_Game/Art/Textures/LabSteel_BaseColor.png",
+      "output": "exec-6826c053-6df1-46e6-9858-2b147afeb2fa.png",
+      "prompt": "Use case: photorealistic-natural. Asset type: seamless tileable PBR base-color texture for abandoned research laboratory equipment in a realistic first-person horror game. Generate a square 2048x2048 texture of aged brushed stainless steel, viewed exactly straight-on with completely flat diffuse illumination, no directional light, no highlights or shadows baked in. Fine directional brushed grain, many very thin uneven micro-scratches, subtle greasy finger smears, shallow abrasion, small restrained patches of oxidized brown around occasional pits, cold gray-silver metallic color. The surface must be mostly usable stainless steel, varied and naturally worn, not uniformly rusted. Material surface only, filling the full image. Seamless across all four edges, no borders, no frame, no hardware, no bolts, no perspective, no object, no text, no labels, no grid, no watermark.",
+      "sha256": "6029a11f96bd221d63311b581e588602aacad36268f331f4cf6a88f56107d60c",
+      "actualDimensions": [
+        1254,
+        1254
+      ]
+    },
+    {
+      "asset": "Assets/_Game/Art/Textures/LabEnamel_BaseColor.png",
+      "output": "exec-c893caf1-eb70-4004-ba4a-d6b9a4c8c6a5.png",
+      "prompt": "Use case: photorealistic-natural. Asset type: seamless tileable PBR base-color texture for old research laboratory cabinets and scientific instruments in a realistic first-person horror game. Generate a square 2048x2048 texture of aged muted pale gray-sage baked enamel paint over steel, exactly straight-on, completely flat diffuse illumination without baked-in shadows or reflections. Broad quiet painted areas with authentic tiny orange-peel paint texture, scattered small chips exposing dark gray metal and a trace of rust at their edges, yellowed disinfectant wipe streaks and subtle grime, restrained fine scratches. The enamel remains predominantly light desaturated sage-gray, visibly aged yet credible precision laboratory equipment, not an artistic grunge wall. Uniform physical scale and sharp microscopic detail. Material surface only, filling the image. Seamless across all four edges. No perspective, no objects, no panel lines, no fixtures, no bolts, no text, no labels, no border, no watermark.",
+      "sha256": "75b895d61f501e9a04886030f9cce433d88521b9f2eaf833a6ca6ebe49505ff7",
+      "actualDimensions": [
+        1254,
+        1254
+      ]
+    },
+    {
+      "asset": "Assets/_Game/Art/Textures/LabRubber_BaseColor.png",
+      "output": "exec-2eeb9afd-d53a-4fbc-8d9d-bdb86d6ac272.png",
+      "prompt": "Use case: photorealistic-natural. Asset type: seamless tileable PBR base-color texture for flexible life-support rubber hoses and instrument grips in an abandoned research laboratory horror game. Generate a square 2048x2048 close material study of old charcoal-black industrial rubber, exactly straight-on, completely flat diffuse illumination without baked-in shading, highlights or directional light. Fine molded rubber grain, faint longitudinal extrusion lines, sparse fine shallow aging crazing, subdued graphite scuffing and greasy handling marks. Mostly near-black charcoal with small realistic gray variations; no brown rust, no large dramatic cracks, no large pattern. High detail, physical scale fine enough for a 4 cm hose. Material surface only fills the entire frame, seamless across all four edges. No tube geometry, no perspective, no object, no text, no labels, no border, no watermark.",
+      "sha256": "df544b17e8ffc23a88ff3e2bda72830a8acc4f19313a063b29340f5bde358d1f",
+      "actualDimensions": [
+        1254,
+        1254
+      ]
+    }
+  ]
+}

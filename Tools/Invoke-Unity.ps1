@@ -1,5 +1,5 @@
 param(
-    [ValidateSet('Import','Mechanics','Generate','Validate','EditTests','PlayTests','Build','Capture','SignCapture','CreatureCapture','Smoke','Intro','IntroSmoke','IntroVoices','IntroAudio','Ambience','PlayerRefinements','PlayerSmoke','Open')][string]$Task = 'Generate',
+    [ValidateSet('Import','Mechanics','Generate','Validate','EditTests','PlayTests','Build','Capture','SignCapture','CreatureCapture','Smoke','Intro','IntroSmoke','IntroVoices','IntroAudio','Ambience','PlayerRefinements','PlayerSmoke','EquipmentGrips','ResearchSurfaces','ResearchEncounter','ResearchCapture','ResearchSmoke','ResearchEncounterSmoke','AquaticPursuitSmoke','Open')][string]$Task = 'Generate',
     [string]$Unity = 'C:\dev\UnityEditors\6000.3.24f1\Editor\Unity.exe'
 )
 $ErrorActionPreference = 'Stop'
@@ -29,6 +29,13 @@ switch ($Task) {
  'Ambience' { $arguments += @('-quit','-executeMethod','Game.Editor.ForestAmbienceSetup.InstallBuildingCrickets') }
  'PlayerRefinements' { $arguments += @('-quit','-executeMethod','Game.Editor.ProjectSetup.InstallPlayerRefinements') }
  'PlayerSmoke' { $arguments += @('-executeMethod','Game.Editor.PlayerRefinementsVerification.Run') }
+ 'EquipmentGrips' { $arguments += @('-quit','-executeMethod','Game.Editor.ProjectSetup.InstallEquipmentGrips') }
+ 'ResearchSurfaces' { $arguments += @('-quit','-executeMethod','Game.Editor.ProjectSetup.InstallResearchSurfaces') }
+ 'ResearchEncounter' { $arguments += @('-quit','-executeMethod','Game.Editor.ProjectSetup.InstallResearchEncounter') }
+ 'ResearchEncounterSmoke' { $arguments += @('-executeMethod','Game.Editor.ResearchEncounterVerification.Run') }
+ 'AquaticPursuitSmoke' { $arguments += @('-nographics','-executeMethod','Game.Editor.AquaticPursuitVerification.Run') }
+ 'ResearchCapture' { $arguments += @('-executeMethod','Game.Editor.VisualVerification.CaptureResearch') }
+ 'ResearchSmoke' { $arguments += @('-executeMethod','Game.Editor.ResearchGameplayVerification.Run') }
 }
 $process = Start-Process -FilePath $Unity -ArgumentList $arguments -WindowStyle Hidden -PassThru
 # Wait for the editor, not its persistent licensing/helper process tree.

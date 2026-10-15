@@ -1889,8 +1889,8 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 296933713249162678}
-  - component: {fileID: 2884649702108081943}
   - component: {fileID: 926557431616206573}
+  - component: {fileID: 2884649702108081943}
   m_Layer: 0
   m_Name: intro_ethan_01
   m_TagString: Untagged
@@ -1916,22 +1916,6 @@ Transform:
   - {fileID: 256983426538446946}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &2884649702108081943
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1541703877403689498}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 61f291cbba624304ebcbb18dc19f05d9, type: 3}
-  m_Name:
-  m_EditorClassIdentifier: Game.Runtime::Game.IntroPassenger
-  head: {fileID: 8003866251504468062}
-  spine: {fileID: 1677535239121044971}
-  jaw: {fileID: 2325869885057939888}
-  gesture: {fileID: 1730461318470921290}
 --- !u!114 &926557431616206573
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1942,11 +1926,27 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 8678fa5c44a94954cbbc56150d7fc69e, type: 3}
-  m_Name:
+  m_Name: 
   m_EditorClassIdentifier: Game.Runtime::Game.HunterIdentity
   characterId: ethan
   deceased: 0
   encounterRole: vehicle
+--- !u!114 &2884649702108081943
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1541703877403689498}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 61f291cbba624304ebcbb18dc19f05d9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Game.Runtime::Game.IntroPassenger
+  head: {fileID: 8003866251504468062}
+  spine: {fileID: 1677535239121044971}
+  jaw: {fileID: 2325869885057939888}
+  gesture: {fileID: 1730461318470921290}
 --- !u!1 &1547776936383568345
 GameObject:
   m_ObjectHideFlags: 0

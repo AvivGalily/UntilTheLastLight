@@ -176,12 +176,12 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: c17a50301f8b7534f83aff26a732ec6a, type: 3}
-  m_Name:
+  m_Name: 
   m_EditorClassIdentifier: Game.Runtime::Game.WorldItem
   persistentId: norton_casualty
   kind: 6
   remaining: 1
-  label:
+  label: 
   noteId: note_norton
   houseCharger: 0
 --- !u!114 &9179368622111735468
@@ -194,7 +194,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 785d9e973a6b8e945a59506b1c803b08, type: 3}
-  m_Name:
+  m_Name: 
   m_EditorClassIdentifier: Game.Runtime::Game.BloodySurface
   surfaces:
   - {fileID: 1786869301773599708}
@@ -235,7 +235,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 8678fa5c44a94954cbbc56150d7fc69e, type: 3}
-  m_Name:
+  m_Name: 
   m_EditorClassIdentifier: Game.Runtime::Game.HunterIdentity
   characterId: ethan
   deceased: 1

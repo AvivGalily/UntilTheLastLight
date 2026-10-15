@@ -1,0 +1,7 @@
+{
+  "use": "Privately retained visual references only; not included in Unity Assets or the player. Creature and specimen models are original project geometry.",
+  "references": [
+    {"title":"Oran Ikan practical creature production still","page":"https://www.eiga-square.jp/news/esq/9D1C785B60F2EB41BB2364B74415F6E4","image":"https://www.eiga-square.jp/mv_imgs/articles/65C0FD64277FE04F89E2344C3EB8C40E.jpg","local":"aquatic-horror-reference.jpg","inspiration":"Deep-set eyes, wet dermis, fanned gills and irregular predatory dentition."},
+    {"title":"UCL Grant Museum: fluid preservation and animal head specimens","page":"https://blogs.ucl.ac.uk/museums/2019/07/19/specimen-of-the-week-a-cocktail-of-spirits-fluid-preservation-at-the-grant-museum/","image":"https://blogs.ucl.ac.uk/museums/files/2019/07/20190717_131544.jpg","local":"preserved-heads-reference.jpg","inspiration":"Archival glass vessels, desaturated preserved anatomy, fluid and accession labels."}
+  ]
+}

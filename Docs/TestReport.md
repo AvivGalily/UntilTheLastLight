@@ -1,5 +1,25 @@
 # Verification report — 2026-10-10
 
+## Reference-studied overhand grips - 2026-10-15
+
+- Original CC0 equipment hand assets reauthored: palm above the left flashlight with rear-switch thumb; raised right axe grip; upper stock saddle with a distinct trigger index. Source photos and observations: ArtSource/References/EquipmentGrips/sources.json, outside Assets.
+- Focused EquipmentGrips installation rebinds the equipment and defensive arm rigs in ForestGame and MechanicsTest, retaining the research scene and gameplay state.
+- All 110 EditMode and 17 PlayMode tests pass (127 total). The new grip regression checks which hand supplies the knuckles, above-handle contact, wrist entry behind the knuckles and absence of backwards wrist bends. Existing bone length, immutable mesh, chirality and equipment checks pass with distributed forearm twist.
+- PlayerSmoke passed look-down, recoil/reload, independent flashlight, no active player fill with the flashlight off, shadow gait and actor identity checks. Full Smoke passed combat/equipment/input/encounter/save/navigation checks.
+- Actual Unity captures 104-108 were visually inspected after the final forearm-twist fix. Inspection lighting is temporary and does not exist in gameplay. Ordinary night views 88-96 were recaptured too.
+- Windows build succeeded: 614,995,742 bytes. Final native startup/display receipt: Logs/WindowsLaunchCheck.json.
+- Source audit: no duplicate GUIDs, missing meta, Python syntax errors or missing tool/code paths.
+
+## Research laboratory / Walker timing revision - 2026-10-15
+
+- Unity Generate/Validate passed. Room navigation remains connected around the new physical tank.
+- All 109 EditMode and 17 PlayMode tests passed (126 total).
+- ResearchSmoke passed: 4-7 seconds of continuous light with real approach steps; beam interruption reset; zero-time freeze; 3.5m/s pursuit between player walk/run; actual walking with close pursuit becomes fatal at three seconds; five-metre wreck activation without reading; ten active seconds even after walking away; menu pause.
+- Full Smoke passed, including physical fog retreat/return, nine wolves, player presentation, weapon controls, heads/cadence/death/fireballs and save/load.
+- ResearchCapture produced and visually reviewed `100-research-laboratory.png`, `101-research-specimen-tank.png`, `102-walker-scientific-poster.png`, and `103-broken-laboratory-glass.png` in Docs/Screenshots. Skin/hoses have outward-facing normals; containment glass preserves visibility of the floating specimen.
+- Windows build succeeded: 614,994,046 bytes. Native DX11 startup/display verification passed with zero startup errors and all three fullscreen/window measurements; receipt: Logs/WindowsLaunchCheck.json. The first cold launch missed the existing 1.5-second window-resize observation; the immediate repeat passed all modes.
+- Source audit passed: no duplicate GUIDs, missing meta files, Python syntax errors or missing tool/code paths. No new hardware performance benchmark was performed.
+
 ## Current release: wheel/TAB equipment, hands and restored threats — 0.13.0
 
 - **86/86 EditMode and 13/13 PlayMode tests passed**, zero failures. Final starts: **2026-10-10 13:45:28Z / 2026-10-10 13:46:21Z**. New tests resolve mouse-scroll and TAB against real controls, verify TAB stays enabled while Gameplay is paused, cycling ownership, all nine wolf identities in schema-five save data, hand skin/fabric maps and retention of smooth finger normals through axe motion.
@@ -80,7 +100,7 @@
 - Both generated scenes pass compilation, wiring and asset validation, including the added voice/bark references. `Logs/Generate.log`. No character geometry or texture was changed in this release.
 - **PURSUIT SMOKE PASS** exercises actual root deactivation, silence while hidden, a frozen zero-time hidden countdown, an unseen reachable return, return roar, deep growl, menu pause and continuous retargeting to the player without sight/hearing. The simulated pursuit closes distance instead of expiring into patrol. **WOLF BARK SMOKE PASS** exercises actual approaching playback, gain **0.600 at 12m < 0.909 at 5m**, zero-time freeze and immediate shelter silence. Death also stops the bark source. `Logs/Smoke.log`.
 - Existing **DISPLAY UI**, **COMBAT**, **LIVING FOREST** and **RUNTIME SMOKE PASS** checks were rerun and pass, including close-range fatal attack, axe kills, movement-only footsteps, warnings/bite animation, exclusive ambush ownership, real escape/repair, Hebrew, documents/map, pause, save/load and gate completion.
-- The recorded dog bark and source creature layers have CC0 credits, download hashes and a reproducible offline-capable generator. Audio generation creates a lowered bark and processed growl/roar; these are designed game effects. `Tools/generate_enemy_audio.py`, `ArtSource/Vendor/enemy-voices-cc0/sources.json` and `ThirdPartyNotices.md` retain provenance. Runtime playback requires no download.
+- The recorded dog bark and source creature layers have CC0 credits, download hashes and a reproducible offline-capable generator. Audio generation creates a lowered bark and processed growl/roar; these are designed game effects. `Tools/Audio/generate_enemy_audio.py`, `ArtSource/Vendor/enemy-voices-cc0/sources.json` and `ThirdPartyNotices.md` retain provenance. Runtime playback requires no download.
 - Windows **0.8.0** built successfully: **475,080,514 bytes** reported by Unity. A separately launched DX11 player on Intel Iris Xe logged no startup exceptions or shader errors, measured **1920×1080 FullScreenWindow → 1600×900 Windowed → 1920×1080 FullScreenWindow**, all passing, then exited with code 0. `Logs/Build.log`, `Logs/DisplayCheck.json`, `Logs/WindowsLaunch.log` and `Logs/WindowsLaunchCheck.json` record this release. No standalone `-batchmode` was used. This confirms startup/display behavior; audio playback and pursuit are checked in the editor integration smoke, not a manual standalone playthrough or listening review.
 
 ## Previous release: wolf bone texture — 0.7.1

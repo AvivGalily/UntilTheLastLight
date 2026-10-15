@@ -56,12 +56,12 @@ does not replay after that checkpoint. New Game restores the living victim and
 the working lamp. Quitting before the feeding sequence finishes rewinds to the
 previous checkpoint, as with the rest of the checkpoint system.
 
-Run `python Tools/download_forest_assets.py` once to retrieve/check the CC0
+Run `python Tools/Assets/download_forest_assets.py` once to retrieve/check the CC0
 inputs. Run `Tools/Invoke-Blender.ps1` to regenerate/export all assets; its final
 step restores the photographed PBR surfaces after the original base generator.
-`Tools/generate_encounter_voice.ps1` reproduces the David SAPI line on Windows;
-`python Tools/generate_encounter_audio.py` produces the original music/effects.
-`python Tools/generate_strings.py` includes the new matching HE/EN strings.
+`Tools/Audio/generate_encounter_voice.ps1` reproduces the David SAPI line on Windows;
+`python Tools/Audio/generate_encounter_audio.py` produces the original music/effects.
+`python Tools/Localization/generate_strings.py` includes the new matching HE/EN strings.
 Then use `Tools/Invoke-Unity.ps1 -Task Generate` and the existing verification
 tasks. The checked-in WAVs and FBXs require neither Blender nor speech services
 at game runtime.

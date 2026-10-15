@@ -75,7 +75,7 @@ namespace Game.Tests
             {
                 var data=new SaveData{schemaVersion=2,checkpoint="Ranger cabin",charge=37,mapAcquired=true,documents=new[]{"note_cartographer"},pickups=new ItemRecord[0]};
                 string path=Path.Combine(dir,"save.json");File.WriteAllText(path,JsonUtility.ToJson(data));var loaded=new SaveService(path).Load(out _);
-                Assert.That(loaded.schemaVersion,Is.EqualTo(5));Assert.True(loaded.mapAcquired);Assert.False(loaded.axe);Assert.IsEmpty(loaded.deadWolves);Assert.That(loaded.charge,Is.EqualTo(37));
+                Assert.That(loaded.schemaVersion,Is.EqualTo(6));Assert.True(loaded.mapAcquired);Assert.False(loaded.axe);Assert.IsEmpty(loaded.deadWolves);Assert.That(loaded.charge,Is.EqualTo(37));
             }
             finally{Directory.Delete(dir,true);}
         }

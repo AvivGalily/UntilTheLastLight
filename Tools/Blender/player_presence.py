@@ -174,12 +174,20 @@ def grip(trigger=False,side='R',radius=.027,return_pose=False):
         target=centre+outward*f+axis*a+normal*n*(radius/.027)
         H.point_bone(rig,bone.name,target-bone.head)
     bpy.context.view_layer.update()
-    # Match the shaft to Blender Z; the palm is offset beside it, not over it.
+    # Canonical grip frame: normal points into the handle from the palm,
+    # outward follows the fingers away from the wrist, axis crosses the knuckles.
     arm_groups={'lowerarm01.'+side}|{bone.name for bone in rig.pose.bones['lowerarm01.'+side].children_recursive}
     frame=Matrix((normal,outward,axis)).transposed().to_4x4()
     # Axe: vertical shaft, inward palm and a wrist behind the grip.
-    # Flashlight/shotgun: support their longitudinal axes from underneath.
-    destination=Matrix(((0,0,1),(-1 if side=='L' else 1,0,0),(0,1,0))).transposed().to_4x4() if trigger or side=='L' else Matrix.Diagonal((1,-1,-1,1))
+    # Left flashlight: palm above the cylinder, thumb at the rear switch,
+    # wrist on the outside of the left arm rather than folded across the body.
+    if side=='L':destination=Matrix(((0,0,-1),(-1,0,0),(0,-1,0))).transposed().to_4x4()
+    else:
+        # Stock/axe: the thumb saddles the top, palm rests against the outside,
+        # and fingers descend around the grip from a slightly raised wrist.
+        # This is a real diagonal grip, not an upside-down supporting palm.
+        tilt=math.radians(40 if trigger else 15);c,s=math.cos(tilt),math.sin(tilt)
+        destination=Matrix(((1,0,0),(0,-c,-s),(0,s,-c))).transposed().to_4x4()
     transform=destination@frame.inverted()@Matrix.Translation(-centre)
     assert transform.to_3x3().determinant()>.999,'Equipment hand must use a proper anatomical rotation'
     def keep(ob,v):

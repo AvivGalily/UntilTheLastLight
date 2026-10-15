@@ -4,26 +4,8 @@ using System.Text;
 using UnityEngine;
 namespace Game
 {
-    [Serializable] public sealed class ItemRecord { public string id; public int remaining; }
-    [Serializable] public sealed class SaveData
-    {
-        public int schemaVersion = 5;
-        public string build = "M2-0.13.0", scene = "ForestGame", checkpoint, spawnId = "ranger_cabin";
-        public float charge, activeSeconds;
-        public bool flashlightOn, fuse, powerOn, wounded, completed;
-        public int batteries, seed = 1407;
-        public string[] documents;
-        public ItemRecord[] pickups;
-        public bool tutorialRepelled;
-        public bool introCompleted;
-        public bool mapAcquired;
-        public bool axe;
-        public bool forestEncounterSeen,flashlightFaulted;
-        public bool shotgun,headUnlocked,headIntroduced;
-        public int loadedShells,spareShells,weapon;
-        public float fireRecovery;
-        public string[] deadWolves=new string[0];
-    }
+
+
     public sealed class SaveService
     {
         public readonly string Path;
@@ -31,7 +13,18 @@ namespace Game
         public SaveService(string path) { Path = path; }
         public static void Validate(SaveData s)
         {
-            if (s == null || s.schemaVersion<1||s.schemaVersion>5) throw new InvalidDataException("Unsupported or missing save version.");
+            if (s == null || s.schemaVersion<1||s.schemaVersion>6) throw new InvalidDataException("Unsupported or missing save version.");
+            if(s.schemaVersion>=6)
+            {
+                var r=s.research;
+                if(r==null||r.phase<0||r.phase>5||r.health<0||r.health>4||!float.IsFinite(r.elapsed)||r.elapsed<0||r.elapsed>600
+                    ||!float.IsFinite(r.x)||!float.IsFinite(r.y)||!float.IsFinite(r.z)||!float.IsFinite(r.yaw)
+                    ||Math.Abs(r.x)>1000||Math.Abs(r.y)>100||Math.Abs(r.z)>1000
+                    ||(r.phase==5)!=(r.health==0)||(r.phase<4&&r.health!=4)
+                    ||s.gateKey&&r.phase!=5||s.gateUnlocked&&(!s.gateKey||!s.powerOn)||s.completed&&!s.gateUnlocked
+                    ||!float.IsFinite(s.aquaticRecovery)||s.aquaticRecovery<0||s.aquaticRecovery>5)
+                    throw new InvalidDataException("Invalid research encounter or gate lock state.");
+            }
             if(s.schemaVersion>=5&&(s.loadedShells<0||s.loadedShells>2||s.spareShells<0||s.spareShells>30||s.weapon<0||s.weapon>1||!float.IsFinite(s.fireRecovery)||s.fireRecovery<0||s.fireRecovery>10||(!s.shotgun&&(s.loadedShells!=0||s.weapon==1))||(s.headIntroduced&&!s.headUnlocked)))throw new InvalidDataException("Invalid Norton encounter state.");
             if(s.schemaVersion>=4&&s.flashlightFaulted&&(!s.forestEncounterSeen||s.flashlightOn||s.charge!=0))throw new InvalidDataException("Invalid flashlight circuit state.");
             if (s.scene != "ForestGame" || s.spawnId != "ranger_cabin" || string.IsNullOrWhiteSpace(s.checkpoint)) throw new InvalidDataException("Unknown checkpoint.");
@@ -56,6 +49,12 @@ namespace Game
             if(s.schemaVersion==2){s.axe=false;s.deadWolves=new string[0];s.schemaVersion=3;}
             if(s.schemaVersion==3){s.forestEncounterSeen=s.flashlightFaulted=false;s.schemaVersion=4;}
             if(s.schemaVersion==4){s.shotgun=s.headUnlocked=s.headIntroduced=false;s.loadedShells=s.spareShells=s.weapon=0;s.fireRecovery=0;s.schemaVersion=5;}
+            if(s.schemaVersion==5)
+            {
+                s.research=new ResearchSave();s.gateKey=s.gateUnlocked=s.completed;s.aquaticRecovery=0;
+                if(s.completed){s.research.phase=5;s.research.health=0;}
+                s.schemaVersion=6;
+            }
             return s;
         }
         public SaveData Load(out string message)

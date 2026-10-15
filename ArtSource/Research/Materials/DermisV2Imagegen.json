@@ -1,0 +1,13 @@
+{
+  "mode": "built-in image_gen",
+  "transparent_background": false,
+  "prompt": "Use case: photorealistic-natural. Asset type: final seamless 2048 x 2048 square albedo material for an original humanoid amphibian creature in a realistic science-fiction horror game. Primary request: a believable natural amphibian skin surface, photographed as a completely flat macro material swatch spanning about 30 centimetres of physical skin. Very fine irregular pores and flattened small pebbled scales in continuous fleshy dermis, extremely subtle branching blue-purple capillaries below the skin, uneven desaturated olive-gray and slate gray-brown mottling with subdued pale gray-pink flecks and healed fine scratches. Soft creases belong to supple living skin. Real organic variation at several scales, restrained colour, credible animal anatomy. Surface should feel moist but the colour map itself has perfectly even diffuse lighting without reflections, specular highlights or shadows. Edge to edge seamless material with no obvious repeat and no large bands. No face, head, eyes, limbs, creature silhouette or body, no raised circular armor plates, no metal, no stone, no fabric, no coral, no thick polygonal scales, no glowing details, no slime bubbles, no text, no label, no border or watermark. Texture is intended for real-time PBR and must retain the fine natural pores without exaggerated embossed grooves.",
+  "asset": "Assets/_Game/Art/Textures/LabAbyssDermisV2_BaseColor.png",
+  "original": "ArtSource/Research/Materials/LabAbyssDermisV2_Imagegen.png",
+  "sha256": "4cce5c066b50554e9088836b26e9d61c858346f14471c03d62e73ab966bf3338",
+  "dimensions": [
+    1254,
+    1254
+  ],
+  "derivatives": "Technical normal RGB; mask R nonmetal, G AO, B dermal thickness, A varied smoothness. Generated colour is unchanged."
+}

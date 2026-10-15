@@ -6,6 +6,7 @@ namespace Game
     {
         public int Batteries { get; private set; } = 2;
         public bool HasFuse { get; set; }
+        public bool HasGateKey {get;set;}
         public bool HasAxe {get;set;}
         public bool HasShotgun {get;set;}
         public int LoadedShells {get;private set;}
@@ -24,6 +25,6 @@ namespace Game
         public int AddBatteries(int offered)
         { int accepted = Mathf.Clamp(offered, 0, 6 - Batteries); Batteries += accepted; return accepted; }
         public bool ConsumeBattery() { if (Batteries <= 0) return false; Batteries--; return true; }
-        public void Restore(int batteries, bool fuse,bool axe=false) { Batteries = Mathf.Clamp(batteries, 0, 6); HasFuse = fuse;HasAxe=axe;RestoreWeapon(false,0,0,HeldWeapon.Axe); }
+        public void Restore(int batteries, bool fuse,bool axe=false) { Batteries = Mathf.Clamp(batteries, 0, 6); HasFuse = fuse;HasGateKey=false;HasAxe=axe;RestoreWeapon(false,0,0,HeldWeapon.Axe); }
     }
 }

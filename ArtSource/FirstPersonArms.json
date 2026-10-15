@@ -7,9 +7,11 @@
       "upper": "upperarm01.R",
       "lower": "lowerarm01.R",
       "wrist": "wrist.R",
-      "geometry": "native CC0 skin and fitted clothing; normalized arm-only bone weights",
+      "geometry": "native CC0 skin and fitted clothing; normalized arm-only bone weights; proper rotation without reflection",
       "source": "hanging_survivor_01.blend",
-      "runtime": "length-preserving shoulder/elbow/wrist IK; no vertex shear"
+      "runtime": "length-preserving shoulder/elbow/wrist IK with same-hand palm-directed elbow plane and distributed native forearm twist; no vertex shear",
+      "gripStyle": "raised wrist, closed fingers and opposed thumb around axe handle",
+      "reference": "ArtSource/References/EquipmentGrips/sources.json"
     },
     {
       "asset": "player_shotgun_hand_01",
@@ -18,9 +20,11 @@
       "upper": "upperarm01.R",
       "lower": "lowerarm01.R",
       "wrist": "wrist.R",
-      "geometry": "native CC0 skin and fitted clothing; normalized arm-only bone weights",
+      "geometry": "native CC0 skin and fitted clothing; normalized arm-only bone weights; proper rotation without reflection",
       "source": "hanging_survivor_01.blend",
-      "runtime": "length-preserving shoulder/elbow/wrist IK; no vertex shear"
+      "runtime": "length-preserving shoulder/elbow/wrist IK with same-hand palm-directed elbow plane and distributed native forearm twist; no vertex shear",
+      "gripStyle": "upper stock saddle with opposed thumb and separate trigger finger",
+      "reference": "ArtSource/References/EquipmentGrips/sources.json"
     },
     {
       "asset": "player_flashlight_hand_01",
@@ -29,9 +33,11 @@
       "upper": "upperarm01.L",
       "lower": "lowerarm01.L",
       "wrist": "wrist.L",
-      "geometry": "native CC0 skin and fitted clothing; normalized arm-only bone weights",
+      "geometry": "native CC0 skin and fitted clothing; normalized arm-only bone weights; proper rotation without reflection",
       "source": "hanging_survivor_01.blend",
-      "runtime": "length-preserving shoulder/elbow/wrist IK; no vertex shear"
+      "runtime": "length-preserving shoulder/elbow/wrist IK with same-hand palm-directed elbow plane and distributed native forearm twist; no vertex shear",
+      "gripStyle": "overhand cylinder, palm above and thumb at rear switch",
+      "reference": "ArtSource/References/EquipmentGrips/sources.json"
     }
   ]
 }

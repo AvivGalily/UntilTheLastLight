@@ -1,18 +1,6 @@
 {
   "characters": [
     {
-      "character": "jack",
-      "source": "ArtSource/Blender/intro_jack_01.blend",
-      "fallenAsset": "arrival_jack_01",
-      "sameFaceHairClothesUVs": true,
-      "license": "retained CC0 MakeHuman anatomy and clothing; retained healthy skin derivative",
-      "dimensions": [
-        0.6210372447967529,
-        1.7331571578979492,
-        0.3346444070339203
-      ]
-    },
-    {
       "character": "tyler",
       "source": "ArtSource/Blender/intro_tyler_01.blend",
       "fallenAsset": "arrival_tyler_01",
@@ -22,18 +10,6 @@
         0.687239408493042,
         1.741396427154541,
         0.3263627886772156
-      ]
-    },
-    {
-      "character": "ethan",
-      "source": "ArtSource/Blender/intro_ethan_01.blend",
-      "fallenAsset": "arrival_ethan_01",
-      "sameFaceHairClothesUVs": true,
-      "license": "retained CC0 MakeHuman anatomy and clothing; retained healthy skin derivative",
-      "dimensions": [
-        0.6212279200553894,
-        1.6594709157943726,
-        0.31393757462501526
       ]
     }
   ]

@@ -25,9 +25,10 @@ namespace Game
                 if (s && s.Contains(point) && Clear(s.transform.position, point)) return true;
             return false;
         }
-        public Protection Sample(Vector3 point)
+        public Protection Sample(Vector3 point, bool ignoreFlashlight = false)
         {
             if (InShelter(point)) return Protection.Full;
+            if (ignoreFlashlight) return Protection.None;
             if (MinimumRepelDistance>0&&PointBlank(point)) return Protection.None;
             if (!Flashlight.Active || !Beam) return Protection.None;
             Vector3 offset = point - Beam.position;
@@ -39,7 +40,7 @@ namespace Game
             return angle <= Flashlight.Tuning.innerHalfAngle && d <= Flashlight.Range - Flashlight.Tuning.edgeMeters
                 ? Protection.Full : Protection.Edge;
         }
-        public Protection Capsule(Vector3 feet, float radius, float height)
+        public Protection Capsule(Vector3 feet, float radius, float height, bool ignoreFlashlight = false)
         {
             if(PointBlank(feet))return InShelter(feet+Vector3.up*height*.6f)?Protection.Full:Protection.None;
             Protection result = Protection.None;
@@ -49,7 +50,7 @@ namespace Game
                 for (int side = 0; side < 5; side++)
                 {
                     Vector3 edge = side == 0 ? Vector3.zero : side == 1 ? Vector3.right * radius : side == 2 ? Vector3.left * radius : side == 3 ? Vector3.forward * radius : Vector3.back * radius;
-                    Protection sample = Sample(p + edge);
+                    Protection sample = Sample(p + edge, ignoreFlashlight);
                     if (sample > result) result = sample;
                 }
             }
@@ -74,7 +75,7 @@ namespace Game
             }
             return sum;
         }
-        public bool StepAllowed(Vector3 from, Vector3 to, float radius, float height, Vector3 player, bool retreat)
+        public bool StepAllowed(Vector3 from, Vector3 to, float radius, float height, Vector3 player, bool retreat, bool ignoreFlashlight = false)
         {
             int count = Mathf.Max(1, Mathf.CeilToInt(Vector3.Distance(from, to) / (radius * .5f)));
             float previousExposure = Exposure(from, radius, height);
@@ -91,14 +92,14 @@ namespace Game
                     previousExposure = e; previousDistance = d;
                     if (e == 0) exiting = false;
                 }
-                else if (Capsule(p, radius, height) == Protection.Full) return false;
+                else if (Capsule(p, radius, height, ignoreFlashlight) == Protection.Full) return false;
             }
             return true;
         }
-        public bool AttackBlocked(Vector3 monsterFeet, float radius, float height, Vector3 playerChest)
+        public bool AttackBlocked(Vector3 monsterFeet, float radius, float height, Vector3 playerChest, bool ignoreFlashlight = false)
         {
             if(PointBlank(monsterFeet))return InShelter(playerChest)||InShelter(monsterFeet+Vector3.up*height*.6f)||!Clear(monsterFeet+Vector3.up*height*.6f,playerChest);
-            if (InShelter(playerChest) || Capsule(monsterFeet, radius, height) != Protection.None) return true;
+            if (InShelter(playerChest) || Capsule(monsterFeet, radius, height, ignoreFlashlight) != Protection.None) return true;
             Vector3 start = monsterFeet + Vector3.up * height * .6f;
             if (!Clear(start, playerChest)) return true;
             int samples = Mathf.Max(1, Mathf.CeilToInt(Vector3.Distance(start, playerChest) / (radius * .5f)));
@@ -106,7 +107,7 @@ namespace Game
             {
                 Vector3 point = Vector3.Lerp(start, playerChest, (float)i / samples);
                 // End at the player's body; never cross the lamp origin and sample in front of it.
-                if (Vector3.Distance(point, playerChest) > .35f && Sample(point) != Protection.None) return true;
+                if (Vector3.Distance(point, playerChest) > .35f && Sample(point, ignoreFlashlight) != Protection.None) return true;
             }
             return false;
         }

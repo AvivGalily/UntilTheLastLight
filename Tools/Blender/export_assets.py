@@ -50,9 +50,9 @@ for path in paths:
         materials.update(mat.name for mat in obj.data.materials if mat)
         obj.hide_render=False
     target=out/(path.stem+'.fbx')
-    animated=path.stem in ('walker_01','zombie_wolf_01','hanging_survivor_01','web_jack_01','cinder_head_01')
+    animated=path.stem in ('walker_01','zombie_wolf_01','hanging_survivor_01','web_jack_01','cinder_head_01','research_abomination_01')
     rigs=[obj for obj in bpy.context.scene.objects if obj.type=='ARMATURE']
-    if animated and (len(rigs)!=1 or len(rigs[0].data.bones)<28):raise ValueError('Crawler requires a weighted 28-bone rig')
+    if animated and (len(rigs)!=1 or len(rigs[0].data.bones)<(20 if path.stem=='research_abomination_01' else 28)):raise ValueError('Animated asset requires its complete weighted skeleton')
     if not args.manifest_only:
         bpy.ops.export_scene.fbx(filepath=str(target),object_types={'MESH','ARMATURE'},axis_forward='-Z',axis_up='Y',apply_unit_scale=True,bake_space_transform=False,use_mesh_modifiers=False,add_leaf_bones=False,use_armature_deform_only=True,bake_anim=animated,bake_anim_use_all_actions=True,bake_anim_use_nla_strips=False,bake_anim_simplify_factor=0)
     records.append({'id':path.stem,'source':path.relative_to(root).as_posix(),'export':target.relative_to(root).as_posix(),'units':'metres','triangles':lods.get('LOD0',triangles),'lodTriangles':lods,'materials':sorted(materials),'textures':['Assets/_Game/Art/Textures/'+name+'_'+suffix+'.png' for name in sorted(materials) for suffix in ('BaseColor','Normal','Mask','Anatomy') if (root/'Assets/_Game/Art/Textures'/(name+'_'+suffix+'.png')).exists()],'collider':'separate simple Unity collider; decorative foliage has no collision','blendShapes':shapes,'animations':[action.name for action in bpy.data.actions] if animated else [],'bones':sum(len(r.data.bones) for r in rigs),'license':'original project model; original imagegen skin albedo' if animated else 'original procedural project asset','status':'reference-guided organic sculpt; human epidermis atlas and pore/roughness maps; weighted eight-limb crawler, in-place skeletal clips and jaw morph' if animated else 'original art pass'})
@@ -78,7 +78,7 @@ for path in paths:
         records[-1]['status']='Original 22-radial silk web, five sagging rings and tree/ground anchor strands; separate intact core and persistent torn rim; Unity bone-attached bindings release on impact'
     if path.stem in ('player_body_01','player_axe_hand_01','player_shotgun_hand_01','player_flashlight_hand_01'):
         records[-1]['license']='CC0 MakeHuman/MPFB anatomy, clothing and Mindfront skin; project pose and extraction'
-        records[-1]['status']='Full clothed anatomical shadow body with grounded Crouch, four Walk and four Run leg/arm poses; displacement gait phase shared with footsteps; level capsule-height placement' if path.stem=='player_body_01' else 'Native weighted left flashlight/right axe/right shotgun upper arm, forearm, wrist and curled hand; fitted source sleeve; normalized arm-only weights and evaluated grip-frame bone export; runtime length-preserving two-bone IK without mesh shear. ArtSource/FirstPersonArms.json; reproduce with first_person_arms.py.'
+        records[-1]['status']='Full clothed anatomical shadow body with grounded Crouch, four Walk and four Run leg/arm poses; displacement gait phase shared with footsteps; level capsule-height placement' if path.stem=='player_body_01' else 'Reference-studied native overhand left flashlight and upper right axe/stock grips; opposed thumb and separate trigger finger; normalized arm-only weights and evaluated grip-frame bone export; palm-directed shoulder/elbow/wrist IK without mesh shear. ArtSource/FirstPersonArms.json and ArtSource/References/EquipmentGrips/sources.json; reproduce with first_person_arms.py.'
         if path.stem!='player_body_01':
             records[-1]['textures']=['Assets/_Game/Art/Textures/'+key+'_'+suffix+'.png' for key in ('HumanSkin0','BodyFabric') for suffix in ('BaseColor','Normal','Mask')]
     if path.stem in ('cinder_head_01','eviscerated_casualty_01'):
@@ -106,6 +106,14 @@ for path in paths:
     if path.stem in ('intro_vehicle_01','intro_wheel_01'):
         records[-1]['status']='Original metre-scale 4x4 interior or separate steering rim; explicit UVs, retained project leather/fabric maps and procedural PBR grain/weave relief; distinct dashboard, door, seat, ribbed floor mat and wheel surfaces.'
         records[-1]['textures']=['Assets/_Game/Art/Textures/'+key+'_'+suffix+'.png' for key in ('BodyLeather','BodyFabric') for suffix in ('BaseColor','Normal','Mask')]
+    if path.stem=='research_abomination_01':
+        records[-1]['license']='Original continuous organic anatomy and 20-bone rig; built-in imagegen dermis V2 and retained project oral maps'
+        records[-1]['status']='R-09 V2: fused musculature, eye sockets, tapered bony maxilla and open mandibular arch, thin labial borders, rooted irregular teeth, concave oral lining with head/jaw blend and grooved tongue, recessed gill slits and dorsal membrane; six skeletal clips including continuous attack-jaw recovery and planted-ankle IK gait with tail/leg weights separated; runtime displacement sets gait phase, tank-owned hoses detach, neck-bone chain and death-pulsed collectible key'
+        records[-1]['textures']=['Assets/_Game/Art/Textures/'+key+'_'+suffix+'.png' for key in ('LabAbyssDermisV2','LabIris','CrawlerTeeth','CrawlerGums','CrawlerThroat') for suffix in ('BaseColor','Normal','Mask')]
+    if path.stem in ('lab_wolf_head_01','lab_deer_head_01'):
+        records[-1]['license']='CC0 NewDLC wolf anatomy and retained fur/skull maps; project head extraction, preserved neck tissue and fictional antlered variant'
+        records[-1]['status']='Static anatomical wet specimens; retained original animal UVs and licensed fur/bone maps; generated preserved-tissue derivative'
+        records[-1]['textures']=['Assets/_Game/Art/Textures/'+key+'_'+suffix+'.png' for key in ('WolfSkin','WolfBone','LabPreservedTissue','CrawlerTeeth') for suffix in ('BaseColor','Normal','Mask')]
 (root/'Docs').mkdir(exist_ok=True)
 (root/'Docs'/'AssetManifest.json').write_text(json.dumps({'seed':1407,'assets':sorted(records,key=lambda record:record['id']),'otherAssets':'Unity interaction/collision, blood shaders and overlays; original SFX, CC0 footsteps/voices, and twelve supplied Runway opening dialogue takes plus four supplied effects. See ThirdPartyNotices.md and ArtSource/Audio/Runway.'},indent=2),encoding='utf-8')
 print('EXPORTED',len(paths),'validated assets; manifest contains',len(records),'project assets')

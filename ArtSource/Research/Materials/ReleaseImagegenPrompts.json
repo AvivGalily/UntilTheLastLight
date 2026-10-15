@@ -1,0 +1,26 @@
+{
+  "mode": "built-in image_gen",
+  "transparent_background": false,
+  "prompts": [
+    {
+      "key": "LabAbyssSkin",
+      "prompt": "Use case: photorealistic-natural. Asset type: seamless tileable base-color surface for an original aquatic humanoid horror creature in a realistic 3D game. Generate a square detailed material texture of cold sickly gray-olive amphibian dermis, fine uneven pebbled pores, small irregular overlapping reptile scales blending into wrinkled soft tissue, restrained dusky purple capillaries, bruised mottling, occasional pale scarred flecks, subtle wet biological surface colour. Mostly muted charcoal olive and gray-green, natural animal skin, unsettling preserved deep-water anatomy. Exactly straight-on flat diffuse lighting, no baked specular highlights, no shadows. Texture material only fills the entire image, seamless edges, uniform fine physical scale. No animal face or eye or body, no perspective, no labels, no text, no border, no watermark.",
+      "asset": "Assets/_Game/Art/Textures/LabAbyssSkin_BaseColor.png",
+      "sha256": "3b70cb5d3ebe5fe34276a5d79b4edbcad115f289048ae557dac2fae848f6d3dc",
+      "dimensions": [
+        1254,
+        1254
+      ]
+    },
+    {
+      "key": "LabPreservedTissue",
+      "prompt": "Use case: photorealistic-natural. Asset type: seamless tileable base-color texture for small fictional preserved biological specimens in museum-style laboratory jars in a 3D horror game. A square highly detailed material surface of pale ivory, faded gray-pink preserved animal soft tissue, thin branching purple capillaries under slightly translucent skin, delicate pores, soft uneven folds, faint yellowed preservative discoloration and tiny restrained dark mottled patches. Credible formalin-preserved skin, subtle clinical anatomical material, no blood splashes, no exposed organs. Perfectly straight-on, completely flat diffuse lighting with no highlights or shadows baked into the color. Material surface fills frame edge to edge, seamless on all sides. No specimen shape, no face, no eye, no body, no jar, no text, no border, no watermark.",
+      "asset": "Assets/_Game/Art/Textures/LabPreservedTissue_BaseColor.png",
+      "sha256": "19e71d717db66a7acdd14d0c44f59c0ed5c723621dc82be422bec0f0d3c2e75c",
+      "dimensions": [
+        1254,
+        1254
+      ]
+    }
+  ]
+}

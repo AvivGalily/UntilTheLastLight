@@ -4,7 +4,7 @@
 
 The mouth now uses original imagegen decayed-enamel, wounded lip/gum and dark-mucosa artwork, stored as one native 1254px source atlas and three 1254×418 runtime crops. Native normal/AO/smoothness maps add fine detail. The lip tissue is also feathered into a separate 4096px anatomy atlas so the exposed outer lip has bruised, scarred color that follows the skin and jaw. The original human-skin source and atlas remain retained. The 26 teeth have pointed tips and independent enamel UVs; all 28 bones, skin weights, idle/crawl clips and both jaw shapes remain. Bite closure preserves each tooth's shape and avoids the previous folding in the cheeks.
 
-Reproduce from checked-in sources with `python Tools/prepare_crawler_mouth.py`, then Blender `crawler_mouth_material.py -- --project C:\dev\UntilTheLastLight` and the focused `export_assets.py -- --project C:\dev\UntilTheLastLight --asset walker_01`. The full art wrapper includes mouth preparation/application. New `07-decayed-mouth-open.png` and `08-decayed-mouth-bite.png` are actual Unity close views, alongside the refreshed model views and crawl frames. See `ThirdPartyNotices.md` for the exact source/prompt paths.
+Reproduce from checked-in sources with `python Tools/Assets/prepare_crawler_mouth.py`, then Blender `crawler_mouth_material.py -- --project C:\dev\UntilTheLastLight` and the focused `export_assets.py -- --project C:\dev\UntilTheLastLight --asset walker_01`. The full art wrapper includes mouth preparation/application. New `07-decayed-mouth-open.png` and `08-decayed-mouth-bite.png` are actual Unity close views, alongside the refreshed model views and crawl frames. See `ThirdPartyNotices.md` for the exact source/prompt paths.
 
 The user-supplied image guides the pale humanoid anatomy, horizontal torso, long bent limbs, eyeless head and large tooth-filled mouth. The model, textures and animation are authored in this project; the reference image is not embedded or redistributed. This is a stylized game model based on that reference.
 
@@ -34,7 +34,7 @@ Refresh skin only, keeping the existing geometry, rig, jaw and clips:
 & 'C:\Program Files\Blender Foundation\Blender 5.2\blender.exe' --background --python-exit-code 1 --python Tools/Blender/export_assets.py -- --project C:\dev\UntilTheLastLight --asset walker_01
 ./Tools/Invoke-Unity.ps1 -Task Generate
 ./Tools/Invoke-Unity.ps1 -Task CreatureCapture
-python Tools/create_creature_preview.py
+python Tools/Diagnostics/create_creature_preview.py
 ```
 
 The focused skin refresh is deterministic from the checked-in source and needs

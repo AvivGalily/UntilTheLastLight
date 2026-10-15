@@ -19,4 +19,7 @@ runpy.run_path(str(Path(__file__).with_name("arrival_cast.py")), run_name="__mai
 runpy.run_path(str(Path(__file__).with_name("encounter_cast.py")), run_name="__main__")
 runpy.run_path(str(Path(__file__).with_name("player_presence.py")), run_name="__main__")
 runpy.run_path(str(Path(__file__).with_name("first_person_arms.py")), run_name="__main__")
+runpy.run_path(str(Path(__file__).with_name("research_specimen.py")), run_name="__main__")
+runpy.run_path(str(Path(__file__).with_name("research_creature.py")), run_name="__main__")
+runpy.run_path(str(Path(__file__).with_name("research_preserved_heads.py")), run_name="__main__")
 sys.argv=original_argv

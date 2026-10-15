@@ -47,7 +47,7 @@ namespace Game.Tests
                 var service=new SaveService(path);var data=new SaveData{checkpoint="checkpoint_blackout",charge=0,flashlightOn=false,forestEncounterSeen=true,flashlightFaulted=true,documents=new string[0],pickups=new ItemRecord[0]};
                 service.Write(data);var loaded=service.Load(out _);Assert.True(loaded.forestEncounterSeen);Assert.True(loaded.flashlightFaulted);
                 data.schemaVersion=3;data.charge=52;data.flashlightOn=true;service.Write(data);loaded=service.Load(out _);
-                Assert.That(loaded.schemaVersion,Is.EqualTo(5));Assert.False(loaded.forestEncounterSeen);Assert.False(loaded.flashlightFaulted);Assert.That(loaded.charge,Is.EqualTo(52));
+                Assert.That(loaded.schemaVersion,Is.EqualTo(6));Assert.False(loaded.forestEncounterSeen);Assert.False(loaded.flashlightFaulted);Assert.That(loaded.charge,Is.EqualTo(52));
             }
             finally{if(Directory.Exists(dir))Directory.Delete(dir,true);}
         }

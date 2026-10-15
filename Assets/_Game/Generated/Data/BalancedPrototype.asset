@@ -45,13 +45,15 @@ MonoBehaviour:
     radius: 0.7
     height: 1.95
     stalkSpeed: 1.8
-    approachSpeed: 2.8
-    huntSpeed: 4.5
+    approachSpeed: 3.5
+    huntSpeed: 3.5
     retreatSpeed: 4
-    attackRange: 1.8
-    windupSeconds: 1.2
+    attackRange: 1.5
+    windupSeconds: 3
     warningSeconds: 1.5
     warningRange: 8
+    flashlightMinSeconds: 4
+    flashlightMaxSeconds: 7
     huntSeconds: 14
     planningHz: 4
     sensesHz: 8
@@ -63,7 +65,7 @@ MonoBehaviour:
     spawnMax: 50
     encounterCooldown: 14
     restoreGraceSeconds: 10
-    pointBlankRange: 2.8
+    pointBlankRange: 1.5
     encounterMinSeconds: 32
     encounterMaxSeconds: 52
     hiddenMinSeconds: 10

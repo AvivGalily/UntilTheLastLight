@@ -1,5 +1,9 @@
 # עד האור האחרון — אפיון משחק ומדריך מימוש ל־GPT-6
 
+> **Equipment grip revision, 2026-10-15:** The flashlight is held from above with the left hand; axe and shotgun use raised right-hand grips with opposed thumbs and closed fingers. The shotgun has a separate index pose. The anatomical elbow plane and shoulder anchors keep the wrist continuous with the forearm through look-down, axe swings, recoil and reload. Inspected photo references are recorded in ArtSource/References/EquipmentGrips/sources.json and remain outside the playable Assets.
+
+> **Current research/gameplay revision, 2026-10-15 (supersedes older rules below):** The station has a large four-view scientific Walker study, broken test tubes, laboratory instruments and a cylindrical blue-lit tank with a head-up floating reptilian humanoid connected to hoses. Continuous flashlight exposure must last 4-7 seconds; interruption resets it and the Walker advances during exposure. Its approach and hunt speed is 3.5m/s, above walking (3) and below sprinting (5.2). Less than 1.5m for three continuous seconds is fatal even when both actors move; leaving range, walls and amber shelter interrupt contact. The point-blank flashlight boundary is now 1.5m. Entering within five horizontal metres of the burning car starts its first head appearance after ten active seconds, independently of the letter and subsequent distance; menus pause the countdown.
+
 > **עדכון מימוש וחוקים — 0.5.0, 08.10.2026:** בעקבות הבקשה האחרונה הוחלפו ארבע הגופות במודלים אנטומיים של MakeHuman עם טקסטורות עור, שיער ובגדים, פציעות ודם. נוספו חמישה זאבים נגועים עם שלד ואנימציות, וגרזן ליד גופת המודד הקרובה לבקתה: E לאיסוף ולחצן עכבר שמאלי לתקיפה; שתי פגיעות הורגות זאב. נוספו צעדים לפי תנועה ומשטח, נשימה לפי מאמץ, צעקה מוקלטת, דם על המסך ותפריט מוות. המפלצת חוזרת מנקודות מרוחקות עם נתיב הגעה, בלי להשתגר מול השחקן, ונקישות ההליכה נשמעות רק בזמן תנועה. קובצי המקור והרישיונות מתועדים ב־[Docs/CombatAndCharacters.md](Docs/CombatAndCharacters.md).
 
 > **שינוי מפורש לעומת חוקי האפיון המקורי:** בתוך רדיוס אופקי של 2.8 מטרים הפנס אינו הודף את המפלצת ואינו מבטל את התקיפה. תקיפה מלאה של המפלצת קטלנית גם במפגש הראשון; אין עוד תלות באיסוף נתיך או בהשלמת לימוד הפנס. קירות ומחסות ענבריים עדיין מגינים, והנורה בתחנת המחקר אינה מגינה. הגרזן פוגע בזאבים בלבד. הנפות הגרזן דורשות טווח, כיוון וקו פגיעה פנוי. גרזן וזאבים מתים נשמרים בנקודות השמירה; שמירות ישנות עוברות לגרסה 3. כללי שינוי אלה קודמים לסעיפי ההגנה והמפגש הראשון במסמך המקורי. העדכונים הבאים מתארים גרסאות קודמות.
@@ -597,7 +601,7 @@ Occlusion בסיסי: בדיקת קיר/גזע בתדירות נמוכה והנ�
 | `Assets/_Game/Scripts/Core/` | bootstrap, מצב משחק, אירועים, זמן ו־IDs |
 | `Assets/_Game/Scripts/Player/` | תנועה, מבט, אינטראקציה, stamina ופציעה |
 | `Assets/_Game/Scripts/Lighting/` | מודל פנס, הגנה, מקורות קבועים |
-| `Assets/_Game/Scripts/Monster/` | FSM, חושים, מתכנן תנועה והתקפה |
+| `Assets/_Game/Scripts/Enemies/` | FSM, חושים, מתכנן תנועה והתקפה |
 | `Assets/_Game/Scripts/World/` | Dread, עצים, ערפל, מקלטים ואירועים |
 | `Assets/_Game/Scripts/Inventory/` | נתוני חפצים, מלאי, Pickups, שימוש |
 | `Assets/_Game/Scripts/Quests/` | משימות, חידות וקיצורי דרך |

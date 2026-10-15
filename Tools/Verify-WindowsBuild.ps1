@@ -1,6 +1,6 @@
 param()
 $ErrorActionPreference='Stop'
-$expectedVersion='0.13.0'
+$expectedVersion='0.14.2'
 $taskRoot=Split-Path -Parent $PSScriptRoot
 $exe=Join-Path $taskRoot 'Builds/Windows/UntilTheLastLight.exe'
 $log=Join-Path $taskRoot 'Logs/WindowsLaunch.log'
@@ -28,7 +28,11 @@ if(-not $smoke.Contains('SEPARATE WEAPON HANDS PASS')){throw 'Independent left f
 if(-not $smoke.Contains('EQUIPMENT INPUT SMOKE PASS')){throw 'Actual keyboard weapon/battery/reload evidence is missing.'}
 if(-not $smoke.Contains('WOLF POPULATION PASS')){throw 'Nine clear connected wolf territories have not been verified.'}
 if(-not $smoke.Contains('FOG RETREAT PASS') -or -not $smoke.Contains('HEAD LIFECYCLE PASS')){throw 'Fog retreat/head death and recurrence evidence is missing.'}
+$pursuit=Get-Content -LiteralPath (Join-Path $taskRoot 'Logs/AquaticPursuitVerification.json') -Raw | ConvertFrom-Json
+if(-not $pursuit.passed){throw 'Aquatic pursuit integration did not pass.'}
+$pursuitLog=Get-Content -LiteralPath (Join-Path $taskRoot 'Logs/AquaticPursuitSmoke.log') -Raw
+if(-not $pursuitLog.Contains('R09 WEIGHTED STRIDE:') -or -not $pursuitLog.Contains('RESEARCH ENCOUNTER PASS:')){throw 'Weighted aquatic stride or neck-key encounter verification is missing.'}
 if(-not (Get-Content -LiteralPath (Join-Path $taskRoot 'Logs/IntroSmoke.log') -Raw).Contains('FOREST INTRO SMOKE PASS')){throw 'Opening/cabin transition evidence is missing.'}
-$record=[ordered]@{build=$result.version;bytes=[long]$size;processId=$nativePlayer.Id;exitCode=$nativePlayer.ExitCode;graphics=('Direct3D 11 / '+$gpu);startupErrors=0;editTestsPassed=[int]$edit.'test-run'.passed;playTestsPassed=[int]$play.'test-run'.passed;unitTestsNote=('Both suites rerun and passed for the final '+$expectedVersion+' assets/code.');runtimeSmoke='passed';nortonSmoke='passed';standaloneDisplay='passed';displayMeasurements=$result.measurements;batchMode=$false;checkedAt=(Get-Date).ToString('o')}
+$record=[ordered]@{build=$result.version;bytes=[long]$size;processId=$nativePlayer.Id;exitCode=$nativePlayer.ExitCode;graphics=('Direct3D 11 / '+$gpu);startupErrors=0;editTestsPassed=[int]$edit.'test-run'.passed;playTestsPassed=[int]$play.'test-run'.passed;unitTestsNote=('Both suites passed on the '+$expectedVersion+' assets/code; focused pursuit, weighted stride and complete research encounter also passed.');aquaticPursuit='passed';aquaticStrideMesh='passed';aquaticPursuitCheckedAt=$pursuit.checkedAt;runtimeSmoke='passed';nortonSmoke='passed';standaloneDisplay='passed';displayMeasurements=$result.measurements;batchMode=$false;checkedAt=(Get-Date).ToString('o')}
 $record | ConvertTo-Json -Depth 5 | Set-Content -LiteralPath $receipt -Encoding UTF8
 Write-Output ('Windows '+$result.version+' native startup/display passed; '+$size+' build bytes; '+$record.editTestsPassed+' EditMode and '+$record.playTestsPassed+' PlayMode tests.')
